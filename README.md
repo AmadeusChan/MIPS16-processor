@@ -1,0 +1,33 @@
+# Description
+A MIPS processor designed in VHDL, which supports the following instructions: (This is the final project of Computer Orgnization in Tsinghua University)
+
+- ADDIU 
+- ADDIU3
+- ADDSP
+- ADDU
+- AND
+- B
+- BEQZ
+- BNEZ
+- BTEQZ
+- CMP
+- JR
+- LI
+- LW
+- LW_SP
+- MFIH
+- MFPC
+- MTIH
+- MTSP
+- NOP
+- OR
+- SLL
+- SRA
+- SUBU
+- SW
+- SW_SP
+- MOVE	
+- SLLV	
+- BTNEZ	
+- SW_RS	
+- ADDSP3
