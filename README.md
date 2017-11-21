@@ -31,3 +31,22 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - BTNEZ	
 - SW_RS	
 - ADDSP3
+
+## recent updates:
+- delete control signal wb_from_reg_src, mem_from_reg_src(meaningless), load_from_mem(exactly the same as mem_read)
+
+## gonna add:
+- top-level module
+- regs
+- alu
+- ram1, ram2
+- external devices (VGA and PS2)
+- ID_foward_IF_regs, IF_ID_regs, ID_ALU_regs, ALU_MEM_regs, MEM_WB_regs
+- RAW(read after write) harzard detector 
+- forward unit
+- UAL(use after load) hazard detector
+- structure hazard detector
+- coprocessor-NN, including the following instructions:
+	* vector element-wise plus, sub, multiplication
+	* dot-product
+	* load/store vector registers (8, length 128)
