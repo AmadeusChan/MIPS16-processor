@@ -41,18 +41,16 @@ entity controller is
            operand2_src : out  STD_LOGIC_VECTOR (1 downto 0);
            op_code : out  STD_LOGIC_VECTOR (3 downto 0);
            reg_write_enable : out  STD_LOGIC;
-           load_from_mem : out  STD_LOGIC;
            out_mem_write : out  STD_LOGIC;
            out_mem_read : out  STD_LOGIC;
            mem_enable : out  STD_LOGIC;
-           wb_src : out  STD_LOGIC_VECTOR (2 downto 0);
-           wb_data_from_reg_src : out  STD_LOGIC;
-           mem_data_from_reg_src : out  STD_LOGIC);
+           wb_src : out  STD_LOGIC_VECTOR (2 downto 0)
+			  );
 end controller;
 
 architecture Behavioral of controller is
 	
-	signal  mem_write : STD_LOGIC;
+	signal mem_write : STD_LOGIC;
 	signal mem_read : STD_LOGIC;
 	
 begin
@@ -87,6 +85,24 @@ begin
 				end case;
 			when others =>
 				is_branch <= '0';
+		end case;
+	end process;
+
+	-- is_jump 
+	process (instruction) 
+	begin
+		case instruction(15 downto 11) is 
+			when ib => 
+				is_jump <= '1';
+			when ijr => 
+				case instruction(7 downto 0) is
+					when "00000000" => 
+						is_jump <= '1';
+					when others =>
+						is_jump <= '0';
+				end case;
+			when others => 
+				is_jump <= '0';
 		end case;
 	end process;
 
@@ -127,7 +143,39 @@ begin
 	-- op code
 	process (instruction)
 	begin
-		
+		case instruction(15 downto 11) is 
+			when iaddsp3 | iaddiu | iaddiu3 | iaddsp | ilw | ilw_sp | isw | isw_sp => 
+				op_code <= op_add;
+			when iaddu => 
+				case instruction(1 downto 0) is 
+					when "01" => 
+						op_code <= op_add;
+					when others => 
+						op_code <= op_sub;
+				end case;
+			when iand => 
+				case instruction(4 downto 0) is 
+					when "01100" => 
+						op_code <= op_and;
+					when "01010" =>
+						op_code <= op_sub;
+					when "01101" => 
+						op_code <= op_or;
+					when "00100" => 
+						op_code <= op_sll;
+					when others => 
+						op_code <= op_add;
+				end case;
+			when isll => 
+				case instruction(1 downto 0) is 
+					when "00" => 
+						op_code <= op_sll;
+					when others => 
+						op_code <= op_sra;
+				end case;
+			when others => 
+				op_code <= op_add;
+		end case;
 	end process;
 
 	-- reg_write_enable
@@ -184,12 +232,6 @@ begin
 		end case;
 	end process;
 
-	-- load_from_mem
-	process (mem_read)
-	begin
-		load_from_mem <= mem_read;
-	end process;
-
 	-- mem_enable
 	process (mem_read, mem_write)
 	begin
@@ -225,16 +267,5 @@ begin
 		end case;
 	end process;
 
-	-- wb_data_from_reg_src
-	process (instruction)
-	begin
-		wb_data_from_reg_src <= from_reg_1;
-	end process;
-
-	-- mem_data_from_reg_src
-	process (instruction)
-	begin
-		mem_data_from_reg_src <= from_reg_1;
-	end process;
 end Behavioral;
 

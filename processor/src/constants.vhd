@@ -37,6 +37,7 @@ package constants is
 	constant ib: std_logic_vector(4 downto 0) := "00010";
 
 	constant ibeqz: std_logic_vector(4 downto 0) := "00100";
+
 	constant ibnez: std_logic_vector(4 downto 0) := "00101";
 
 	constant iaddiu: std_logic_vector(4 downto 0) := "01001";
@@ -76,6 +77,7 @@ package constants is
 	constant isra: std_logic_vector(4 downto 0) := "00110";
 
 	constant isw: std_logic_vector(4 downto 0) := "11011";
+
 	constant isw_sp: std_logic_vector(4 downto 0) := "11010";
 
 -- branch_type
