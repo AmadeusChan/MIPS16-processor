@@ -1,40 +1,38 @@
 Release 14.7 - xst P.20131013 (nt64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
---> Parameter TMPDIR set to Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/xst/projnav.tmp
+--> Parameter TMPDIR set to Y:/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.17 secs
+Total CPU time to Xst completion: 0.09 secs
  
---> Parameter xsthdpdir set to Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/xst
+--> Parameter xsthdpdir set to Y:/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.17 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
 
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-WARNING:HDLParsers:3607 - Unit work/controller is now defined in a different file.  It was defined in "//mac/home/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/controller.vhd", and is now defined in "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/controller.vhd".
-WARNING:HDLParsers:3607 - Unit work/controller/Behavioral is now defined in a different file.  It was defined in "//mac/home/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/controller.vhd", and is now defined in "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/controller.vhd".
-WARNING:HDLParsers:3607 - Unit work/constants is now defined in a different file.  It was defined in "//mac/home/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/constants.vhd", and is now defined in "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/constants.vhd".
-WARNING:HDLParsers:3607 - Unit work/constants is now defined in a different file.  It was defined in "//mac/home/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/constants.vhd", and is now defined in "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/constants.vhd".
-Compiling vhdl file "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/constants.vhd" in Library work.
-Architecture constants of Entity constants is up to date.
-Compiling vhdl file "//vmware-host/shared folders/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/src/controller.vhd" in Library work.
-Architecture behavioral of Entity controller is up to date.
+Compiling vhdl file "//mac/home/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/src/constants.vhd" in Library work.
+Package <constants> compiled.
+Package body <constants> compiled.
+Compiling vhdl file "//mac/home/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/src/controller.vhd" in Library work.
+Entity <controller> compiled.
+Entity <controller> (Architecture <Behavioral>) compiled.
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.41 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.47 secs
  
 --> 
 
-Total memory usage is 210488 kilobytes
+Total memory usage is 209692 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    5 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
