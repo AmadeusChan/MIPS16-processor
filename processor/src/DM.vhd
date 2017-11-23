@@ -53,8 +53,6 @@ end DM;
 
 architecture Behavioral of DM is
 
-	type state_type is (s0, s1);
-	signal state: state_type := s0;
 	signal rflag : std_logic := '0';		--rflag='1'代表把串口数据线（Ram1Data）置高阻，用于节省状态的控制
 
 begin
@@ -70,62 +68,56 @@ begin
 			Ram1WE <= '1';
 			Ram1Addr <= (others => '0');
 			DataOut <= (others => '0');
-			state <= s0;
-		elsif (clk'event and clk = '1') then
-			case state is
-				when s0 =>		--准备读/写 串口/内存
-					if (MemWrite = '1') then		--写
+		elsif (clk'event) then
+			if (clk = '1') then		--准备读/写 串口/内存
+				if (MemWrite = '1') then		--写
+					rflag <= '0';
+					if (AddrIn = x"BF00") then			--准备写串口
+						Ram1Data(7 downto 0) <= DataIn(7 downto 0);
+						wrn <= '0';
+					else										--准备写内存
+						Ram1Addr(15 downto 0) <= AddrIn;
+						Ram1Data <= DataIn;
+						Ram1WE <= '0';
+					end if;
+				elsif (MemRead = '1') then		--读
+					if (AddrIn = x"BF01") then 		--准备读串口状态
+						DataOut(15 downto 2) <= (others => '0');
+						DataOut(1) <= data_ready;
+						DataOut(0) <= tsre and tbre;
+						if (rflag = '0') then				--读串口状态时意味着接下来可能要读/写串口数据
+							Ram1Data <= (others => 'Z');	--故预先把ram1_data置为高阻
+							rflag <= '1';						--如果接下来要读，则可直接把rdn置'0'，省一个状态；要写，则rflag='0'，正常走写串口的流程
+						end if;	
+					elsif (AddrIn = x"BF00") then		--准备读串口数据
 						rflag <= '0';
-						if (AddrIn = x"BF00") then			--准备写串口
-							Ram1Data(7 downto 0) <= DataIn(7 downto 0);
-							wrn <= '0';
-						else										--准备写内存
-							Ram1Addr(15 downto 0) <= AddrIn;
-							Ram1Data <= DataIn;
-							Ram1WE <= '0';
-						end if;
-					elsif (MemRead = '1') then		--读
-						if (AddrIn = x"BF01") then 		--准备读串口状态
-							DataOut(15 downto 2) <= (others => '0');
-							DataOut(1) <= data_ready;
-							DataOut(0) <= tsre and tbre;
-							if (rflag = '0') then				--读串口状态时意味着接下来可能要读/写串口数据
-								Ram1Data <= (others => 'Z');	--故预先把ram1_data置为高阻
-								rflag <= '1';						--如果接下来要读，则可直接把rdn置'0'，省一个状态；要写，则rflag='0'，正常走写串口的流程
-							end if;	
-						elsif (AddrIn = x"BF00") then		--准备读串口数据
-							rflag <= '0';
-							rdn <= '0';
-						else										--准备读内存
-							Ram1Addr(15 downto 0) <= AddrIn;
-							Ram1Data <= (others => 'Z');
-							Ram1OE <= '0';
-						end if;
+						rdn <= '0';
+					else										--准备读内存
+						Ram1Addr(15 downto 0) <= AddrIn;
+						Ram1Data <= (others => 'Z');
+						Ram1OE <= '0';
 					end if;
-					state <= s1;
-				when s1 =>		--读/写 串口/内存
-					if(MemWrite = '1') then			--写
-						if (AddrIn = x"BF00") then			--写串口
-							wrn <= '1';
-						else										--写内存
-							Ram1WE <= '1';
-						end if;
-					elsif(MemRead = '1') then		--读
-						if (AddrIn = x"BF01") then			--读串口状态，已读出
-							null;
-						elsif (AddrIn = x"BF00") then 	--读串口数据
-							rdn <= '1';
-							DataOut(15 downto 8) <= (others => '0');
-							DataOut(7 downto 0) <= Ram1Data(7 downto 0);
-						else										--读内存
-							Ram1OE <= '1';
-							DataOut <= Ram1Data;
-						end if;								
+				end if;
+			elsif (clk = '0') then	--读/写 串口/内存
+				if(MemWrite = '1') then			--写
+					if (AddrIn = x"BF00") then			--写串口
+						wrn <= '1';
+					else										--写内存
+						Ram1WE <= '1';
 					end if;
-					state <= s0;
-				when others =>
-					state <= s0;
-			end case;
+				elsif(MemRead = '1') then		--读
+					if (AddrIn = x"BF01") then			--读串口状态，已读出
+						null;
+					elsif (AddrIn = x"BF00") then 	--读串口数据
+						rdn <= '1';
+						DataOut(15 downto 8) <= (others => '0');
+						DataOut(7 downto 0) <= Ram1Data(7 downto 0);
+					else										--读内存
+						Ram1OE <= '1';
+						DataOut <= Ram1Data;
+					end if;								
+				end if;
+			end if;
 		end if;
 	
 	end process;

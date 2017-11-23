@@ -49,46 +49,36 @@ end IM;
 
 architecture Behavioral of IM is
 
-	type state_type is (s0, s1);
-	signal state: state_type := s0;
-
 begin
 	
 	process(clk, rst)
 	begin
 		
 		if (rst = '0') then
-			state <= s0;
 			Ram2EN <= '0';
 			Ram2OE <= '1';
 			Ram2WE <= '1';
 			Ram2Addr <= (others => '0');
 			InstOut <= (others => '0');
-			state <= s0;
-		elsif (clk'event and clk = '1') then
-			case state is
-				when s0 =>	--×¼±¸¶Á/Ð´Ö¸Áî
-					if (MemWrite = '1') then		--Ð´
-						Ram2Addr <= AddrIn;
-						Ram2Data <= InstIn;
-						Ram2WE <= '0';
-					elsif (MemRead = '1') then		--¶Á
-						Ram2Addr <= PCIn;
-						Ram2Data <= (others => 'Z');
-						Ram2OE <= '0';
-					end if;
-					state <= s1;
-				when s1 =>	--¶Á/Ð´Ö¸Áî
-					if (MemWrite = '1') then		--Ð´
-						Ram2WE <= '1';
-					elsif (MemRead = '1') then		--¶Á
-						Ram2OE <= '1';
-						InstOut <= Ram2Data;
-					end if;
-					state <= s0;
-				when others =>
-					state <= s0;
-			end case;
+		elsif (clk'event) then
+			if (clk = '1') then		--×¼±¸¶Á/Ð´Ö¸Áî
+				if (MemWrite = '1') then		--Ð´
+					Ram2Addr <= AddrIn;
+					Ram2Data <= InstIn;
+					Ram2WE <= '0';
+				elsif (MemRead = '1') then		--¶Á
+					Ram2Addr <= PCIn;
+					Ram2Data <= (others => 'Z');
+					Ram2OE <= '0';
+				end if;
+			elsif (clk = '0') then	--¶Á/Ð´Ö¸Áî
+				if (MemWrite = '1') then		--Ð´
+					Ram2WE <= '1';
+				elsif (MemRead = '1') then		--¶Á
+					Ram2OE <= '1';
+					InstOut <= Ram2Data;
+				end if;
+			end if;
 		end if;
 		
 	end process;
