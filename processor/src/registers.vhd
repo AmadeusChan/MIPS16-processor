@@ -50,7 +50,9 @@ end registers;
 
 architecture Behavioral of registers is
 
-	signal regs: array(7 downto 0) of STD_LOGIC_VECTOR(15 downto 0);
+	type regs_type is array(7 downto 0) of std_logic_vector(15 downto 0);
+
+	signal regs: regs_type;
 	signal hi, ra, t, sp: STD_LOGIC;
 	-- signal reg_data1, reg_data2: STD_LOGIC_VECTOR(15 downto 0);
 
@@ -88,7 +90,7 @@ begin
 								sp <= write_data;
 						end case;
 				end case;
-			else 
+			end if;
 		end if;
 	end process;
 
