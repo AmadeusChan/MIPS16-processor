@@ -58,61 +58,85 @@ begin
 				tmp <= A + B;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_sub =>
 				tmp <= A - B;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_and =>
 				tmp <= A and B;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_or =>
 				tmp <= A or B;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_xor =>
 				tmp <= A xor B;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_not =>
 				tmp <= not A;
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_sll =>
 				tmp <= TO_STDLOGICVECTOR(TO_BITVECTOR(A) sll CONV_INTEGER(B));
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_srl =>
 				tmp <= TO_STDLOGICVECTOR(TO_BITVECTOR(A) srl CONV_INTEGER(B));
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_sra =>
 				tmp <= TO_STDLOGICVECTOR(TO_BITVECTOR(A) sra CONV_INTEGER(B));
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_rol =>
 				tmp <= TO_STDLOGICVECTOR(TO_BITVECTOR(A) rol CONV_INTEGER(B));
 				if (tmp = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when op_neg =>
 				tmp <= 0 - A;
 				if (A = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 			when others =>
 				tmp <= A;
 				if (A = "0000000000000000") then
 					Zero <= '1';
+				else
+					Zero <= '0';
 				end if;
 		end case;
 end process;
