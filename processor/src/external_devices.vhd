@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    14:03:24 11/22/2017 
+-- Create Date:    22:38:08 11/23/2017 
 -- Design Name: 
--- Module Name:    IF_ID_regs - Behavioral 
+-- Module Name:    external_devices - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,20 +29,32 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity IF_ID_regs is
-    Port ( bubble : in  STD_LOGIC;
-           stall : in  STD_LOGIC;
-           instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);
-           pc_in : in  STD_LOGIC_VECTOR (15 downto 0);
+entity external_devices is
+    Port ( 
+	address : in  STD_LOGIC_VECTOR (15 downto 0);
+	in_data : in  STD_LOGIC_VECTOR (15 downto 0);
+	out_data : out  STD_LOGIC_VECTOR (15 downto 0);
+	mem_en : in  STD_LOGIC;
+	mem_read : in  STD_LOGIC;
+	mem_write : in  STD_LOGIC
+	
+	-- serial port
+	data_ready : in  STD_LOGIC;
+	rdn : out  STD_LOGIC;
+	tbre : in  STD_LOGIC;
+	tsre : in  STD_LOGIC;
+	wrn : out  STD_LOGIC;
+	
+	-- VGA monitor
+	rgb: out STD_LOGIC_VECTOR(8 downto 0);
+	hs, vs: out STD_LOGIC;
+	
+	-- PS2 keyboard
+	ps2clk, ps2data: in STD_LOGIC;
+   );
+end external_devices;
 
-           instruction_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           pc_out : out  STD_LOGIC_VECTOR (15 downto 0);
-
-           clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC);
-end IF_ID_regs;
-
-architecture Behavioral of IF_ID_regs is
+architecture Behavioral of external_devices is
 
 begin
 

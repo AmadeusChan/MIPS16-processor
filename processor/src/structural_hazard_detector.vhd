@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    14:03:24 11/22/2017 
+-- Create Date:    23:03:44 11/23/2017 
 -- Design Name: 
--- Module Name:    IF_ID_regs - Behavioral 
+-- Module Name:    structural_hazard_detector - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,20 +29,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity IF_ID_regs is
-    Port ( bubble : in  STD_LOGIC;
-           stall : in  STD_LOGIC;
-           instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);
-           pc_in : in  STD_LOGIC_VECTOR (15 downto 0);
+entity structural_hazard_detector is
+    Port ( mem_write_in : in  STD_LOGIC;
+           mem_address_in : in  STD_LOGIC_VECTOR (15 downto 0);
+           mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+           if_id_bubble : out  STD_LOGIC;
+           ram2_oe : out  STD_LOGIC;
+           ram2_we : out  STD_LOGIC;
+           ram2_in_data : out  STD_LOGIC_VECTOR (15 downto 0);
+           ram2_in_address : out  STD_LOGIC_VECTOR (15 downto 0));
+end structural_hazard_detector;
 
-           instruction_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           pc_out : out  STD_LOGIC_VECTOR (15 downto 0);
-
-           clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC);
-end IF_ID_regs;
-
-architecture Behavioral of IF_ID_regs is
+architecture Behavioral of structural_hazard_detector is
 
 begin
 

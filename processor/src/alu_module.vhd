@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    14:03:24 11/22/2017 
+-- Create Date:    22:06:25 11/23/2017 
 -- Design Name: 
--- Module Name:    IF_ID_regs - Behavioral 
+-- Module Name:    alu_module - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,20 +29,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity IF_ID_regs is
-    Port ( bubble : in  STD_LOGIC;
-           stall : in  STD_LOGIC;
-           instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);
-           pc_in : in  STD_LOGIC_VECTOR (15 downto 0);
+entity alu_module is
+end alu_module;
 
-           instruction_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           pc_out : out  STD_LOGIC_VECTOR (15 downto 0);
-
-           clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC);
-end IF_ID_regs;
-
-architecture Behavioral of IF_ID_regs is
+architecture Behavioral of alu_module is
 
 begin
 
