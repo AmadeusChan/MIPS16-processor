@@ -60,7 +60,7 @@ begin
 			Ram2WE <= '1';
 			Ram2Addr <= (others => '0');
 			InstOut <= (others => '0');
-		elsif (clk'event) then
+		elsif (clk'event and MemEN = '1') then
 			if (clk = '1') then		--×¼±¸¶Á/Ð´Ö¸Áî
 				if (MemWrite = '1') then		--Ð´
 					Ram2Addr <= AddrIn;

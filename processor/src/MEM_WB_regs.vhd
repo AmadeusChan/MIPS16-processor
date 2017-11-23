@@ -46,6 +46,26 @@ architecture Behavioral of MEM_WB_regs is
 
 begin
 
+	process(clk, rst)
+	begin
+		if (rst = '0') then
+			write_back_data_out <= (others => '0');
+			write_back_reg_out <= (others => '0');
+			write_enable_out <= '0';
+		elsif (clk'event and clk = '1') then
+			if (stall = '1') then
+				null;
+			elsif (bubble = '1') then
+				write_back_data_out <= (others => '0');
+				write_back_reg_out <= (others => '0');
+				write_enable_out <= '0';
+			else
+				write_back_data_out <= write_back_data_in;
+				write_back_reg_out <= write_back_reg_in;
+				write_enable_out <= write_enable_in;
+			end if;
+		end if;
+	end process;
 
 end Behavioral;
 

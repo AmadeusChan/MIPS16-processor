@@ -56,6 +56,41 @@ architecture Behavioral of ALU_MEM_regs is
 
 begin
 
+	process(clk, rst)
+	begin
+		if (rst = '0') then
+			write_back_data_out <= (others => '0');
+			write_back_reg_out <= (others => '0');
+			reg_write_enable_out <= '0';
+			mem_data_out <= (others => '0');
+			mem_address_out <= (others => '0');
+			mem_enable_out <= '0';
+			mem_read_out <= '0';
+			mem_write_out <= '0';
+		elsif (clk'event and clk = '1') then
+			if (stall = '1') then
+				null;
+			elsif (bubble = '1') then
+				write_back_data_out <= (others => '0');
+				write_back_reg_out <= (others => '0');
+				reg_write_enable_out <= '0';
+				mem_data_out <= (others => '0');
+				mem_address_out <= (others => '0');
+				mem_enable_out <= '0';
+				mem_read_out <= '0';
+				mem_write_out <= '0';
+			else
+				write_back_data_out <= write_back_data_in;
+				write_back_reg_out <= write_back_reg_in;
+				reg_write_enable_out <= reg_write_enable_in;
+				mem_data_out <= mem_data_in;
+				mem_address_out <= mem_address_in;
+				mem_enable_out <= mem_enable_in;
+				mem_read_out <= mem_read_in;
+				mem_write_out <= mem_write_in;
+			end if;
+		end if;
+	end process;
 
 end Behavioral;
 
