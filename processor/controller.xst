@@ -1,5 +1,5 @@
-set -tmpdir "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/xst/projnav.tmp"
-set -xsthdpdir "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/xst"
+set -tmpdir "Y:/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/xst/projnav.tmp"
+set -xsthdpdir "Y:/Desktop/homework/computer_organization/big_homework/MIPS16-processor/processor/xst"
 elaborate
 -ifn controller.prj
 -ifmt mixed
