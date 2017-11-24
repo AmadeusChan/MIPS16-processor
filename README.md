@@ -50,3 +50,77 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* vector element-wise plus, sub, multiplication
 	* dot-product
 	* load/store vector registers (8, length 128)
+
+## progress
+- ALU.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- ID_forward_IF_regs.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- IF_ID_regs.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- ID_ALU_regs.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- ALU_MEM_regs.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- MEM_WB_regs.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- controller.vhd
+	* [x] implement 
+	* [] simulation
+	* [] test on FPGA
+- decoder.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- registers.vhd
+	* [x] implement 
+	* [] simulation
+	* [] test on FPGA
+- DM.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- IM.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- external_devices.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- instruction_fetch_module.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- register_module.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- RAW_hazard_detector_and_forward_unit.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- UAL_hazard_detector.vhd
+	* [x] implement 
+	* [x] simulation
+	* [] test on FPGA
+- structural_hazard_detector.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
+- processor.vhd
+	* [] implement 
+	* [] simulation
+	* [] test on FPGA
