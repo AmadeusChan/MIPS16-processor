@@ -1,0 +1,14 @@
+[Inputs]
+reg_write_enable
+mem_read
+clk
+rst
+=read_reg1[3:0]=
+=read_reg2[3:0]=
+=write_back_reg[3:0]=
+[Outputs]
+is_ual_hazard_1
+is_ual_hazard_2
+bubble
+stall
+[BiDir]
