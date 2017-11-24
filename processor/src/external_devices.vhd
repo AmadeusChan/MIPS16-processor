@@ -36,7 +36,7 @@ entity external_devices is
 	out_data : out  STD_LOGIC_VECTOR (15 downto 0);
 	mem_en : in  STD_LOGIC;
 	mem_read : in  STD_LOGIC;
-	mem_write : in  STD_LOGIC
+	mem_write : in  STD_LOGIC;
 	
 	-- serial port
 	data_ready : in  STD_LOGIC;
@@ -50,7 +50,7 @@ entity external_devices is
 	hs, vs: out STD_LOGIC;
 	
 	-- PS2 keyboard
-	ps2clk, ps2data: in STD_LOGIC;
+	ps2clk, ps2data: in STD_LOGIC
    );
 end external_devices;
 

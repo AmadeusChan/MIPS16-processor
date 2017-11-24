@@ -19,6 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 
 library work;
 use work.constants.all;
@@ -39,7 +41,7 @@ entity registers is
            write_data : in  STD_LOGIC_VECTOR (15 downto 0);
            write_enable : in  STD_LOGIC;
            forward_data1 : in  STD_LOGIC_VECTOR (15 downto 0);
-           forward_data2 : in  STD_LOGIC_VECTOR (0 downto 0);
+           forward_data2 : in  STD_LOGIC_VECTOR (15 downto 0);
            is_hazard_1 : in  STD_LOGIC;
            is_hazard_2 : in  STD_LOGIC;
            read_data1 : out  STD_LOGIC_VECTOR (15 downto 0);
@@ -53,7 +55,7 @@ architecture Behavioral of registers is
 	type regs_type is array(7 downto 0) of std_logic_vector(15 downto 0);
 
 	signal regs: regs_type;
-	signal hi, ra, t, sp: STD_LOGIC;
+	signal hi, ra, t, sp: STD_LOGIC_VECTOR(15 downto 0);
 	-- signal reg_data1, reg_data2: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
@@ -61,18 +63,18 @@ begin
 	process (clk, rst) 
 	begin
 		if rst = '0' then
-			regs(0) <= "000000000000000";
-			regs(1) <= "000000000000000";
-			regs(2) <= "000000000000000";
-			regs(3) <= "000000000000000";
-			regs(4) <= "000000000000000";
-			regs(5) <= "000000000000000";
-			regs(6) <= "000000000000000";
-			regs(7) <= "000000000000000";
-			hi <= "000000000000000";
-			ra <= "000000000000000";
-			t <= "000000000000000";
-			sp <= "000000000000000";
+			regs(0) <= (others => '0');
+			regs(1) <= (others => '0');
+			regs(2) <= (others => '0');
+			regs(3) <= (others => '0');
+			regs(4) <= (others => '0');
+			regs(5) <= (others => '0');
+			regs(6) <= (others => '0');
+			regs(7) <= (others => '0');
+			hi <= (others => '0');
+			ra <= (others => '0');
+			t <= (others => '0');
+			sp <= (others => '0');
 		elsif clk'event and clk = '0' then
 			if write_enable = enable then
 				case write_reg(3) is 
@@ -88,7 +90,11 @@ begin
 								t <= write_data;
 							when "011" => 
 								sp <= write_data;
+							when others => 
+								null;
 						end case;
+					when others =>
+						null;
 				end case;
 			end if;
 		end if;

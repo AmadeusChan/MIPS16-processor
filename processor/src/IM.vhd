@@ -37,7 +37,7 @@ entity IM is
            Ram2EN : out  STD_LOGIC;		--永远等于'0'
            Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
-			  
+
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--控制读IM的信号，='1'代表需要读
            MemWrite : in  STD_LOGIC;	--控制写IM的信号，='1'代表需要写
@@ -80,7 +80,7 @@ begin
 				end if;
 			end if;
 		end if;
-		
+
 	end process;
 
 end Behavioral;
