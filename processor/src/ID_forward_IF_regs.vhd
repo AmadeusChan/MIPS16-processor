@@ -52,6 +52,37 @@ architecture Behavioral of ID_forward_IF_regs is
 
 begin
 
+	process(rst, clk)
+	begin
+		
+		if (rst = '0') then
+			branch_target_out <= (others => '0');
+			jump_target_out <= (others => '0');
+			is_jump_out <= '0';
+			is_branch_out <= '0';
+			branch_type_out <= '0';
+			branch_relative_reg_data_out <= (others => '0');
+		elsif (clc'event and clk = '1') then
+			if (stall = '1') then
+				null;
+			elsif (bubble = '1') then
+				branch_target_out <= (others => '0');
+				jump_target_out <= (others => '0');
+				is_jump_out <= '0';
+				is_branch_out <= '0';
+				branch_type_out <= '0';
+				branch_relative_reg_data_out <= (others => '0');
+			else
+				branch_target_out <= branch_target_in;
+				jump_target_out <= jump_target_in;
+				is_jump_out <= is_jump_in;
+				is_branch_out <= is_branch_in;
+				branch_type_out <= branch_type_in;
+				branch_relative_reg_data_out <= branch_relative_reg_data_in;
+			end if;
+		end if;
+	
+	end process;
 
 end Behavioral;
 

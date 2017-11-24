@@ -48,7 +48,6 @@ entity instruction_fetch_module is
 		instruction_out, pc_out: out STD_LOGIC_VECTOR(15 downto 0)
 	);
 
-
 end instruction_fetch_module;
 
 architecture Behavioral of instruction_fetch_module is
