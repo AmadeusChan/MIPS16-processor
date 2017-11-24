@@ -86,7 +86,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] test on FPGA
 - registers.vhd
 	* [x] implement 
-	* [ ] simulation
+	* [x] simulation
 	* [ ] test on FPGA
 - DM.vhd
 	* [ ] implement 
@@ -124,3 +124,6 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] implement 
 	* [ ] simulation
 	* [ ] test on FPGA
+
+## delay estimation
+- registers.vhd: 12ns + ALU delay

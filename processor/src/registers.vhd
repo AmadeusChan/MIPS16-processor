@@ -55,7 +55,7 @@ architecture Behavioral of registers is
 	type regs_type is array(7 downto 0) of std_logic_vector(15 downto 0);
 
 	signal regs: regs_type;
-	signal hi, ra, t, sp: STD_LOGIC_VECTOR(15 downto 0);
+	signal ih, ra, t, sp: STD_LOGIC_VECTOR(15 downto 0);
 	-- signal reg_data1, reg_data2: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
@@ -71,7 +71,7 @@ begin
 			regs(5) <= (others => '0');
 			regs(6) <= (others => '0');
 			regs(7) <= (others => '0');
-			hi <= (others => '0');
+			ih <= (others => '0');
 			ra <= (others => '0');
 			t <= (others => '0');
 			sp <= (others => '0');
@@ -83,7 +83,7 @@ begin
 					when '1' => 
 						case write_reg(2 downto 0) is
 							when "000" =>
-								hi <= write_data;
+								ih <= write_data;
 							when "001" => 
 								ra <= write_data;
 							when "010" => 
@@ -100,7 +100,7 @@ begin
 		end if;
 	end process;
 
-	process (read_reg1, is_hazard_1) 
+	process (read_reg1, is_hazard_1, regs, ih, ra, t, sp) 
 	begin
 		if is_hazard_1 = '1' then
 			read_data1 <= forward_data1;
@@ -111,7 +111,7 @@ begin
 				when others => 
 					case read_reg1(2 downto 0) is
 						when "000" => 
-							read_data1 <= hi;
+							read_data1 <= ih;
 						when "001" =>
 							read_data1 <= ra;
 						when "010" => 
@@ -123,7 +123,7 @@ begin
 		end if;
 	end process;
 
-	process (read_reg2, is_hazard_2) 
+	process (read_reg2, is_hazard_2, regs, ih, ra, t, sp) 
 	begin
 		if is_hazard_2 = '1' then
 			read_data2 <= forward_data2;
@@ -134,7 +134,7 @@ begin
 				when others => 
 					case read_reg2(2 downto 0) is
 						when "000" => 
-							read_data2 <= hi;
+							read_data2 <= ih;
 						when "001" =>
 							read_data2 <= ra;
 						when "010" => 

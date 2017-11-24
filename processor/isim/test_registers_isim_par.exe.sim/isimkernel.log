@@ -1,0 +1,30 @@
+Command line:
+   test_registers_isim_par.exe
+     -simmode  gui
+     -sdfmax  /uut/=netgen/par/registers_timesim.sdf
+     -sdfroot  /uut
+     -simrunnum  0
+     -socket  49215
+
+Fri Nov 24 20:19:11 2017
+
+
+ Elaboration Time: 56.2384 sec
+
+ Current Memory Usage: 1045.2 Meg
+
+ Total Signals          : 12720
+ Total Nets             : 7798
+ Total Signal Drivers   : 7718
+ Total Blocks           : 3423
+ Total Primitive Blocks : 1812
+ Total Processes        : 7712
+ Total Traceable Variables  : 18365
+ Total Scalar Nets and Variables : 63747
+
+ Total Simulation Time: 57.7828 sec
+
+ Current Memory Usage: 730.632 Meg
+
+Fri Nov 24 20:23:18 2017
+
