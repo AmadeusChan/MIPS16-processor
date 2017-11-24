@@ -30,9 +30,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity instruction_fetch_module is
-end instruction_fetch_module;
-
-architecture Behavioral of instruction_fetch_module is
 
 	Port (
 		-- ram2
@@ -48,8 +45,12 @@ architecture Behavioral of instruction_fetch_module is
 		branch_type_in, is_branch_in, is_junp_in: in STD_LOGIC;
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
-		instruction_out, pc_out: out STD_LOGIC_VECTOR(15 downto 0);
+		instruction_out, pc_out: out STD_LOGIC_VECTOR(15 downto 0)
 	);
+
+end instruction_fetch_module;
+
+architecture Behavioral of instruction_fetch_module is
 
 begin
 

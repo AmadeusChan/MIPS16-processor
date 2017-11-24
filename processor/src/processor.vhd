@@ -96,13 +96,13 @@ architecture Behavioral of processor is
 			branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 			branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 		
-			instruction_out, pc_out: out STD_LOGIC_VECTOR(15 downto 0);
+			instruction_out, pc_out: out STD_LOGIC_VECTOR(15 downto 0)
 		);
 	end component;
 
 	signal ram2_we_to_if, ram2_oe_to_if, is_structural_hazard_to_if_tmp, is_ual_hazard_to_if_tmp: STD_LOGIC;
 	signal branch_type_tmp, is_branch_tmp, is_jump_tmp: STD_LOGIC;
-	signal branch_relative_reg_data_tmp, branch_target_tmp, jump_target_tmp, instruction_tmp, pc_from_if_tmp: in STD_LOGIC_VECTOR(15 downto 0);
+	signal branch_relative_reg_data_tmp, branch_target_tmp, jump_target_tmp, instruction_tmp, pc_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 	component register_module is
 	    Port ( instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);

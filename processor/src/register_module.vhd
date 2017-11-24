@@ -119,18 +119,18 @@ begin
 
 	controller_imp: controller
 	port map(
-		instruction => instruction_in;
-		branch_type => branch_type_out;
-		is_branch => is_branch_out;
-		is_jump => is_jump_out;
-		operand1_src => operand1_src_tmp;
-		operand2_src => operand2_src_tmp;
-		op_code => op_code_out;
-		reg_write_enable => reg_write_enable_out;
-		out_mem_write => mem_write_out;
-		out_mem_read => mem_read_out;
-		mem_enable => mem_enable_out;
-		wb_src => wb_src_out;
+		instruction => instruction_in,
+		branch_type => branch_type_out,
+		is_branch => is_branch_out,
+		is_jump => is_jump_out,
+		operand1_src => operand1_src_tmp,
+		operand2_src => operand2_src_tmp,
+		op_code => op_code_out,
+		reg_write_enable => reg_write_enable_out,
+		out_mem_write => mem_write_out,
+		out_mem_read => mem_read_out,
+		mem_enable => mem_enable_out,
+		wb_src => wb_src_out
 	);
 
 	decoder_imp: decoder 
@@ -144,19 +144,19 @@ begin
 
 	registers_imp: registers 
 	port map(
-		read_reg1 => read_reg1_tmp;
-		read_reg2 => read_reg2_tmp;
-		write_reg => write_back_reg;
-		write_data => write_back_data_in;
-		write_enable => reg_write_enable;
-		forward_data1 => forward_data_1;
-		forward_data2 => forward_data_2;
-		is_hazard_1 => is_hazard_1;
-		is_hazard_2 => is_hazard_2;
-		read_data1 => read_data1_tmp;
-		read_data2 => read_data2_tmp;
-		clk => clk;
-		rst => rst;
+		read_reg1 => read_reg1_tmp,
+		read_reg2 => read_reg2_tmp,
+		write_reg => write_back_reg,
+		write_data => write_back_data_in,
+		write_enable => reg_write_enable,
+		forward_data1 => forward_data_1,
+		forward_data2 => forward_data_2,
+		is_hazard_1 => is_hazard_1,
+		is_hazard_2 => is_hazard_2,
+		read_data1 => read_data1_tmp,
+		read_data2 => read_data2_tmp,
+		clk => clk,
+		rst => rst
 	);
 
 	cin_out <= '0';
