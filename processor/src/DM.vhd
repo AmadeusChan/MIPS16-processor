@@ -68,7 +68,7 @@ begin
 			Ram1WE <= '1';
 			Ram1Addr <= (others => '0');
 			DataOut <= (others => '0');
-		elsif (clk'event) then
+		elsif (clk'event and MemEN = '1') then
 			if (clk = '1') then		--准备读/写 串口/内存
 				if (MemWrite = '1') then		--写
 					rflag <= '0';

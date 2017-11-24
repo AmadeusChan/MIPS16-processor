@@ -46,6 +46,25 @@ architecture Behavioral of IF_ID_regs is
 
 begin
 
+	process(rst, clk)
+	begin
+	
+		if (rst = '0') then
+			instruction_out <= (others => '0');
+			pc_out <= (others => '0');
+		elsif (clk'event and clk = '1') then
+			if (stall = '1') then
+				null;
+			elsif (bubble = '1') then
+				instruction_out <= "0000100000000000";
+				pc_out <= pc_in;
+			else
+				instruction_out <= instruction_in;
+				pc_out <= pc_in;
+			end if;
+		end if;
+		
+	end process;
 
 end Behavioral;
 
