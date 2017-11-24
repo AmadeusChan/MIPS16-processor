@@ -1,0 +1,30 @@
+Command line:
+   test_structural_hazard_detector_isim_par.exe
+     -simmode  gui
+     -sdfmax  /uut/=netgen/par/structural_hazard_detector_timesim.sdf
+     -sdfroot  /uut
+     -simrunnum  0
+     -socket  49227
+
+Fri Nov 24 20:55:18 2017
+
+
+ Elaboration Time: 1.41961 sec
+
+ Current Memory Usage: 668.226 Meg
+
+ Total Signals          : 485
+ Total Nets             : 315
+ Total Signal Drivers   : 261
+ Total Blocks           : 227
+ Total Primitive Blocks : 117
+ Total Processes        : 259
+ Total Traceable Variables  : 880
+ Total Scalar Nets and Variables : 6934
+
+ Total Simulation Time: 2.63642 sec
+
+ Current Memory Usage: 668.226 Meg
+
+Fri Nov 24 20:57:38 2017
+
