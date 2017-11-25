@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/test_structural_hazard_detector_isim_par.exe" -prj "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/test_structural_hazard_detector_par.prj" "work.test_structural_hazard_detector" 
+-intstyle "ise" -incremental -o "D:/yi__c/MIPS16-processor/processor/test_DM_isim_beh.exe" -prj "D:/yi__c/MIPS16-processor/processor/test_DM_beh.prj" "work.test_DM" 

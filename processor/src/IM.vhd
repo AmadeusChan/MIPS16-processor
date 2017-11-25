@@ -60,25 +60,23 @@ begin
 			Ram2WE <= '1';
 			Ram2Addr <= (others => '0');
 			InstOut <= (others => '0');
-		elsif (rising_edge(clk) and falling_edge(clk)) then
-			if (MemEN = '1') then
-				if (clk = '1') then		--×¼±¸¶Á/Ð´Ö¸Áî
-					if (MemWrite = '1') then		--Ð´
-						Ram2Addr <= AddrIn;
-						Ram2Data <= InstIn;
-						Ram2WE <= '0';
-					elsif (MemRead = '1') then		--¶Á
-						Ram2Addr <= PCIn;
-						Ram2Data <= (others => 'Z');
-						Ram2OE <= '0';
-					end if;
-				elsif (clk = '0') then	--¶Á/Ð´Ö¸Áî
-					if (MemWrite = '1') then		--Ð´
-						Ram2WE <= '1';
-					elsif (MemRead = '1') then		--¶Á
-						Ram2OE <= '1';
-						InstOut <= Ram2Data;
-					end if;
+		elsif (MemEN = '1') then
+			if (rising_edge(clk)) then		--×¼±¸¶Á/Ð´Ö¸Áî
+				if (MemWrite = '1') then		--Ð´
+					Ram2Addr(15 downto 0) <= AddrIn;
+					Ram2Data <= InstIn;
+					Ram2WE <= '0';
+				elsif (MemRead = '1') then		--¶Á
+					Ram2Addr(15 downto 0) <= PCIn;
+					Ram2Data <= (others => 'Z');
+					Ram2OE <= '0';
+				end if;
+			elsif (falling_edge(clk)) then	--¶Á/Ð´Ö¸Áî
+				if (MemWrite = '1') then		--Ð´
+					Ram2WE <= '1';
+				elsif (MemRead = '1') then		--¶Á
+					Ram2OE <= '1';
+					InstOut <= Ram2Data;
 				end if;
 			end if;
 		end if;

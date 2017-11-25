@@ -1,8 +1,7 @@
 ISim log file
-Running: Z:\amadeus\academic_materials\Semester_Fall2017\Computer_Orgnization\projects\MIPS16-processor\processor\test_structural_hazard_detector_isim_par.exe -intstyle ise -gui -sdfmax /uut/=netgen/par/structural_hazard_detector_timesim.sdf -sdfroot /uut -tclbatch isim.cmd -wdb Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/test_structural_hazard_detector_isim_par.wdb 
+Running: D:\yi__c\MIPS16-processor\processor\test_DM_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb D:/yi__c/MIPS16-processor/processor/test_DM_isim_beh.wdb 
 ISim P.20131013 (signature 0x7708f090)
 This is a Full version of ISim.
-INFO: SDF backannotation was successful with SDF file netgen/par/structural_hazard_detector_timesim.sdf, for root module /uut/.
 Time resolution is 1 ps
 # onerror resume
 # wave add /
