@@ -129,3 +129,4 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - registers.vhd: 12ns + ALU delay
 - structural_hazard_detector.vhd: 6ns
 - RAW hazard_detector and forward unit: 10ns
+- controller: 10ns
