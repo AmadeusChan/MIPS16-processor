@@ -1,19 +1,18 @@
-Running: D:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -o D:/yi__c/MIPS16-processor/processor/test_DM_isim_beh.exe -prj D:/yi__c/MIPS16-processor/processor/test_DM_beh.prj work.test_DM 
+Running: D:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -o D:/yi__c/MIPS16-processor/processor/test_ID_forward_IF_regs_isim_beh.exe -prj D:/yi__c/MIPS16-processor/processor/test_ID_forward_IF_regs_beh.prj work.test_ID_forward_IF_regs 
 ISim P.20131013 (signature 0x7708f090)
 Number of CPUs detected in this system: 8
 Turning on mult-threading, number of parallel sub-compilation jobs: 16 
 Determining compilation order of HDL files
-Parsing VHDL file "D:/yi__c/MIPS16-processor/processor/src/DM.vhd" into library work
-Parsing VHDL file "D:/yi__c/MIPS16-processor/processor/test/test_DM.vhd" into library work
+Parsing VHDL file "D:/yi__c/MIPS16-processor/processor/src/ID_forward_IF_regs.vhd" into library work
+Parsing VHDL file "D:/yi__c/MIPS16-processor/processor/test/test_ID_forward_IF_regs.vhd" into library work
 Starting static elaboration
 Completed static elaboration
 Compiling package standard
 Compiling package std_logic_1164
-Compiling architecture behavioral of entity DM [dm_default]
-Compiling architecture behavior of entity test_dm
+Compiling architecture behavioral of entity ID_forward_IF_regs [id_forward_if_regs_default]
+Compiling architecture behavior of entity test_id_forward_if_regs
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
 Compiled 5 VHDL Units
-Built simulation executable D:/yi__c/MIPS16-processor/processor/test_DM_isim_beh.exe
-Fuse Memory Usage: 29916 KB
+Built simulation executable D:/yi__c/MIPS16-processor/processor/test_ID_forward_IF_regs_isim_beh.exe
+Fuse Memory Usage: 29168 KB
 Fuse CPU Usage: 406 ms

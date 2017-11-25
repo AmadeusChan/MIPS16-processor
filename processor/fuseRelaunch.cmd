@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "D:/yi__c/MIPS16-processor/processor/test_DM_isim_beh.exe" -prj "D:/yi__c/MIPS16-processor/processor/test_DM_beh.prj" "work.test_DM" 
+-intstyle "ise" -incremental -o "D:/yi__c/MIPS16-processor/processor/test_ID_forward_IF_regs_isim_beh.exe" -prj "D:/yi__c/MIPS16-processor/processor/test_ID_forward_IF_regs_beh.prj" "work.test_ID_forward_IF_regs" 
