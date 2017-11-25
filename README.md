@@ -78,7 +78,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] test on FPGA
 - controller.vhd
 	* [x] implement 
-	* [ ] simulation
+	* [x] simulation
 	* [ ] test on FPGA
 - decoder.vhd
 	* [ ] implement 

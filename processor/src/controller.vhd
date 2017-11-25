@@ -143,7 +143,7 @@ begin
 					when "00100" => operand2_src <= operand2_from_reg_1;
 					when others => operand2_src <= operand2_from_reg_2;
 				end case;
-			when iaddiu | iaddiu3 | iaddsp | iaddsp3 | ilw | ilw_sp | isll | isw =>
+			when iaddiu | iaddiu3 | iaddsp | iaddsp3 | ilw | ilw_sp | isll | isw | isw_sp =>
 				operand2_src <= operand2_from_immediate;
 			when others => 
 				operand2_src <= operand2_from_reg_2;
