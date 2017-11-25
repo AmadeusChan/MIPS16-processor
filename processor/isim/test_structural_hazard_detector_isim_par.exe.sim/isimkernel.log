@@ -4,14 +4,14 @@ Command line:
      -sdfmax  /uut/=netgen/par/structural_hazard_detector_timesim.sdf
      -sdfroot  /uut
      -simrunnum  0
-     -socket  49227
+     -socket  49177
 
-Fri Nov 24 20:55:18 2017
+Sat Nov 25 14:03:40 2017
 
 
- Elaboration Time: 1.41961 sec
+ Elaboration Time: 1.34161 sec
 
- Current Memory Usage: 668.226 Meg
+ Current Memory Usage: 671.666 Meg
 
  Total Signals          : 485
  Total Nets             : 315
@@ -22,9 +22,9 @@ Fri Nov 24 20:55:18 2017
  Total Traceable Variables  : 880
  Total Scalar Nets and Variables : 6934
 
- Total Simulation Time: 2.63642 sec
+ Total Simulation Time: 1.45081 sec
 
- Current Memory Usage: 668.226 Meg
+ Current Memory Usage: 986.239 Meg
 
-Fri Nov 24 20:57:38 2017
+Sat Nov 25 14:04:18 2017
 
