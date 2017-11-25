@@ -40,8 +40,8 @@ entity UAL_hazard_detector is
            mem_read : in  STD_LOGIC;
     	     clk, rst: in STD_LOGIC;
 
-           is_ual_hazard_1 : out  STD_LOGIC;
-           is_ual_hazard_2 : out  STD_LOGIC;
+           --is_ual_hazard_1 : out  STD_LOGIC;
+           --is_ual_hazard_2 : out  STD_LOGIC;
            bubble : out  STD_LOGIC;
            stall : out  STD_LOGIC
    );
@@ -60,19 +60,19 @@ begin
 	begin
 		if rst = '0' then
 			state <= detecting;
-			is_ual_hazard_1 <= '0';
-			is_ual_hazard_2 <= '0';
+			--is_ual_hazard_1 <= '0';
+			--is_ual_hazard_2 <= '0';
 		elsif clk'event and clk = '1' then 
 			if state = detecting then
 				if is_ual_hazard_1_tmp = '1' or is_ual_hazard_2_tmp = '1' then
 					state <= detected;
-					is_ual_hazard_1 <= is_ual_hazard_1_tmp;
-					is_ual_hazard_2 <= is_ual_hazard_2_tmp;
+					--is_ual_hazard_1 <= is_ual_hazard_1_tmp;
+					--is_ual_hazard_2 <= is_ual_hazard_2_tmp;
 				end if;
 			else 
 				state <= detecting;
-				is_ual_hazard_1 <= '0';
-				is_ual_hazard_2 <= '0';
+				--is_ual_hazard_1 <= '0';
+				--is_ual_hazard_2 <= '0';
 			end if;
 		end if;
 	end process;

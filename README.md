@@ -109,8 +109,8 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] simulation
 	* [ ] test on FPGA
 - RAW_hazard_detector_and_forward_unit.vhd
-	* [ ] implement 
-	* [ ] simulation
+	* [x] implement 
+	* [x] simulation
 	* [ ] test on FPGA
 - UAL_hazard_detector.vhd
 	* [x] implement 
@@ -128,3 +128,4 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 ## delay estimation
 - registers.vhd: 12ns + ALU delay
 - structural_hazard_detector.vhd: 6ns
+- RAW hazard_detector and forward unit: 10ns

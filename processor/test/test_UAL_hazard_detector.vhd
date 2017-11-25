@@ -48,8 +48,8 @@ ARCHITECTURE behavior OF test_UAL_hazard_detector IS
          mem_read : IN  std_logic;
          clk : IN  std_logic;
          rst : IN  std_logic;
-         is_ual_hazard_1 : OUT  std_logic;
-         is_ual_hazard_2 : OUT  std_logic;
+         --is_ual_hazard_1 : OUT  std_logic;
+         --is_ual_hazard_2 : OUT  std_logic;
          bubble : OUT  std_logic;
          stall : OUT  std_logic
         );
@@ -85,8 +85,8 @@ BEGIN
           mem_read => mem_read,
           clk => clk,
           rst => rst,
-          is_ual_hazard_1 => is_ual_hazard_1,
-          is_ual_hazard_2 => is_ual_hazard_2,
+          --is_ual_hazard_1 => is_ual_hazard_1,
+          --is_ual_hazard_2 => is_ual_hazard_2,
           bubble => bubble,
           stall => stall
         );
