@@ -49,7 +49,9 @@ entity instruction_fetch_module is
 		branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
-		pc_out: out STD_LOGIC_VECTOR(15 downto 0)
+		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
+		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
+		clk, rst: in STD_LOGIC
 	);
 
 end instruction_fetch_module;
@@ -57,44 +59,73 @@ end instruction_fetch_module;
 architecture Behavioral of instruction_fetch_module is
 
 	signal pc_in: STD_LOGIC_VECTOR(15 downto 0);
+	signal instruction_in: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
 
 	ram2_en_out <= '1';
 	
-	process(pc_out)
-	begin
-		pc_in <= pc_out;
-	end process;
-	
-	process(is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in)
+	process(pc_out, is_structural_hazard_in, is_ual_hazard_in)
 	begin
 		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
+			pc_in <= pc_out;
+		else
+			pc_in <= pc_out + '1';
+		end if;
+	end process;	
+	
+	process(pc_in, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
+	begin
+		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
+			instruction_in <= pc_in;
 			ram2_we_out <= '0';
 			ram2_oe_out <= '0';
 		elsif (is_jump_in = '1') then
-			pc_out <= jump_target_in;
+			instruction_in <= jump_target_in;
 			ram2_we_out <= '0';
 			ram2_oe_out <= '0';
 		elsif (is_branch_in = '1') then
 			case branch_type_in is
 				when equal_branch =>
 					if (branch_relative_reg_data_in = x"0000") then
-						pc_out <= pc_in + branch_target_in;
+						instruction_in <= branch_target_in;
 						ram2_we_out <= '0';
 						ram2_oe_out <= '0';
+					else
+						instruction_in <= pc_in;
+						ram2_oe_out <= ram2_oe_in;
+						ram2_we_out <= ram2_we_in;
 					end if;
 				when not_equal_branch =>
 					if (branch_relative_reg_data_in = x"0001") then
-						pc_out <= pc_in + branch_target_in;
+						instruction_in <= branch_target_in;
 						ram2_we_out <= '0';
 						ram2_oe_out <= '0';
+					else
+						instruction_in <= pc_in;
+						ram2_oe_out <= ram2_oe_in;
+						ram2_we_out <= ram2_we_in;
 					end if;
+				when others =>
+					instruction_in <= pc_in;
+					ram2_oe_out <= ram2_oe_in;
+					ram2_we_out <= ram2_we_in;
 			end case;
 		else
-			pc_out <= pc_in + 1;
+			instruction_in <= pc_in;
 			ram2_oe_out <= ram2_oe_in;
 			ram2_we_out <= ram2_we_in;
+		end if;
+	end process;
+	
+	process(clk, rst)
+	begin
+		if (rst = '0') then
+			pc_out <= (others => '0');
+			instruction_out <= (others => '0');
+		elsif (clk'event and clk = '1') then
+			pc_out <= pc_in;
+			instruction_out <= instruction_in;
 		end if;
 	end process;
 

@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "D:/yi__c/MIPS16-processor/processor/test_instruction_fetch_module_isim_beh.exe" -prj "D:/yi__c/MIPS16-processor/processor/test_instruction_fetch_module_beh.prj" "work.test_instruction_fetch_module" 

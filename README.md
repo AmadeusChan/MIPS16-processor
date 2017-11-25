@@ -102,7 +102,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] test on FPGA
 - instruction_fetch_module.vhd
 	* [x] implement 
-	* [ ] simulation
+	* [x] simulation
 	* [ ] test on FPGA
 - register_module.vhd
 	* [ ] implement 
