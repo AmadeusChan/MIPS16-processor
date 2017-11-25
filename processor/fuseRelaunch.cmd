@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/test_decoder_isim_par.exe" -prj "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/test_decoder_par.prj" "work.test_decoder" 

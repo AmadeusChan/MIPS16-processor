@@ -47,7 +47,7 @@ begin
 	process (instruction)
 	begin
 		case instruction(15 downto 11) is
-			when iaddiu | iaddiu3 | iaddu | iand | ibeqz | ibnez | ilw | isw | isw_sp =>
+			when iaddiu | iaddiu3 | iaddu | iand | ibeqz | ibnez | ilw | isw_sp =>
 				read_reg_1 <= '0' & instruction(10 downto 8);
 			when imtih =>
 				case instruction(7 downto 0) is
@@ -56,6 +56,8 @@ begin
 					when others => 
 						read_reg_1 <= "1000";
 				end case;
+			when isw => 
+				read_reg_1 <= '0' & instruction(7 downto 5);
 			when imtsp => 
 				case instruction(10 downto 8) is 
 					when "100" => 
@@ -67,13 +69,17 @@ begin
 					when others => 
 						read_reg_1 <= "1011";
 				end case;
+			when imove => 
+				read_reg_1 <= '0' & instruction(7 downto 5);
 			when others => 
 				read_reg_1 <= "1011";
 		end case;
 	end process;
 
 	-- read_reg_2
-	read_reg_2 <= '0' & instruction(7 downto 5);
+	read_reg_2 <= "1011" when (instruction(15 downto 8) = "01100010" or instruction(15 downto 11) = "11010") else
+	'0' & instruction(10 downto 8) when (instruction(15 downto 11) = "11011") else
+	'0' & instruction(7 downto 5);
 
 	-- immediate
 	process (instruction) 
@@ -94,6 +100,13 @@ begin
 			when iaddiu3 => 
 				immediate <= instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3) & instruction(3 downto 0);
 			-- 3-bit
+			when isll => 
+				case instruction(4 downto 2) is
+					when "000" =>
+						immediate <= "0000000000001000";
+					when others => 
+						immediate <= instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4 downto 2);
+				end case;
 			when others =>
 				immediate <= instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4) & instruction(4 downto 2);
 		end case;

@@ -120,8 +120,17 @@ begin
 	process (instruction)
 	begin
 		case instruction(15 downto 11) is
-			when iaddiu | iaddiu3 | iaddsp3 | iaddsp | iaddu | ilw | ilw_sp | isw | isw_sp =>
+			when iaddiu | iaddiu3 | iaddsp3 | iaddu | ilw | ilw_sp =>
 				operand1_src <= from_reg_1;
+			when iaddsp => 
+				case instruction(10 downto 8) is
+					when "010" => 
+						operand1_src <= from_reg_2;
+					when others =>
+						operand1_src <= from_reg_1;
+				end case;
+			when isw | isw_sp => 
+				operand1_src <= from_reg_2;
 			when iand =>
 				case instruction(4 downto 0) is
 					when "01100" | "01010" | "01101" =>

@@ -77,7 +77,126 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
       wait for 20 ns;	
-		instruction <= "0100111010101010";
+		
+		-- addiu
+		instruction <= "0100101010001000";
+		wait for 20ns;
+		
+		-- addiu3
+		instruction <= "0100000101001010";
+		wait for 20ns;
+		
+		-- addsp3
+		instruction <= "0000011101010101";
+		wait for 20ns;
+		
+		-- addsp
+		instruction <= "0110001110100101";
+		wait for 20ns;
+		
+		-- addu
+		instruction <= "1110000101011001";
+		wait for 20ns;
+		
+		-- and
+		instruction <= "1110110101001100";
+		wait for 20ns;
+		
+		-- b
+		instruction <= "0001001011010101";
+		wait for 20ns;
+		
+		-- beqz
+		instruction <= "0010001000000001";
+		wait for 20ns;
+		
+		-- bnez
+		instruction <= "0010110010010011";
+		wait for 20ns;
+		
+		-- bteqz
+		instruction <= "0110000010101010";
+		wait for 20ns;
+		
+		-- btnez
+		instruction <= "0110000110100101";
+		wait for 20ns;
+		
+		-- cmp
+		instruction <= "1110101111001010";
+		wait for 20ns;
+		
+		-- jr
+		instruction <= "1110111000000000";
+		wait for 20ns;
+		
+		-- li
+		instruction <= "0110110111100011";
+		wait for 20ns;
+		
+		-- lw
+		instruction <= "1001110110101010";
+		wait for 20ns;
+		
+		-- lw_sp
+		instruction <= "1001010010010000";
+		wait for 20ns;
+		
+		-- mfih
+		instruction <= "1111011100000000";
+		wait for 20ns;
+		
+		-- mfpc
+		instruction <= "1110101101000000";
+		wait for 20ns;
+		
+		-- move
+		instruction <= "0111101111000000";
+		wait for 20ns;
+		
+		--mtih
+		instruction <= "1111001100000001";
+		wait for 20ns;
+		
+		-- mtsp
+		instruction <= "0110010010000000";
+		wait for 20ns;
+		
+		-- nop
+		instruction <= "0000100000000000";
+		wait for 20ns;
+
+		-- or
+		instruction <= "1110101111001101";
+		wait for 20ns;
+		
+		-- sll
+		instruction <= "0011011110100000";
+		wait for 20ns;
+		
+		-- sllv
+		instruction <= "1110101001100100";
+		wait for 20ns;
+		
+		-- sra
+		instruction <= "0011001101100011";
+		wait for 20ns;
+		
+		-- subu
+		instruction <= "1110011011011011";
+		wait for 20ns;
+		
+		-- sw
+		instruction <= "1101111011100000";
+		wait for 20ns;
+		
+		-- sw_rs
+		instruction <= "0110001010101010";
+		wait for 20ns;
+		
+		-- sw_sp
+		instruction <= "1101001101101100";
+		wait for 20ns;
 
       -- insert stimulus here 
 
