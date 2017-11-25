@@ -78,7 +78,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [ ] test on FPGA
 - controller.vhd
 	* [x] implement 
-	* [ ] simulation
+	* [x] simulation
 	* [ ] test on FPGA
 - decoder.vhd
 	* [x] implement 
@@ -105,8 +105,8 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [x] simulation
 	* [ ] test on FPGA
 - register_module.vhd
-	* [ ] implement 
-	* [ ] simulation
+	* [x] implement 
+	* [x] simulation
 	* [ ] test on FPGA
 - RAW_hazard_detector_and_forward_unit.vhd
 	* [x] implement 
@@ -131,3 +131,4 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - RAW hazard_detector and forward unit: 10ns
 - controller: 10ns
 - decoder: 10ns
+- register_module: 11ns for control signal
