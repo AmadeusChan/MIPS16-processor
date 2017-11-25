@@ -121,6 +121,54 @@
       <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="2"/>
       <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="275"/>
     </file>
+    <file xil_pn:name="test/test_MEM_WB_regs.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="56"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="56"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="56"/>
+    </file>
+    <file xil_pn:name="test/test_ALU_MEM_regs.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="60"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="60"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="60"/>
+    </file>
+    <file xil_pn:name="test/test_ID_ALU_regs.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="67"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="67"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="67"/>
+    </file>
+    <file xil_pn:name="test/test_IF_ID_regs.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="73"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="73"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="73"/>
+    </file>
+    <file xil_pn:name="test/test_ID_forward_IF_regs.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="78"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="78"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="78"/>
+    </file>
+    <file xil_pn:name="test/test_DM.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
+    </file>
+    <file xil_pn:name="test/test_IM.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
+    </file>
+    <file xil_pn:name="test/test_registers.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
+    </file>
+    <file xil_pn:name="test/test_instruction_fetch_module.vhd" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
+      <association xil_pn:name="PostMapSimulation" xil_pn:seqID="62"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="62"/>
+      <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="62"/>
+    </file>
   </files>
 
   <properties>
