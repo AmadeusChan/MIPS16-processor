@@ -62,7 +62,7 @@ begin
 			is_branch_out <= '0';
 			branch_type_out <= '0';
 			branch_relative_reg_data_out <= (others => '0');
-		elsif (clc'event and clk = '1') then
+		elsif (clk'event and clk = '1') then
 			if (stall = '1') then
 				null;
 			elsif (bubble = '1') then

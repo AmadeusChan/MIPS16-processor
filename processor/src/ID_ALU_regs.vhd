@@ -82,7 +82,7 @@ begin
 			op_code_out <= (others => '0');
 			operand1_out <= (others => '0');
 			operand2_out <= (others => '0');
-			cin_out <= (others => '0');
+			cin_out <= '0';
 			mem_enable_out <= '0';
 			mem_read_out <= '0';
 			mem_write_out <= '0';
@@ -90,7 +90,7 @@ begin
 			if (stall = '1') then
 				null;
 			elsif (bubble = '1') then
-				pc_out <= (others => '0');
+				pc_out <= pc_in;
 				wb_src_out <= (others => '1');
 				mem_data_from_reg_out <= (others => '0');
 				wb_data_from_reg_out <= (others => '0');
@@ -100,7 +100,7 @@ begin
 				op_code_out <= (others => '0');
 				operand1_out <= (others => '0');
 				operand2_out <= (others => '0');
-				cin_out <= (others => '0');
+				cin_out <= '0';
 				mem_enable_out <= '0';
 				mem_read_out <= '0';
 				mem_write_out <= '0';
