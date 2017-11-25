@@ -62,7 +62,7 @@ begin
 			InstOut <= (others => '0');
 		elsif (MemEN = '1') then
 			if (rising_edge(clk)) then		--×¼±¸¶Á/Ð´Ö¸Áî
-				if (MemWrite = '1') then		--Ð´
+				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
 					Ram2Addr(15 downto 0) <= AddrIn;
 					Ram2Data <= InstIn;
 					Ram2WE <= '0';
@@ -72,7 +72,7 @@ begin
 					Ram2OE <= '0';
 				end if;
 			elsif (falling_edge(clk)) then	--¶Á/Ð´Ö¸Áî
-				if (MemWrite = '1') then		--Ð´
+				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
 					Ram2WE <= '1';
 				elsif (MemRead = '1') then		--¶Á
 					Ram2OE <= '1';

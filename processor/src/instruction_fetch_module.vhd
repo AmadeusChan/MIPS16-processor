@@ -49,6 +49,8 @@ entity instruction_fetch_module is
 		branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
+		addr_in: in STD_LOGIC_VECTOR(15 downto 0); --write back输入信号
+	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
 		clk, rst: in STD_LOGIC
@@ -58,12 +60,48 @@ end instruction_fetch_module;
 
 architecture Behavioral of instruction_fetch_module is
 
-	signal pc_in: STD_LOGIC_VECTOR(15 downto 0);
-	signal instruction_in: STD_LOGIC_VECTOR(15 downto 0);
+	signal ram2_en_in: STD_LOGIC := '1';
+	signal pc_in: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+	signal instruction_in: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+	
+	component IM
+		port(clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           Ram2OE : out  STD_LOGIC;
+           Ram2WE : out  STD_LOGIC;
+           Ram2EN : out  STD_LOGIC;		--永远等于'0'
+           Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
+           Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
+
+           MemEN : in  STD_LOGIC;
+           MemRead : in  STD_LOGIC;		--控制读IM的信号，='1'代表需要读
+           MemWrite : in  STD_LOGIC;	--控制写IM的信号，='1'代表需要写
+           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--读IM时，地址输入
+           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写IM时，地址输入
+           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写内存时，要写入IM的数据
+           InstOut : out  STD_LOGIC_VECTOR (15 downto 0)
+		);
+	end component;
 
 begin
 
-	ram2_en_out <= '1';
+	u : IM
+	port map(clk => clk,
+				rst => rst,
+				Ram2OE => ram2_oe_out,
+				Ram2WE => ram2_we_out,
+				Ram2EN => ram2_en_out,
+				Ram2Addr => ram2_addr_out,
+				Ram2Data => ram2_data_out,
+				
+				MemEN => ram2_en_in,
+				MemRead => ram2_oe_in,
+				MemWrite => ram2_we_in,
+				PCIn => pc_in,
+				AddrIn => addr_in,
+				InstIn => instruction_in,
+				InstOut => instruction_out
+	);
 	
 	process(pc_out, is_structural_hazard_in, is_ual_hazard_in)
 	begin
@@ -78,43 +116,27 @@ begin
 	begin
 		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 			instruction_in <= pc_in;
-			ram2_we_out <= '0';
-			ram2_oe_out <= '0';
 		elsif (is_jump_in = '1') then
 			instruction_in <= jump_target_in;
-			ram2_we_out <= '0';
-			ram2_oe_out <= '0';
 		elsif (is_branch_in = '1') then
 			case branch_type_in is
 				when equal_branch =>
 					if (branch_relative_reg_data_in = x"0000") then
 						instruction_in <= branch_target_in;
-						ram2_we_out <= '0';
-						ram2_oe_out <= '0';
 					else
 						instruction_in <= pc_in;
-						ram2_oe_out <= ram2_oe_in;
-						ram2_we_out <= ram2_we_in;
 					end if;
 				when not_equal_branch =>
 					if (branch_relative_reg_data_in = x"0001") then
 						instruction_in <= branch_target_in;
-						ram2_we_out <= '0';
-						ram2_oe_out <= '0';
 					else
 						instruction_in <= pc_in;
-						ram2_oe_out <= ram2_oe_in;
-						ram2_we_out <= ram2_we_in;
 					end if;
 				when others =>
 					instruction_in <= pc_in;
-					ram2_oe_out <= ram2_oe_in;
-					ram2_we_out <= ram2_we_in;
 			end case;
 		else
 			instruction_in <= pc_in;
-			ram2_oe_out <= ram2_oe_in;
-			ram2_we_out <= ram2_we_in;
 		end if;
 	end process;
 	
@@ -122,10 +144,8 @@ begin
 	begin
 		if (rst = '0') then
 			pc_out <= (others => '0');
-			instruction_out <= (others => '0');
 		elsif (clk'event and clk = '1') then
 			pc_out <= pc_in;
-			instruction_out <= instruction_in;
 		end if;
 	end process;
 

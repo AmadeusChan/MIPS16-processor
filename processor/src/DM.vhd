@@ -75,7 +75,7 @@ begin
 					if (AddrIn = x"BF00") then			--准备写串口
 						Ram1Data(7 downto 0) <= DataIn(7 downto 0);
 						wrn <= '0';
-					else										--准备写内存
+					elsif (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then	--准备写内存
 						Ram1Addr(15 downto 0) <= AddrIn;
 						Ram1Data <= DataIn;
 						Ram1WE <= '0';
@@ -92,7 +92,7 @@ begin
 					elsif (AddrIn = x"BF00") then		--准备读串口数据
 						rflag <= '0';
 						rdn <= '0';
-					else										--准备读内存
+					elsif (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then	--准备读内存
 						Ram1Addr(15 downto 0) <= AddrIn;
 						Ram1Data <= (others => 'Z');
 						Ram1OE <= '0';
@@ -102,7 +102,7 @@ begin
 				if(MemWrite = '1') then			--写
 					if (AddrIn = x"BF00") then			--写串口
 						wrn <= '1';
-					else										--写内存
+					elsif (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then	--写内存
 						Ram1WE <= '1';
 					end if;
 				elsif(MemRead = '1') then		--读
@@ -112,7 +112,7 @@ begin
 						rdn <= '1';
 						DataOut(15 downto 8) <= (others => '0');
 						DataOut(7 downto 0) <= Ram1Data(7 downto 0);
-					else										--读内存
+					elsif (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then	--读内存
 						Ram1OE <= '1';
 						DataOut <= Ram1Data;
 					end if;								
