@@ -45,50 +45,36 @@ entity IM is
            AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写IM时，地址输入
            InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写内存时，要写入IM的数据
            InstOut : out  STD_LOGIC_VECTOR (15 downto 0));	--读IM时，读出的指令
+			  
 end IM;
 
 architecture Behavioral of IM is
-
-begin
-
-	Ram2OE <= '0';
-	Ram2WE <= '0';
-	Ram2EN <= '0';
-	Ram2Addr <= (others => '0');
-	Ram2Data <= (others => 'Z');
-	InstOut <= (others => '0');
 	
---	process(clk, rst)
---	begin
---		
---		if (rst = '0') then
---			Ram2EN <= '0';
---			Ram2OE <= '1';
---			Ram2WE <= '1';
---			Ram2Addr <= (others => '0');
---			InstOut <= (others => '0');
---		elsif (MemEN = '1') then
---			if (rising_edge(clk)) then		--准备读/写指令
---				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--写
---					Ram2Addr(15 downto 0) <= AddrIn;
---					Ram2Data <= InstIn;
---					Ram2WE <= '0';
---				elsif (MemRead = '1') then		--读
---					Ram2Addr(15 downto 0) <= PCIn;
---					Ram2Data <= (others => 'Z');
---					Ram2OE <= '0';
---				end if;
---			elsif (falling_edge(clk)) then	--读/写指令
---				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--写
---					Ram2WE <= '1';
---				elsif (MemRead = '1') then		--读
---					Ram2OE <= '1';
---					InstOut <= Ram2Data;
---				end if;
---			end if;
---		end if;
---
---	end process;
+begin
+	
+	process(clk, rst, MemWrite, MemRead)
+	begin
+		
+		if (rst = '0') then
+			Ram2EN <= '0';
+			Ram2OE <= '1';
+			Ram2WE <= '1';
+			Ram2Addr <= (others => '0');
+			InstOut <= (others => '0');			
+		elsif (MemEn = '1') then
+			Ram2WE <= not clk or not MemWrite;
+			Ram2OE <= not clk or not MemRead;
+			if (MemWrite = '1' and AddrIn <= x"7FFF") then	--write
+				Ram2Addr(15 downto 0) <= AddrIn;
+				Ram2Data <= InstIn;
+			elsif (MemRead = '1') then								--read
+				Ram2Addr(15 downto 0) <= PCIn;
+				Ram2Data <= (others => 'Z');
+				InstOut <= Ram2Data;
+			end if;
+		end if;
+
+	end process;
 
 end Behavioral;
 

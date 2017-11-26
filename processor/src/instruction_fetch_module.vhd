@@ -49,8 +49,7 @@ entity instruction_fetch_module is
 		branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
-		addr_in: in STD_LOGIC_VECTOR(15 downto 0); --write back�����ź�
-		data_in: in STD_LOGIC_VECTOR(15 downto 0);
+		addr_in, data_in: in STD_LOGIC_VECTOR(15 downto 0); --write back signals
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
@@ -63,23 +62,22 @@ architecture Behavioral of instruction_fetch_module is
 
 	signal ram2_en_in: STD_LOGIC := '1';
 	signal pc_in: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
-	signal instruction_in: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 	
 	component IM
 		port(clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            Ram2OE : out  STD_LOGIC;
            Ram2WE : out  STD_LOGIC;
-           Ram2EN : out  STD_LOGIC;		--��Զ����'0'
+           Ram2EN : out  STD_LOGIC;		--always set to '0'
            Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
 
            MemEN : in  STD_LOGIC;
-           MemRead : in  STD_LOGIC;		--���ƶ�IM���źţ�='1'������Ҫ��
-           MemWrite : in  STD_LOGIC;	--����дIM���źţ�='1'������Ҫд
-           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--��IMʱ����ַ����
-           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--дIMʱ����ַ����
-           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--д�ڴ�ʱ��Ҫд��IM������
+           MemRead : in  STD_LOGIC;		--read IM signal, '1' for read 
+           MemWrite : in  STD_LOGIC;	--write IM signal, '1' for write 
+           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--address when fetch instruction from IM
+           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--address when write IM
+           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--data when write IM
            InstOut : out  STD_LOGIC_VECTOR (15 downto 0)
 		);
 	end component;
@@ -100,44 +98,35 @@ begin
 				MemWrite => ram2_we_in,
 				PCIn => pc_in,
 				AddrIn => addr_in,
-				InstIn => instruction_in,
+				InstIn => data_in,
 				InstOut => instruction_out
-	);
+	);	
 	
-	process(pc_out, is_structural_hazard_in, is_ual_hazard_in)
+	process(pc_out, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
 	begin
 		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 			pc_in <= pc_out;
-		else
-			pc_in <= pc_out + '1';
-		end if;
-	end process;	
-	
-	process(pc_in, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
-	begin
-		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
-			instruction_in <= pc_in;
 		elsif (is_jump_in = '1') then
-			instruction_in <= jump_target_in;
+			pc_in <= jump_target_in;
 		elsif (is_branch_in = '1') then
 			case branch_type_in is
 				when equal_branch =>
 					if (branch_relative_reg_data_in = x"0000") then
-						instruction_in <= branch_target_in;
+						pc_in <= branch_target_in;
 					else
-						instruction_in <= pc_in;
+						pc_in <= pc_out + '1';
 					end if;
 				when not_equal_branch =>
 					if (branch_relative_reg_data_in = x"0001") then
-						instruction_in <= branch_target_in;
+						pc_in <= branch_target_in;
 					else
-						instruction_in <= pc_in;
+						pc_in <= pc_out + '1';
 					end if;
 				when others =>
-					instruction_in <= pc_in;
+					pc_in <= pc_out + '1';
 			end case;
 		else
-			instruction_in <= pc_in;
+			pc_in <= pc_out + '1';
 		end if;
 	end process;
 	
