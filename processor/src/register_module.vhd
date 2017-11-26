@@ -65,6 +65,8 @@ entity register_module is
            mem_enable_out : out  STD_LOGIC;
            mem_read_out : out  STD_LOGIC;
            mem_write_out : out  STD_LOGIC;
+
+		   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
 	   
 	   clk, rst: in STD_LOGIC);
 end register_module;
@@ -120,6 +122,9 @@ architecture Behavioral of register_module is
 	signal operand2_src_tmp: STD_LOGIC_VECTOR(1 downto 0);
 
 begin 
+
+	read_reg_1_out <= read_reg1_tmp;
+	read_reg_2_out <= read_reg2_tmp;
 
 	controller_imp: controller
 	port map(

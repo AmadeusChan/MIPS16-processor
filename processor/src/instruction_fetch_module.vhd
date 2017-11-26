@@ -49,7 +49,8 @@ entity instruction_fetch_module is
 		branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
-		addr_in: in STD_LOGIC_VECTOR(15 downto 0); --write backÊäÈëÐÅºÅ
+		addr_in: in STD_LOGIC_VECTOR(15 downto 0); --write backï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½
+		data_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
@@ -69,16 +70,16 @@ architecture Behavioral of instruction_fetch_module is
            rst : in  STD_LOGIC;
            Ram2OE : out  STD_LOGIC;
            Ram2WE : out  STD_LOGIC;
-           Ram2EN : out  STD_LOGIC;		--ÓÀÔ¶µÈÓÚ'0'
+           Ram2EN : out  STD_LOGIC;		--ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½'0'
            Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
 
            MemEN : in  STD_LOGIC;
-           MemRead : in  STD_LOGIC;		--¿ØÖÆ¶ÁIMµÄÐÅºÅ£¬='1'´ú±íÐèÒª¶Á
-           MemWrite : in  STD_LOGIC;	--¿ØÖÆÐ´IMµÄÐÅºÅ£¬='1'´ú±íÐèÒªÐ´
-           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--¶ÁIMÊ±£¬µØÖ·ÊäÈë
-           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--Ð´IMÊ±£¬µØÖ·ÊäÈë
-           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--Ð´ÄÚ´æÊ±£¬ÒªÐ´ÈëIMµÄÊý¾Ý
+           MemRead : in  STD_LOGIC;		--ï¿½ï¿½ï¿½Æ¶ï¿½IMï¿½ï¿½ï¿½ÅºÅ£ï¿½='1'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½
+           MemWrite : in  STD_LOGIC;	--ï¿½ï¿½ï¿½ï¿½Ð´IMï¿½ï¿½ï¿½ÅºÅ£ï¿½='1'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÐ´
+           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--ï¿½ï¿½IMÊ±ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
+           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--Ð´IMÊ±ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
+           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--Ð´ï¿½Ú´ï¿½Ê±ï¿½ï¿½ÒªÐ´ï¿½ï¿½IMï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
            InstOut : out  STD_LOGIC_VECTOR (15 downto 0)
 		);
 	end component;

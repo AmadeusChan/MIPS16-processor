@@ -19,7 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL; 
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 library work;
@@ -40,7 +40,7 @@ entity processor is
 	rst : in  STD_LOGIC;
 	clk_serial_port : in  STD_LOGIC; -- 11.0592 MHz
 	clk_manual : in  STD_LOGIC;
-	switch : in  STD_LOGIC_VECTOR (15 downto 0); 
+	switch : in  STD_LOGIC_VECTOR (15 downto 0);  
 	led : out  STD_LOGIC_VECTOR (15 downto 0);
 	
 	-- ram1
@@ -84,7 +84,7 @@ end processor;
 
 architecture Behavioral of processor is
 
-	component instruction_fetch_module is 
+	component instruction_fetch_module is  
 		Port (
 			-- ram2
 			ram2_addr_out : out  STD_LOGIC_VECTOR (17 downto 0);
@@ -98,6 +98,9 @@ architecture Behavioral of processor is
 		
 			branch_type_in, is_branch_in, is_jump_in: in STD_LOGIC;
 			branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
+
+			addr_in: in STD_LOGIC_VECTOR(15 downto 0); 
+			data_in: in STD_LOGIC_VECTOR(15 downto 0);
 		
 			instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 			pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
@@ -108,6 +111,7 @@ architecture Behavioral of processor is
 	signal ram2_we_to_if_tmp, ram2_oe_to_if_tmp, is_structural_hazard_to_if_tmp, is_ual_hazard_to_if_tmp: STD_LOGIC;
 	signal branch_type_to_if_tmp, is_branch_to_if_tmp, is_jump_to_if_tmp: STD_LOGIC;
 	signal branch_relative_reg_data_to_if_tmp, branch_target_to_if_tmp, jump_target_to_if_tmp, instruction_from_if_tmp, pc_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
+	signal address_in_to_if_tmp, data_in_to_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 	component register_module is
 	    Port ( instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);
@@ -143,9 +147,13 @@ architecture Behavioral of processor is
 	           mem_enable_out : out  STD_LOGIC;
 	           mem_read_out : out  STD_LOGIC;
 	           mem_write_out : out  STD_LOGIC;
+	    		
+	     	   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
 
 		   clk, rst: in STD_LOGIC);
 	end component;
+
+	signal read_reg_1_from_id, read_reg_2_from_id: STD_LOGIC_VECTOR(3 downto 0);
 
 	signal instruction_to_id_tmp, pc_to_id_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
@@ -309,8 +317,112 @@ architecture Behavioral of processor is
 	signal mem_enable_to_mem_tmp : STD_LOGIC;
 	signal mem_read_to_mem_tmp : STD_LOGIC;
 	signal mem_write_to_mem_tmp : STD_LOGIC;
-begin
 
+	component DM is
+		Port ( 
+			clk : in  STD_LOGIC;
+			rst : in  STD_LOGIC;
+			data_ready : in  STD_LOGIC;
+			tbre : in  STD_LOGIC;
+			tsre : in  STD_LOGIC;
+			rdn : out  STD_LOGIC;
+			wrn : out  STD_LOGIC;
+			Ram1OE : out  STD_LOGIC;
+			Ram1WE : out  STD_LOGIC;
+			Ram1EN : out  STD_LOGIC;
+			Ram1Addr : out  STD_LOGIC_VECTOR (17 downto 0);
+			Ram1Data : inout  STD_LOGIC_VECTOR (15 downto 0);
+			
+			MemEN : in  STD_LOGIC;
+			MemRead : in  STD_LOGIC;		
+			MemWrite : in  STD_LOGIC;	
+			AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);
+			DataIn : in  STD_LOGIC_VECTOR (15 downto 0);
+			DataOut : out  STD_LOGIC_VECTOR (15 downto 0)
+		);	
+	end component;
+
+	signal mem_data_out_from_mem_tmp: STD_LOGIC_VECTOR(15 downto 0);
+
+	component MEM_WB_regs is
+	    Port ( clk : in  STD_LOGIC;
+	           rst : in  STD_LOGIC;
+	           bubble : in  STD_LOGIC;
+	           stall : in  STD_LOGIC;
+	           write_back_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	           write_back_data_out : out  STD_LOGIC_VECTOR (15 downto 0);
+	           write_back_reg_in : in  STD_LOGIC_VECTOR (3 downto 0);
+	           write_back_reg_out : out  STD_LOGIC_VECTOR (3 downto 0);
+	           write_enable_in : in  STD_LOGIC;
+	           write_enable_out : out  STD_LOGIC);
+	end component;
+
+	signal bubble_to_mem_wb_tmp, stall_to_mem_wb_tmp: STD_LOGIC;
+	signal write_back_data_from_mem_tmp: STD_LOGIC_VECTOR(15 downto 0);
+	signal write_back_reg_from_mem_tmp: STD_LOGIC_VECTOR(3 downto 0);
+	signal write_enable_from_mem_tmp: STD_LOGIC;
+
+	component structural_hazard_detector is
+	    Port ( mem_write_in : in  STD_LOGIC;
+	           mem_address_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	           mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	
+		   is_hazard : out  STD_LOGIC;
+	           ram2_oe : out  STD_LOGIC;
+	           ram2_we : out  STD_LOGIC;
+	           ram2_in_data : out  STD_LOGIC_VECTOR (15 downto 0);
+	           ram2_in_address : out  STD_LOGIC_VECTOR (15 downto 0));
+	end component;
+
+	component UAL_hazard_detector is
+	    Port ( read_reg1 : in  STD_LOGIC_VECTOR (3 downto 0);
+	           read_reg2 : in  STD_LOGIC_VECTOR (3 downto 0);
+	           write_back_reg : in  STD_LOGIC_VECTOR (3 downto 0);
+	           reg_write_enable : in  STD_LOGIC;
+	           mem_read : in  STD_LOGIC;
+	    	   clk, rst: in STD_LOGIC;
+	
+	           bubble : out  STD_LOGIC;
+	           stall : out  STD_LOGIC
+	   );
+	end component;
+
+
+
+begin
+	-- use-after-load hazard detector
+	UAL_hazard_detector_imp: UAL_hazard_detector 
+	port map (
+		read_reg1 => read_reg_1_from_id, 
+		read_reg2 => read_reg_2_from_id,
+		write_back_reg => write_back_reg_to_alu_tmp,
+		reg_write_enable => reg_write_enable_to_alu_tmp,
+		mem_read => mem_read_to_alu_tmp,
+	
+		clk => clk, 
+		rst => rst,
+	
+		bubble => bubble_to_id_alu_tmp,
+		stall => stall_to_if_id_tmp
+	);
+
+	is_ual_hazard_to_if_tmp <= stall_to_if_id_tmp;
+
+	-- structural hazard detector
+	structural_hazard_detector_imp: structural_hazard_detector 
+	port map (
+		mem_write_in => mem_write_to_mem_tmp,
+		mem_address_in => mem_address_to_mem_tmp,
+		mem_data_in => mem_data_to_mem_tmp,
+	
+		is_hazard => is_structural_hazard_to_if_tmp,
+		ram2_oe => ram2_oe_to_if_tmp, 
+		ram2_we => ram2_we_to_if_tmp,
+	
+		ram2_in_data => data_in_to_if_tmp,
+		ram2_in_address => address_in_to_if_tmp
+	);
+	
 	-- instruction fetch module
 	instruction_fetch_module_imp: instruction_fetch_module 
 	port map(
@@ -324,6 +436,9 @@ begin
 		is_ual_hazard_in => is_ual_hazard_to_if_tmp,
 		ram2_we_in => ram2_we_to_if_tmp,
 		ram2_oe_in => ram2_oe_to_if_tmp,
+
+		addr_in => address_in_to_if_tmp,
+		data_in => data_in_to_if_tmp,
 
 		branch_type_in => branch_type_to_if_tmp,
 		is_branch_in => is_branch_to_if_tmp,
@@ -375,6 +490,8 @@ begin
 		mem_enable_out => mem_enable_from_id_tmp,
 		mem_read_out => mem_read_from_id_tmp,
 		mem_write_out => mem_write_from_id_tmp,
+		read_reg_1_out => read_reg_1_from_id,
+		read_reg_2_out => read_reg_2_from_id,
 
 		clk => clk,
 		rst => rst
@@ -512,6 +629,53 @@ begin
 	mem_enable_from_alu_tmp <= mem_enable_to_alu_tmp;
 	mem_read_from_alu_tmp <= mem_read_to_alu_tmp;
 	mem_write_from_alu_tmp <= mem_write_to_alu_tmp;
-	
+
+	-- data memory
+	DM_imp: DM 
+	port map(
+		clk => clk,  
+		rst => rst,
+		
+		data_ready => data_ready, 
+		tbre => tbre,
+		tsre => tsre,
+		rdn => rdn,
+		wrn => wrn,
+		Ram1OE => ram1_oe,
+		Ram1WE => ram1_we,
+		Ram1EN => ram1_en, 
+		Ram1Addr => ram1_addr,
+		Ram1Data => ram1_data,
+		
+		MemEN => mem_enable_to_mem_tmp,
+		MemRead => mem_read_to_mem_tmp,
+		MemWrite => mem_write_to_mem_tmp,
+		AddrIn => mem_address_to_mem_tmp,
+		DataIn => mem_data_to_mem_tmp,
+		DataOut => mem_data_out_from_mem_tmp
+	);
+
+	-- memory access module
+	write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when mem_read_to_mem_tmp = enable else
+					write_back_data_to_mem_tmp;
+	write_back_reg_from_mem_tmp <= write_back_reg_to_mem_tmp;
+	write_enable_from_mem_tmp <= reg_write_enable_to_mem_tmp;
+
+	-- memory-write-back registers
+	MEM_WB_regs_imp: MEM_WB_regs 
+	port map(
+		clk => clk,
+		rst => rst,
+		bubble => bubble_to_mem_wb_tmp, 
+		stall => stall_to_mem_wb_tmp,
+		write_back_data_in => write_back_data_from_mem_tmp,
+		write_back_data_out => write_back_data_to_wb_tmp,
+		write_back_reg_in => write_back_reg_from_mem_tmp,
+		write_back_reg_out => write_back_reg_to_wb_tmp,
+		write_enable_in => write_enable_from_mem_tmp,
+		write_enable_out => write_back_enable_to_wb_tmp
+	);
+
+
 end Behavioral;
 
