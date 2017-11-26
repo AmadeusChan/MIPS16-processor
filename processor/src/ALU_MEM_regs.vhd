@@ -36,8 +36,8 @@ entity ALU_MEM_regs is
            stall : in  STD_LOGIC;
            write_back_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
            write_back_data_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           write_back_reg_in : in  STD_LOGIC_VECTOR (15 downto 0);
-           write_back_reg_out : out  STD_LOGIC_VECTOR (15 downto 0);
+           write_back_reg_in : in  STD_LOGIC_VECTOR (3 downto 0);
+           write_back_reg_out : out  STD_LOGIC_VECTOR (3 downto 0);
            reg_write_enable_in : in  STD_LOGIC;
            reg_write_enable_out : out  STD_LOGIC;
            mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
