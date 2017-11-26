@@ -121,10 +121,10 @@ architecture Behavioral of processor is
 	           write_back_reg_in : in  STD_LOGIC_VECTOR (3 downto 0);
 	           reg_write_enable_in : in  STD_LOGIC;
 
-	           is_hazard_1 : in  STD_LOGIC;
-	           is_hazard_2 : in  STD_LOGIC;
-	           forward_data_1 : in  STD_LOGIC_VECTOR (15 downto 0);
-	           forward_data_2 : in  STD_LOGIC_VECTOR (15 downto 0);
+	           is_hazard_1_in : in  STD_LOGIC;
+	           is_hazard_2_in : in  STD_LOGIC;
+	           forward_data_1_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	           forward_data_2_in : in  STD_LOGIC_VECTOR (15 downto 0);
 
 	           branch_target_out : out  STD_LOGIC_VECTOR (15 downto 0);
 	           jump_target_out : out  STD_LOGIC_VECTOR (15 downto 0);
@@ -387,9 +387,56 @@ architecture Behavioral of processor is
 	   );
 	end component;
 
+	component RAW_hazard_detector_and_forward_unit is
+	    Port ( wb_reg_write_enable : in  STD_LOGIC;
+	           mem_reg_write_enable : in  STD_LOGIC;
+	           alu_reg_write_enable : in  STD_LOGIC;
+	
+	           wb_write_back_reg : in  STD_LOGIC_VECTOR (3 downto 0);
+	           mem_write_back_reg : in  STD_LOGIC_VECTOR (3 downto 0);
+	           alu_write_back_reg : in  STD_LOGIC_VECTOR (3 downto 0);
+	
+	           wb_write_back_data : in  STD_LOGIC_VECTOR (15 downto 0);
+	           mem_write_back_data : in  STD_LOGIC_VECTOR (15 downto 0);
+	           alu_write_back_data : in  STD_LOGIC_VECTOR (15 downto 0);
+	
+	           read_reg_1 : in  STD_LOGIC_VECTOR (3 downto 0);
+	           read_reg_2 : in  STD_LOGIC_VECTOR (3 downto 0);
+	
+	           is_hazard_1 : out  STD_LOGIC;
+	           is_hazard_2 : out  STD_LOGIC;
+	
+	           forward_data_1 : out  STD_LOGIC_VECTOR (15 downto 0);
+	           forward_data_2 : out  STD_LOGIC_VECTOR (15 downto 0));
+	end component;
 
 
 begin
+	-- read-after-write hazard detector and forward unit
+	RAW_hazard_detector_and_forward_unit_imp: RAW_hazard_detector_and_forward_unit
+	port map (
+		wb_reg_write_enable => write_back_enable_to_wb_tmp,
+		mem_reg_write_enable => reg_write_enable_to_mem_tmp,
+		alu_reg_write_enable => reg_write_enable_to_alu_tmp,
+	
+		wb_write_back_reg => write_back_reg_to_wb_tmp,
+		mem_write_back_reg => write_back_reg_to_mem_tmp,
+		alu_write_back_reg => write_back_reg_to_alu_tmp,
+	
+		wb_write_back_data => write_back_data_to_wb_tmp,
+		mem_write_back_data => write_back_data_from_mem_tmp,
+		alu_write_back_data => write_back_data_from_alu_tmp,
+	
+		read_reg_1 => read_reg_1_from_id, 
+		read_reg_2 => read_reg_2_from_id,
+	
+		is_hazard_1 => is_hazard_1_to_id_tmp,
+		is_hazard_2 => is_hazard_2_to_id_tmp,
+	
+		forward_data_1 => forward_data_1_to_id_tmp,
+		forward_data_2 => forward_data_2_to_id_tmp
+	);
+
 	-- use-after-load hazard detector
 	UAL_hazard_detector_imp: UAL_hazard_detector 
 	port map (
@@ -464,10 +511,10 @@ begin
 		write_back_reg_in => write_back_reg_to_wb_tmp,
 		reg_write_enable_in => write_back_enable_to_wb_tmp,
 
-		is_hazard_1 => is_hazard_1_to_id_tmp,
-		is_hazard_2 => is_hazard_2_to_id_tmp,
-		forward_data_1 => forward_data_1_to_id_tmp,
-		forward_data_2 => forward_data_2_to_id_tmp,
+		is_hazard_1_in => is_hazard_1_to_id_tmp,
+		is_hazard_2_in => is_hazard_2_to_id_tmp,
+		forward_data_1_in => forward_data_1_to_id_tmp,
+		forward_data_2_in => forward_data_2_to_id_tmp,
 
 		branch_target_out => branch_target_from_id_tmp,
 		jump_target_out => jump_target_from_id_tmp,

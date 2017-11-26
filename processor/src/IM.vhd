@@ -50,38 +50,45 @@ end IM;
 architecture Behavioral of IM is
 
 begin
-	
-	process(clk, rst)
-	begin
-		
-		if (rst = '0') then
-			Ram2EN <= '0';
-			Ram2OE <= '1';
-			Ram2WE <= '1';
-			Ram2Addr <= (others => '0');
-			InstOut <= (others => '0');
-		elsif (MemEN = '1') then
-			if (rising_edge(clk)) then		--×¼±¸¶Á/Ð´Ö¸Áî
-				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
-					Ram2Addr(15 downto 0) <= AddrIn;
-					Ram2Data <= InstIn;
-					Ram2WE <= '0';
-				elsif (MemRead = '1') then		--¶Á
-					Ram2Addr(15 downto 0) <= PCIn;
-					Ram2Data <= (others => 'Z');
-					Ram2OE <= '0';
-				end if;
-			elsif (falling_edge(clk)) then	--¶Á/Ð´Ö¸Áî
-				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
-					Ram2WE <= '1';
-				elsif (MemRead = '1') then		--¶Á
-					Ram2OE <= '1';
-					InstOut <= Ram2Data;
-				end if;
-			end if;
-		end if;
 
-	end process;
+	Ram2OE <= '0';
+	Ram2WE <= '0';
+	Ram2EN <= '0';
+	Ram2Addr <= (others => '0');
+	Ram2Data <= (others => 'Z');
+	InstOut <= (others => '0');
+	
+--	process(clk, rst)
+--	begin
+--		
+--		if (rst = '0') then
+--			Ram2EN <= '0';
+--			Ram2OE <= '1';
+--			Ram2WE <= '1';
+--			Ram2Addr <= (others => '0');
+--			InstOut <= (others => '0');
+--		elsif (MemEN = '1') then
+--			if (rising_edge(clk)) then		--×¼±¸¶Á/Ð´Ö¸Áî
+--				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
+--					Ram2Addr(15 downto 0) <= AddrIn;
+--					Ram2Data <= InstIn;
+--					Ram2WE <= '0';
+--				elsif (MemRead = '1') then		--¶Á
+--					Ram2Addr(15 downto 0) <= PCIn;
+--					Ram2Data <= (others => 'Z');
+--					Ram2OE <= '0';
+--				end if;
+--			elsif (falling_edge(clk)) then	--¶Á/Ð´Ö¸Áî
+--				if (MemWrite = '1' and AddrIn <= x"7FFF") then		--Ð´
+--					Ram2WE <= '1';
+--				elsif (MemRead = '1') then		--¶Á
+--					Ram2OE <= '1';
+--					InstOut <= Ram2Data;
+--				end if;
+--			end if;
+--		end if;
+--
+--	end process;
 
 end Behavioral;
 
