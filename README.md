@@ -53,7 +53,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 
 ## progress
 - ALU.vhd
-	* [ ] implement 
+	* [x] implement 
 	* [ ] simulation
 	* [ ] test on FPGA
 - ID_forward_IF_regs.vhd
@@ -95,7 +95,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - IM.vhd
 	* [x] implement 
 	* [x] simulation
-	* [ ] test on FPGA
+	* [x] test on FPGA
 - external_devices.vhd
 	* [ ] implement 
 	* [ ] simulation
@@ -121,8 +121,8 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 	* [x] simulation
 	* [ ] test on FPGA
 - processor.vhd
-	* [ ] implement 
-	* [ ] simulation
+	* [x] implement 
+	* [x] simulation
 	* [ ] test on FPGA
 
 ## delay estimation
