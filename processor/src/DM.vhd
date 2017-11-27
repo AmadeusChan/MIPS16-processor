@@ -53,31 +53,55 @@ end DM;
 
 architecture Behavioral of DM is
 
-	signal rflag : std_logic := '0';		--rflag='1'代表把串口数据线（Ram1Data）置高阻，用于节省状态的控制
+--	signal rflag : std_logic := '0';		--rflag='1'代表把串口数据线（Ram1Data）置高阻，用于节省状态的控制
 
 begin
-
-	rdn <= '0';
-	wrn <= '0';
-	DataOut <= (others => '0');
-	Ram1OE <= '0';
-	Ram1WE <= '0';
-	Ram1EN <= '0';
-	Ram1Addr <= (others => '0');
-	Ram1Data <= (others => 'Z');
 	
---	process(clk, rst)
---	begin
---		if (rst = '0') then
---			rdn <= '1';
---			wrn <= '1';
+	process(clk, rst, AddrIn)
+	variable judge : STD_LOGIC := '1';
+	begin
+	
+		judge := '1' when (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03"));
+		if (rst = '0') then
+			rdn <= '1';
+			wrn <= '1';
 --			rflag <= '0';
---			Ram1EN <= '0';
---			Ram1OE <= '1';
---			Ram1WE <= '1';
---			Ram1Addr <= (others => '0');
---			DataOut <= (others => '0');
---		elsif (MemEN = '1') then
+			Ram1EN <= '0';
+			Ram1OE <= '1';
+			Ram1WE <= '1';
+			Ram1Addr <= (others => '0');
+			DataOut <= (others => '0');
+		elsif (MemEN = '1') then
+			if (AddrIn = x"BF00") then
+				wrn <= not clk or not MemWrite;
+				rdn <= not clk or not MemRead;
+			elsif (judge = '1') then
+				Ram1WE <= not clk or not MemWrite;
+				Ram1OE <= not clk or not MemRead;
+			end if;
+--			rflag <= MemRead and AddrIn = x"BF01";
+			if (MemWrite = '1') then
+				if (AddrIn = x"BF00") then			--write serial port
+					Ram1Data(7 downto 0) <= DataIn(7 downto 0);
+				elsif (judge = '1') then			--write memory
+					Ram1Addr(15 downto 0) <= AddrIn;
+					Ram1Data <= DataIn;
+				end if;
+			elsif (MemRead = '1') then
+				if (AddrIn = x"BF01") then			--read the state of serial port
+					DataOut(15 downto 2) <= (others => '0');
+					DataOut(1) <= data_ready;		--judge for read
+					DataOut(0) <= tsre and tbre;	--judge for write
+					Ram1Data <= (others => 'Z');	--set Ram1Data to Hi-Z in advance for operation read
+				elsif (AddrIn = x"BF00") then		--read serial port
+					DataOut(15 downto 8) <= (others => '0');
+					DataOut(7 downto 0) <= Ram1Data(7 downto 0);
+				elsif (judge = '1') then			--read memory
+					Ram1Addr(15 downto 0) <= AddrIn;
+					Ram1Data <= (others => 'Z');
+					DataOut <= Ram1Data;
+				end if;
+			end if;
 --			if (rising_edge(clk)) then		--准备读/写 串口/内存
 --				if (MemWrite = '1') then		--写
 --					rflag <= '0';
@@ -127,9 +151,9 @@ begin
 --					end if;								
 --				end if;
 --			end if;
---		end if;
---	
---	end process;
+		end if;
+	
+	end process;
 
 end Behavioral;
 
