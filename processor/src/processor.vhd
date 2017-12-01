@@ -412,6 +412,25 @@ architecture Behavioral of processor is
 
 
 begin
+	-- bubble and stall signals
+	-- IF-ID
+	bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
+
+	-- ID-IF
+	bubble_to_id_if_tmp <= '0';
+	stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp or stall_to_if_id_tmp;
+
+	-- ID-ALU
+	stall_to_id_alu_tmp <= '0';
+
+	-- ALU-MEM
+	bubble_to_alu_mem_tmp <= '0';
+	stall_to_alu_mem_tmp <= '0';
+
+	-- MEM-WB
+	bubble_to_mem_wb_tmp <= '0';
+	stall_to_mem_wb_tmp <= '0';
+
 	-- read-after-write hazard detector and forward unit
 	RAW_hazard_detector_and_forward_unit_imp: RAW_hazard_detector_and_forward_unit
 	port map (
