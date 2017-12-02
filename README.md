@@ -91,7 +91,7 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - DM.vhd
 	* [x] implement 
 	* [x] simulation
-	* [ ] test on FPGA
+	* [x] test on FPGA
 - IM.vhd
 	* [x] implement 
 	* [x] simulation

@@ -60,8 +60,12 @@ begin
 	process(clk, rst, AddrIn)
 	variable judge : STD_LOGIC := '1';
 	begin
-	
-		judge := '1' when (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03"));
+		
+		if (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then
+			judge := '1';
+		else 
+			judge := '0';
+		end if;
 		if (rst = '0') then
 			rdn <= '1';
 			wrn <= '1';

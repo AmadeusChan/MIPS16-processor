@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:38:31 11/25/2017
+-- Create Date:   08:43:31 12/02/2017
 -- Design Name:   
--- Module Name:   D:/yi__c/MIPS16-processor/processor/test/test_instruction_fetch_module.vhd
+-- Module Name:   D:/yi__c/MIPS16-processor/processor/test_instruction_fetch_module2.vhd
 -- Project Name:  processor
 -- Target Device:  
 -- Tool versions:  
@@ -27,7 +27,7 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
+
 library work;
 use work.constants.all; 
  
@@ -59,7 +59,8 @@ ARCHITECTURE behavior OF test_instruction_fetch_module IS
          branch_relative_reg_data_in : IN  std_logic_vector(15 downto 0);
          branch_target_in : IN  std_logic_vector(15 downto 0);
          jump_target_in : IN  std_logic_vector(15 downto 0);
-			addr_in : IN std_logic_vector(15 downto 0);
+         addr_in : IN  std_logic_vector(15 downto 0);
+         data_in : IN  std_logic_vector(15 downto 0);
          instruction_out : OUT  std_logic_vector(15 downto 0);
          pc_out : BUFFER  std_logic_vector(15 downto 0);
          clk : IN  std_logic;
@@ -79,7 +80,8 @@ ARCHITECTURE behavior OF test_instruction_fetch_module IS
    signal branch_relative_reg_data_in : std_logic_vector(15 downto 0) := (others => '0');
    signal branch_target_in : std_logic_vector(15 downto 0) := (others => '0');
    signal jump_target_in : std_logic_vector(15 downto 0) := (others => '0');
-	signal addr_in : std_logic_vector(15 downto 0) := (others => '0');
+   signal addr_in : std_logic_vector(15 downto 0) := (others => '0');
+   signal data_in : std_logic_vector(15 downto 0) := (others => '0');
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
 
@@ -116,7 +118,8 @@ BEGIN
           branch_relative_reg_data_in => branch_relative_reg_data_in,
           branch_target_in => branch_target_in,
           jump_target_in => jump_target_in,
-			 addr_in => addr_in,
+          addr_in => addr_in,
+          data_in => data_in,
           instruction_out => instruction_out,
           pc_out => pc_out,
           clk => clk,
@@ -137,9 +140,9 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;
+      wait for 100 ns;	
 
-		rst <= '1';
+      rst <= '1';
       wait for clk_period;
 
       is_jump_in <= '1';

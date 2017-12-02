@@ -44,7 +44,7 @@ end fpga_IM;
 architecture Behavioral of fpga_IM is
 	
 	signal addr_in : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
-	signal instruction_in: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+	signal instruction_in : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 	signal memoe : STD_LOGIC := '0';
 	signal memwe : STD_LOGIC := '0';
 	signal memen : STD_LOGIC := '1';
