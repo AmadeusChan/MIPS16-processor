@@ -87,3 +87,97 @@ WARNING:NetListWriters:306 - Signal bus u/Ram1Addr<15 : 0> on block fpga_DM is
 Writing EDIF netlist file fpga_DM.edif ...
 ngc2edif: Total memory usage is 91072 kilobytes
 
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design fpga_IM.ngc ...
+WARNING:NetListWriters:298 - No output is written to fpga_IM.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus instruction_in<6 : 0> on block fpga_IM
+   is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus instruction_in_mux0000<15 : 9> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data<10 : 0> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data_mux0000<6 : 0> on
+   block fpga_IM is not reconstructed, because there are some missing bus
+   signals.
+  finished :Prep
+Writing EDIF netlist file fpga_IM.edif ...
+ngc2edif: Total memory usage is 86976 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design fpga_IM.ngc ...
+WARNING:NetListWriters:298 - No output is written to fpga_IM.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus instruction_in<6 : 0> on block fpga_IM
+   is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus instruction_in_mux0000<15 : 9> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data<10 : 0> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data_mux0000<6 : 0> on
+   block fpga_IM is not reconstructed, because there are some missing bus
+   signals.
+  finished :Prep
+Writing EDIF netlist file fpga_IM.edif ...
+ngc2edif: Total memory usage is 86976 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design fpga_IM.ngc ...
+WARNING:NetListWriters:298 - No output is written to fpga_IM.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus instruction_in<6 : 0> on block fpga_IM
+   is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus instruction_in_mux0000<15 : 9> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data<10 : 0> on block
+   fpga_IM is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram2Data_mux0000<6 : 0> on
+   block fpga_IM is not reconstructed, because there are some missing bus
+   signals.
+  finished :Prep
+Writing EDIF netlist file fpga_IM.edif ...
+ngc2edif: Total memory usage is 86976 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design fpga_DM.ngc ...
+WARNING:NetListWriters:298 - No output is written to fpga_DM.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus addr_in<15 : 0> on block fpga_DM is not
+   reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus addr_in_mux0000<15 : 0> on block fpga_DM
+   is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Ram1Addr<15 : 0> on block fpga_DM is
+   not reconstructed, because there are some missing bus signals.
+  finished :Prep
+Writing EDIF netlist file fpga_DM.edif ...
+ngc2edif: Total memory usage is 91072 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design fpga_DM.ngc ...
+WARNING:NetListWriters:298 - No output is written to fpga_DM.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus addr_in<15 : 0> on block fpga_DM is not
+   reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus addr_in_mux0000<15 : 0> on block fpga_DM
+   is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus u/Ram1Addr<15 : 0> on block fpga_DM is
+   not reconstructed, because there are some missing bus signals.
+  finished :Prep
+Writing EDIF netlist file fpga_DM.edif ...
+ngc2edif: Total memory usage is 91072 kilobytes
+

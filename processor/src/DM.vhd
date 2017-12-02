@@ -56,34 +56,24 @@ end DM;
 
 architecture Behavioral of DM is
 
---	signal rflag : std_logic := '0';		--rflag='1'代表把串口数据线（Ram1Data）置高阻，用于节省状态的控制
+	signal judge : std_logic := '0';		--rflag='1'代表把串口数据线（Ram1Data）置高阻，用于节省状态的控制
 
 begin
 
+	judge <= '1' when (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) else '0';
 	wrn <= '0' when (AddrIn = x"BF00" and MemWrite = '1' and clk = '0') else '1';
 	rdn <= '0' when (AddrIn = x"BF00" and MemRead = '1' and clk = '1') else '1';
+	Ram1EN <= '0' when (MemEn = '1') else '1';
+	Ram1WE <= '0' when (judge = '1' and MemWrite = '1' and clk = '0') else '1';
+	Ram1OE <= '0' when (judge = '1' and MemRead = '1' and clk = '1') else '1';
 		
 	process(clk, rst, AddrIn)
-	variable judge : STD_LOGIC := '1';
 	begin
 		
-		if (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) then
-			judge := '1';
-		else 
-			judge := '0';
-		end if;
 		if (rst = '0') then
-			Ram1EN <= '0';
-			Ram1OE <= '1';
-			Ram1WE <= '1';
 			Ram1Addr <= (others => '0');
 			DataOut <= (others => '0');
-		elsif (MemEN = '1') then
-			if (AddrIn = x"BF00") then
-			elsif (judge = '1') then
-				Ram1WE <= not clk or not MemWrite;
-				Ram1OE <= not clk or not MemRead;
-			end if;
+		else
 			if (MemWrite = '1') then
 				if (AddrIn = x"BF00") then			--write serial port
 					Ram1Data(7 downto 0) <= DataIn(7 downto 0);

@@ -51,19 +51,18 @@ end IM;
 architecture Behavioral of IM is
 	
 begin
+
+	Ram2EN <= '0' when (MemEn = '1') else '1';
+	Ram2WE <= '0' when (MemWrite = '1' and clk = '0') else '1';
+	Ram2OE <= '0' when (MemRead = '1' and clk = '1') else '1';    
 	
 	process(clk, rst, MemWrite, MemRead)
 	begin
 		
 		if (rst = '0') then
-			Ram2EN <= '0';
-			Ram2OE <= '1';
-			Ram2WE <= '1';
 			Ram2Addr <= (others => '0');
 			InstOut <= (others => '0');			
-		elsif (MemEn = '1') then
-			Ram2WE <= not clk or not MemWrite;
-			Ram2OE <= not clk or not MemRead;
+		else
 			if (MemWrite = '1' and AddrIn <= x"7FFF") then	--write
 				Ram2Addr(15 downto 0) <= AddrIn;
 				Ram2Data <= InstIn;

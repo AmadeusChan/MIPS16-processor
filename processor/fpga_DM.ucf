@@ -67,3 +67,5 @@ NET "ram1data[3]" LOC = J15;
 NET "ram1data[2]" LOC = J14;
 NET "ram1data[1]" LOC = J13;
 NET "ram1data[0]" LOC = J12;
+
+# PlanAhead Generated physical constraints 
