@@ -108,7 +108,7 @@ architecture Behavioral of processor is
 			pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
 			clk, rst: in STD_LOGIC
 		);
-	end component;
+	end component; 
 	
 	signal pc_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
@@ -414,9 +414,14 @@ architecture Behavioral of processor is
 	           forward_data_1 : out  STD_LOGIC_VECTOR (15 downto 0);
 	           forward_data_2 : out  STD_LOGIC_VECTOR (15 downto 0));
 	end component;
+	
+	signal reg_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 
 begin
+	led(7 downto 0) <= reg_debug_tmp(7 downto 0);
+	led(15 downto 8) <= instruction_to_id_tmp(7 downto 0);
+	
 	process(pc_from_if_tmp(3 downto 0)) 
 	begin
 		case pc_from_if_tmp(3 downto 0) is
@@ -442,7 +447,7 @@ begin
 	
 	process(instruction_from_if_tmp) 
 	begin
-		case instruction_from_if_tmp(7 downto 4) is
+		case instruction_from_if_tmp(3 downto 0) is
 			when "0000"=>disp0<="1111110"; --0
 			when "0001"=>disp0<="0110000"; --1
 			when "0010"=>disp0<="1101101"; --2
@@ -612,7 +617,7 @@ begin
 		read_reg_1_out => read_reg_1_from_id,
 		read_reg_2_out => read_reg_2_from_id,
 		
-		reg_debug => led,
+		reg_debug => reg_debug_tmp,
 
 		clk => clk,
 		rst => rst
