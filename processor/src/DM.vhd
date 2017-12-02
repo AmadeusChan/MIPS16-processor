@@ -62,10 +62,10 @@ begin
 
 	judge <= '1' when (AddrIn > x"7FFF" and (AddrIn < x"BF00" or AddrIn > x"BF03")) else '0';
 	wrn <= '0' when (AddrIn = x"BF00" and MemWrite = '1' and clk = '0') else '1';
-	rdn <= '0' when (AddrIn = x"BF00" and MemRead = '1' and clk = '1') else '1';
+	rdn <= '0' when (AddrIn = x"BF00" and MemRead = '1') else '1';
 	Ram1EN <= '0' when (MemEn = '1') else '1';
 	Ram1WE <= '0' when (judge = '1' and MemWrite = '1' and clk = '0') else '1';
-	Ram1OE <= '0' when (judge = '1' and MemRead = '1' and clk = '1') else '1';
+	Ram1OE <= '0' when (judge = '1' and MemRead = '1') else '1';
 		
 	process(clk, rst, AddrIn)
 	begin
