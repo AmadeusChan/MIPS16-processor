@@ -19,6 +19,9 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -80,6 +83,9 @@ architecture Behavioral of fpga_DM is
 
 	type state is (s0, s1, s2, s3);
 	signal current_state : state := s0;
+	
+	signal cnt : STD_LOGIC_VECTOR(15 downto 0) := x"0000";
+
 
 begin
 	
@@ -115,6 +121,7 @@ begin
 			addr_in <= (others => '0');
 			data_in <= (others => '0');
 			current_state <= s0;
+			cnt <= x"0000";
 		elsif (clk'event and clk = '1') then
 			case current_state is
 				when s0 =>
@@ -122,12 +129,13 @@ begin
 					memwe <= '0';
 					addr_in <= x"BF01";
 					current_state <= s1;
+					cnt <= cnt + x"0001";
 				when s1 =>
 					if (data_out(0) = '1') then
 						memoe <= '0';
 						memwe <= '1';
 						addr_in <= x"BF00";
-						data_in <= x"00AD";
+						data_in <= cnt;
 						current_state <= s2;
 					end if;
 				when s2 =>
@@ -136,7 +144,7 @@ begin
 					addr_in <= x"BF01";
 					current_state <= s3;
 				when s3 =>
-					if (data_out(1) = '1') then
+					if (data_out(1 downto 0) = "11") then
 						memoe <= '1';
 						memwe <= '0';
 						addr_in <= x"BF00";

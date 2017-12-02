@@ -1,5 +1,4 @@
 
-# PlanAhead Generated physical constraints 
 
 NET "clk" LOC = U9;
 NET "data_ready" LOC = A16;

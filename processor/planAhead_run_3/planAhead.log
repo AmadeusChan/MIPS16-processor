@@ -1,10 +1,10 @@
 #-----------------------------------------------------------
 # PlanAhead v14.7 (64-bit)
 # Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
-# Start of session at: Sat Dec 02 15:51:40 2017
-# Process ID: 12284
-# Log file: D:/yi__c/MIPS16-processor/processor/planAhead_run_1/planAhead.log
-# Journal file: D:/yi__c/MIPS16-processor/processor/planAhead_run_1/planAhead.jou
+# Start of session at: Sat Dec 02 16:01:44 2017
+# Process ID: 11468
+# Log file: D:/yi__c/MIPS16-processor/processor/planAhead_run_3/planAhead.log
+# Journal file: D:/yi__c/MIPS16-processor/processor/planAhead_run_3/planAhead.jou
 #-----------------------------------------------------------
 INFO: [Common 17-78] Attempting to get a license: PlanAhead
 INFO: [Common 17-290] Got license for PlanAhead
@@ -13,7 +13,7 @@ Parsing RTL primitives file [D:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/r
 Finished parsing RTL primitives file [D:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
 start_gui
 source D:/yi__c/MIPS16-processor/processor/pa.fromNetlist.tcl
-# create_project -name processor -dir "D:/yi__c/MIPS16-processor/processor/planAhead_run_1" -part xc3s1200efg320-4
+# create_project -name processor -dir "D:/yi__c/MIPS16-processor/processor/planAhead_run_3" -part xc3s1200efg320-4
 # set_property design_mode GateLvl [get_property srcset [current_run -impl]]
 # set_property edif_top_file "D:/yi__c/MIPS16-processor/processor/fpga_DM.ngc" [ get_property srcset [ current_run ] ]
 # add_files -norecurse { {D:/yi__c/MIPS16-processor/processor} }
@@ -42,8 +42,8 @@ WARNING:NetListWriters:306 - Signal bus u/Ram1Addr<15 : 0> on block fpga_DM is
 Writing EDIF netlist file fpga_DM.edif ...
 ngc2edif: Total memory usage is 91072 kilobytes
 
-Parsing EDIF File [./planAhead_run_1/processor.data/cache/fpga_DM_ngc_zx.edif]
-Finished Parsing EDIF File [./planAhead_run_1/processor.data/cache/fpga_DM_ngc_zx.edif]
+Parsing EDIF File [./planAhead_run_3/processor.data/cache/fpga_DM_ngc_zx.edif]
+Finished Parsing EDIF File [./planAhead_run_3/processor.data/cache/fpga_DM_ngc_zx.edif]
 INFO: [Designutils 20-910] Reading macro library D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn
 Parsing EDIF File [D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
 Finished Parsing EDIF File [D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
@@ -60,19 +60,19 @@ Finished Parsing UCF File [D:/yi__c/MIPS16-processor/processor/fpga_DM.ucf]
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Phase 0 | Netlist Checksum: 1abec760
-link_design: Time (s): elapsed = 00:00:06 . Memory (MB): peak = 613.535 ; gain = 140.711
+Phase 0 | Netlist Checksum: e44e9d61
+link_design: Time (s): elapsed = 00:00:06 . Memory (MB): peak = 601.148 ; gain = 145.676
 startgroup
-set_property package_pin B9 [get_ports clk]
+set_property package_pin U9 [get_ports clk]
 endgroup
 save_constraints
 exit
 ERROR: [PlanAhead 12-106] *** Exception: ui.h.b: Found deleted key in HTclEventBroker. Verify if the classes listed here call cleanup()
-HTclEvent: DEBUG_PORT_CONFIG_CHANGE   Classes: ui.views.aR 
-HTclEvent: DEBUG_CORE_CONFIG_CHANGE   Classes: ui.views.aR 
 HTclEvent: SIGNAL_BUS_MODIFY   Classes: ui.views.aR 
 HTclEvent: SIGNAL_MODIFY   Classes: ui.views.aR 
- (See D:/yi__c/MIPS16-processor/processor\planAhead_pid12284.debug)
+HTclEvent: DEBUG_CORE_CONFIG_CHANGE   Classes: ui.views.aR 
+HTclEvent: DEBUG_PORT_CONFIG_CHANGE   Classes: ui.views.aR 
+ (See D:/yi__c/MIPS16-processor/processor\planAhead_pid11468.debug)
 ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
-INFO: [Common 17-206] Exiting PlanAhead at Sat Dec 02 15:52:17 2017...
+INFO: [Common 17-206] Exiting PlanAhead at Sat Dec 02 16:02:18 2017...
 INFO: [Common 17-83] Releasing license: PlanAhead

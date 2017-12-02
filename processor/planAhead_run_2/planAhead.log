@@ -1,8 +1,8 @@
 #-----------------------------------------------------------
 # PlanAhead v14.7 (64-bit)
 # Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
-# Start of session at: Sat Dec 02 10:22:36 2017
-# Process ID: 8116
+# Start of session at: Sat Dec 02 15:52:33 2017
+# Process ID: 3744
 # Log file: D:/yi__c/MIPS16-processor/processor/planAhead_run_2/planAhead.log
 # Journal file: D:/yi__c/MIPS16-processor/processor/planAhead_run_2/planAhead.jou
 #-----------------------------------------------------------
@@ -36,8 +36,6 @@ WARNING:NetListWriters:306 - Signal bus addr_in<15 : 0> on block fpga_DM is not
    reconstructed, because there are some missing bus signals.
 WARNING:NetListWriters:306 - Signal bus addr_in_mux0000<15 : 0> on block fpga_DM
    is not reconstructed, because there are some missing bus signals.
-WARNING:NetListWriters:306 - Signal bus u/Mtridata_Ram1Data<7 : 0> on block
-   fpga_DM is not reconstructed, because there are some missing bus signals.
 WARNING:NetListWriters:306 - Signal bus u/Ram1Addr<15 : 0> on block fpga_DM is
    not reconstructed, because there are some missing bus signals.
   finished :Prep
@@ -62,15 +60,15 @@ Finished Parsing UCF File [D:/yi__c/MIPS16-processor/processor/fpga_DM.ucf]
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Phase 0 | Netlist Checksum: 4238fa29
-link_design: Time (s): elapsed = 00:00:11 . Memory (MB): peak = 609.160 ; gain = 136.895
+Phase 0 | Netlist Checksum: 1abec760
+link_design: Time (s): elapsed = 00:00:06 . Memory (MB): peak = 615.777 ; gain = 153.121
 exit
 ERROR: [PlanAhead 12-106] *** Exception: ui.h.b: Found deleted key in HTclEventBroker. Verify if the classes listed here call cleanup()
-HTclEvent: SIGNAL_MODIFY   Classes: ui.views.aR 
 HTclEvent: SIGNAL_BUS_MODIFY   Classes: ui.views.aR 
+HTclEvent: SIGNAL_MODIFY   Classes: ui.views.aR 
 HTclEvent: DEBUG_PORT_CONFIG_CHANGE   Classes: ui.views.aR 
 HTclEvent: DEBUG_CORE_CONFIG_CHANGE   Classes: ui.views.aR 
- (See D:/yi__c/MIPS16-processor/processor\planAhead_pid8116.debug)
+ (See D:/yi__c/MIPS16-processor/processor\planAhead_pid3744.debug)
 ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
-INFO: [Common 17-206] Exiting PlanAhead at Sat Dec 02 10:26:57 2017...
+INFO: [Common 17-206] Exiting PlanAhead at Sat Dec 02 15:52:55 2017...
 INFO: [Common 17-83] Releasing license: PlanAhead

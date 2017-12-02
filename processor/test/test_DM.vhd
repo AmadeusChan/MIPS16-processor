@@ -162,7 +162,7 @@ BEGIN
 		wait for clk_period;
 		
 		AddrIn <= x"BF00";
-		Ram1Data <= x"5678";
+		Ram1Data <= x"00FF";
 		wait for clk_period;
 		
 		AddrIn <= x"0100";
@@ -171,6 +171,8 @@ BEGIN
 		MemEN <= '0';
 		AddrIn <= x"0010";
 		wait for clk_period;
+		
+		
 		
       -- insert stimulus here 
 
