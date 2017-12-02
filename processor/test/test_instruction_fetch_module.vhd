@@ -62,7 +62,7 @@ ARCHITECTURE behavior OF test_instruction_fetch_module IS
          addr_in : IN  std_logic_vector(15 downto 0);
          data_in : IN  std_logic_vector(15 downto 0);
          instruction_out : OUT  std_logic_vector(15 downto 0);
-         pc_out : BUFFER  std_logic_vector(15 downto 0);
+         pc_out : OUT  std_logic_vector(15 downto 0);
          clk : IN  std_logic;
          rst : IN  std_logic
         );
