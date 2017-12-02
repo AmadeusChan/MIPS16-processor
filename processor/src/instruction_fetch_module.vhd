@@ -52,7 +52,7 @@ entity instruction_fetch_module is
 		addr_in, data_in: in STD_LOGIC_VECTOR(15 downto 0); --write back signals
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
-		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
+		pc_out: out STD_LOGIC_VECTOR(15 downto 0);
 		clk, rst: in STD_LOGIC
 	);
 
@@ -102,40 +102,37 @@ begin
 				InstOut => instruction_out
 	);	
 	
-	process(pc_out, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
-	begin
-		if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
-			pc_in <= pc_out;
-		elsif (is_jump_in = '1') then
-			pc_in <= jump_target_in;
-		elsif (is_branch_in = '1') then
-			case branch_type_in is
-				when equal_branch =>
-					if (branch_relative_reg_data_in = x"0000") then
-						pc_in <= branch_target_in;
-					else
-						pc_in <= pc_out + '1';
-					end if;
-				when not_equal_branch =>
-					if (branch_relative_reg_data_in = x"0001") then
-						pc_in <= branch_target_in;
-					else
-						pc_in <= pc_out + '1';
-					end if;
-				when others =>
-					pc_in <= pc_out + '1';
-			end case;
-		else
-			pc_in <= pc_out + '1';
-		end if;
-	end process;
+	pc_out <= pc_in;
 	
-	process(clk, rst)
+	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
 	begin
 		if (rst = '0') then
-			pc_out <= (others => '0');
+			pc_in <= (others => '0');
 		elsif (clk'event and clk = '1') then
-			pc_out <= pc_in;
+			if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
+				pc_in <= pc_in;
+			elsif (is_jump_in = '1') then
+				pc_in <= jump_target_in;
+			elsif (is_branch_in = '1') then
+				case branch_type_in is
+					when equal_branch =>
+						if (branch_relative_reg_data_in = x"0000") then
+							pc_in <= branch_target_in;
+						else
+							pc_in <= pc_in + '1';
+						end if;
+					when not_equal_branch =>
+						if (branch_relative_reg_data_in = x"0001") then
+							pc_in <= branch_target_in;
+						else
+							pc_in <= pc_in + '1';
+						end if;
+					when others =>
+						pc_in <= pc_in + '1';
+				end case;
+			else
+				pc_in <= pc_in + '1';
+			end if;
 		end if;
 	end process;
 
