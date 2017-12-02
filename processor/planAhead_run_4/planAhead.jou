@@ -1,0 +1,58 @@
+#-----------------------------------------------------------
+# PlanAhead v14.7 (64-bit)
+# Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
+# Start of session at: Sat Dec 02 19:45:07 2017
+# Process ID: 1168
+# Log file: Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/planAhead_run_4/planAhead.log
+# Journal file: Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/planAhead_run_4/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/pa.fromNetlist.tcl
+set_property package_pin "" [get_ports [list  {disp0[5]}]]
+startgroup
+set_property package_pin C7 [get_ports {disp0[6]}]
+endgroup
+startgroup
+set_property package_pin D7 [get_ports {disp0[5]}]
+endgroup
+startgroup
+set_property package_pin E7 [get_ports {disp0[4]}]
+endgroup
+startgroup
+set_property package_pin F7 [get_ports {disp0[3]}]
+endgroup
+startgroup
+set_property package_pin A7 [get_ports {disp0[2]}]
+endgroup
+startgroup
+set_property package_pin E8 [get_ports {disp0[1]}]
+endgroup
+startgroup
+set_property package_pin F8 [get_ports {disp0[0]}]
+endgroup
+startgroup
+set_property package_pin C9 [get_ports {disp1[6]}]
+endgroup
+startgroup
+set_property package_pin D9 [get_ports {disp1[5]}]
+endgroup
+startgroup
+set_property package_pin E9 [get_ports {disp1[4]}]
+endgroup
+startgroup
+set_property package_pin F9 [get_ports {disp1[3]}]
+endgroup
+startgroup
+set_property package_pin G9 [get_ports {disp1[2]}]
+endgroup
+startgroup
+set_property package_pin A10 [get_ports {disp1[1]}]
+endgroup
+startgroup
+set_property package_pin B10 [get_ports {disp1[0]}]
+endgroup
+save_constraints
+startgroup
+set_property package_pin A8 [get_ports {disp0[2]}]
+endgroup
+save_constraints

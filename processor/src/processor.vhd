@@ -57,27 +57,27 @@ entity processor is
 	ram2_we : out  STD_LOGIC;
 	ram2_en : out  STD_LOGIC;
 	
-	dyp0 : out  STD_LOGIC_VECTOR (6 downto 0);
-	dyp1 : out  STD_LOGIC_VECTOR (6 downto 0);
+	disp0 : out  STD_LOGIC_VECTOR (6 downto 0);
+	disp1 : out  STD_LOGIC_VECTOR (6 downto 0);
 	
 	-- serial port
 	data_ready : in  STD_LOGIC;
 	rdn : out  STD_LOGIC;
 	tbre : in  STD_LOGIC;
 	tsre : in  STD_LOGIC;
-	wrn : out  STD_LOGIC;
+	wrn : out  STD_LOGIC
 	
 	-- VGA monitor
-	rgb: out STD_LOGIC_VECTOR(8 downto 0);
-	hs, vs: out STD_LOGIC; 
+	--rgb: out STD_LOGIC_VECTOR(8 downto 0);
+	--hs, vs: out STD_LOGIC; 
 	
 	-- PS2 keyboard
-	ps2clk, ps2data: in STD_LOGIC;
+	--ps2clk, ps2data: in STD_LOGIC;
 	
 	-- flash
-	flash_byte, flash_vpen, flash_ce, flash_oe, flash_we, flash_rp: out STD_LOGIC;
-	flash_addr: out STD_LOGIC_VECTOR(22 downto 0);
-	flash_data: inout STD_LOGIC_VECTOR(15 downto 0)
+	--flash_byte, flash_vpen, flash_ce, flash_oe, flash_we, flash_rp: out STD_LOGIC;
+	--flash_addr: out STD_LOGIC_VECTOR(22 downto 0);
+	--flash_data: inout STD_LOGIC_VECTOR(15 downto 0)
 	 
 	);
 end processor;
@@ -104,9 +104,13 @@ architecture Behavioral of processor is
 		
 			instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 			pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
+			
+			pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
 			clk, rst: in STD_LOGIC
 		);
 	end component;
+	
+	signal pc_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 	signal ram2_we_to_if_tmp, ram2_oe_to_if_tmp, is_structural_hazard_to_if_tmp, is_ual_hazard_to_if_tmp: STD_LOGIC;
 	signal branch_type_to_if_tmp, is_branch_to_if_tmp, is_jump_to_if_tmp: STD_LOGIC;
@@ -149,6 +153,7 @@ architecture Behavioral of processor is
 	           mem_write_out : out  STD_LOGIC;
 	    		
 	     	   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
+				reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
 
 		   clk, rst: in STD_LOGIC);
 	end component;
@@ -412,6 +417,52 @@ architecture Behavioral of processor is
 
 
 begin
+	process(pc_from_if_tmp(3 downto 0)) 
+	begin
+		case pc_from_if_tmp(3 downto 0) is
+			when "0000"=>disp1<="1111110"; --0
+			when "0001"=>disp1<="0110000"; --1
+			when "0010"=>disp1<="1101101"; --2
+			when "0011"=>disp1<="1111001"; --3
+			when "0100"=>disp1<="0110011"; --4
+			when "0101"=>disp1<="1011011"; --5
+			when "0110"=>disp1<="0011111"; --6
+			when "0111"=>disp1<="1110000"; --7
+			when "1000"=>disp1<="1111111"; --8
+			when "1001"=>disp1<="1110011"; --9
+			when "1010"=>disp1<="1110111"; --a
+			when "1011"=>disp1<="0011111"; --b
+			when "1100"=>disp1<="1001110"; --c
+			when "1101"=>disp1<="0111101"; --d
+			when "1110"=>disp1<="1001111"; --e
+			when "1111"=>disp1<="1000111"; --f
+			when others=>disp1<="0000000"; --others
+		end case;
+	end process;
+	
+	process(instruction_from_if_tmp) 
+	begin
+		case instruction_from_if_tmp(7 downto 4) is
+			when "0000"=>disp0<="1111110"; --0
+			when "0001"=>disp0<="0110000"; --1
+			when "0010"=>disp0<="1101101"; --2
+			when "0011"=>disp0<="1111001"; --3
+			when "0100"=>disp0<="0110011"; --4
+			when "0101"=>disp0<="1011011"; --5
+			when "0110"=>disp0<="0011111"; --6
+			when "0111"=>disp0<="1110000"; --7
+			when "1000"=>disp0<="1111111"; --8
+			when "1001"=>disp0<="1110011"; --9
+			when "1010"=>disp0<="1110111"; --a
+			when "1011"=>disp0<="0011111"; --b
+			when "1100"=>disp0<="1001110"; --c
+			when "1101"=>disp0<="0111101"; --d
+			when "1110"=>disp0<="1001111"; --e
+			when "1111"=>disp0<="1000111"; --f
+			when others=>disp0<="0000000"; --others
+		end case;
+	end process;
+
 	-- bubble and stall signals
 	-- IF-ID
 	bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
@@ -515,6 +566,8 @@ begin
 
 		instruction_out => instruction_from_if_tmp,
 		pc_out => pc_from_if_tmp,
+		
+		pc_debug => pc_debug_tmp,
 
 		clk => clk,
 		rst => rst
@@ -558,6 +611,8 @@ begin
 		mem_write_out => mem_write_from_id_tmp,
 		read_reg_1_out => read_reg_1_from_id,
 		read_reg_2_out => read_reg_2_from_id,
+		
+		reg_debug => led,
 
 		clk => clk,
 		rst => rst

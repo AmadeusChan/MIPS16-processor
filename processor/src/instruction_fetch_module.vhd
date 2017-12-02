@@ -53,6 +53,7 @@ entity instruction_fetch_module is
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
+		pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
 		clk, rst: in STD_LOGIC
 	);
 
@@ -83,6 +84,7 @@ architecture Behavioral of instruction_fetch_module is
 	end component;
 
 begin
+	pc_debug <= pc_in;
 
 	u : IM
 	port map(clk => clk,

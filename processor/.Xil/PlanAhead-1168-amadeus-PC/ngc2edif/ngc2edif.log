@@ -1,0 +1,17 @@
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design processor.ngc ...
+WARNING:NetListWriters:298 - No output is written to processor.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus ID_ALU_regs_imp/immediate_out<15 : 0> on
+   block processor is not reconstructed, because there are some missing bus
+   signals.
+WARNING:NetListWriters:306 - Signal bus register_module_imp/read_data2_tmp<15 :
+   0> on block processor is not reconstructed, because there are some missing
+   bus signals.
+  finished :Prep
+Writing EDIF netlist file processor.edif ...
+ngc2edif: Total memory usage is 85988 kilobytes
+

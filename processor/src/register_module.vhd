@@ -67,6 +67,8 @@ entity register_module is
            mem_write_out : out  STD_LOGIC;
 
 		   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
+			
+			reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
 	   
 	   clk, rst: in STD_LOGIC);
 end register_module;
@@ -95,6 +97,7 @@ architecture Behavioral of register_module is
 	           is_hazard_2 : in  STD_LOGIC;
 	           read_data1 : out  STD_LOGIC_VECTOR (15 downto 0);
 	           read_data2 : out  STD_LOGIC_VECTOR (15 downto 0);
+				  reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
 		   clk, rst: in STD_LOGIC
 		);
 	end component;
@@ -164,6 +167,7 @@ begin
 		is_hazard_2 => is_hazard_2_in,
 		read_data1 => read_data1_tmp,
 		read_data2 => read_data2_tmp,
+		reg_debug => reg_debug,
 		clk => clk,
 		rst => rst
 	);

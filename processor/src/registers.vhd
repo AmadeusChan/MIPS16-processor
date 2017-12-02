@@ -46,6 +46,7 @@ entity registers is
            is_hazard_2 : in  STD_LOGIC;
            read_data1 : out  STD_LOGIC_VECTOR (15 downto 0);
            read_data2 : out  STD_LOGIC_VECTOR (15 downto 0);
+			  reg_debug: out STD_LOGIC_VECTOR(15 downto 0); -- for debug
 	   clk, rst: in STD_LOGIC
 	);
 end registers;
@@ -60,12 +61,14 @@ architecture Behavioral of registers is
 
 begin
 
+	reg_debug <= regs(0);
+
 	process (clk, rst) 
 	begin
 		if rst = '0' then
-			regs(0) <= (others => '0');
-			regs(1) <= (others => '0');
-			regs(2) <= (others => '0');
+			regs(0) <= x"0011";
+			regs(1) <= x"AA11";
+			regs(2) <= x"0007";
 			regs(3) <= (others => '0');
 			regs(4) <= (others => '0');
 			regs(5) <= (others => '0');
