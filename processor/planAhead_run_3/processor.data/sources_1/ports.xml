@@ -37,6 +37,11 @@
 			<Port Id="1" Dir="INOUT"/>
 			<Port Id="0" Dir="INOUT"/>
 		</Bus>
+		<Bus Id="oGreen">
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
 		<Bus Id="ram1_addr">
 			<Port Id="17" Dir="OUT"/>
 			<Port Id="16" Dir="OUT"/>
@@ -49,6 +54,24 @@
 			<Port Id="9" Dir="OUT"/>
 			<Port Id="8" Dir="OUT"/>
 			<Port Id="7" Dir="OUT"/>
+			<Port Id="6" Dir="OUT"/>
+			<Port Id="5" Dir="OUT"/>
+			<Port Id="4" Dir="OUT"/>
+			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="disp0">
+			<Port Id="6" Dir="OUT"/>
+			<Port Id="5" Dir="OUT"/>
+			<Port Id="4" Dir="OUT"/>
+			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="disp1">
 			<Port Id="6" Dir="OUT"/>
 			<Port Id="5" Dir="OUT"/>
 			<Port Id="4" Dir="OUT"/>
@@ -73,6 +96,16 @@
 			<Port Id="5" Dir="OUT"/>
 			<Port Id="4" Dir="OUT"/>
 			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="oRed">
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="oBlue">
 			<Port Id="2" Dir="OUT"/>
 			<Port Id="1" Dir="OUT"/>
 			<Port Id="0" Dir="OUT"/>
@@ -117,6 +150,7 @@
 		<Port Id="ram1_we" Dir="OUT"/>
 		<Port Id="rst" Dir="IN"/>
 		<Port Id="ram2_en" Dir="OUT"/>
+		<Port Id="hs" Dir="OUT"/>
 		<Port Id="data_ready" Dir="IN"/>
 		<Port Id="tbre" Dir="IN"/>
 		<Port Id="clk_manual" Dir="IN"/>
@@ -124,6 +158,7 @@
 		<Port Id="clk_serial_port" Dir="IN"/>
 		<Port Id="tsre" Dir="IN"/>
 		<Port Id="ram1_en" Dir="OUT"/>
+		<Port Id="vs" Dir="OUT"/>
 		<Port Id="ram2_we" Dir="OUT"/>
 		<Port Id="rdn" Dir="OUT"/>
 		<Port Id="wrn" Dir="OUT"/>

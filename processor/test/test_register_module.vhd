@@ -173,7 +173,7 @@ BEGIN
       -- insert stimulus here 
 				
 		-- addiu
-		instruction <= "0100101010001000";
+		instruction <= "0111100000100000";
 		wait for 40ns;
 		
 		-- addiu3

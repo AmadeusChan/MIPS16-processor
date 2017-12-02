@@ -68,7 +68,7 @@ entity register_module is
 
 		   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
 			
-			reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
+			reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7: out STD_LOGIC_VECTOR(15 downto 0);
 	   
 	   clk, rst: in STD_LOGIC);
 end register_module;
@@ -98,6 +98,13 @@ architecture Behavioral of register_module is
 	           read_data1 : out  STD_LOGIC_VECTOR (15 downto 0);
 	           read_data2 : out  STD_LOGIC_VECTOR (15 downto 0);
 				  reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_1: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_2: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_3: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_4: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_5: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_6: out STD_LOGIC_VECTOR(15 downto 0);
+				  reg_7: out STD_LOGIC_VECTOR(15 downto 0);
 		   clk, rst: in STD_LOGIC
 		);
 	end component;
@@ -168,6 +175,13 @@ begin
 		read_data1 => read_data1_tmp,
 		read_data2 => read_data2_tmp,
 		reg_debug => reg_debug,
+		reg_1 => reg_1,
+		reg_2 => reg_2,
+		reg_3 => reg_3,
+		reg_4 => reg_4,
+		reg_5 => reg_5,
+		reg_6 => reg_6,
+		reg_7 => reg_7,
 		clk => clk,
 		rst => rst
 	);

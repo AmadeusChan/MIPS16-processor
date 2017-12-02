@@ -1,0 +1,31 @@
+(edif test_VGA
+  (edifVersion 2 0 0)
+  (edifLevel 0)
+  (keywordMap (keywordLevel 0))
+  (status
+    (written
+      (timestamp 2017 12 2 16 21 16)
+      (program "Xilinx ngc2edif" (version "P.68d"))
+      (author "Xilinx. Inc ")
+      (comment "This EDIF netlist is to be used within supported synthesis tools")
+      (comment "for determining resource/timing estimates of the design component")
+      (comment "represented by this netlist.")
+      (comment "Command line: -mdp2sp -w -secure test_VGA.ngc test_VGA.edif ")))
+  (external UNISIMS
+    (edifLevel 0)
+    (technology (numberDefinition))
+  )
+
+  (library test_VGA_lib
+    (edifLevel 0)
+    (technology (numberDefinition))
+  )
+
+  (design test_VGA
+    (cellRef test_VGA
+      (libraryRef test_VGA_lib)
+    )
+    (property PART (string "xc3s1200e-4-fg320") (owner "Xilinx"))
+  )
+)
+

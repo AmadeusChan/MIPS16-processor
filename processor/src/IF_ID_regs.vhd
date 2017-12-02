@@ -35,7 +35,7 @@ entity IF_ID_regs is
            instruction_in : in  STD_LOGIC_VECTOR (15 downto 0);
            pc_in : in  STD_LOGIC_VECTOR (15 downto 0);
 
-           instruction_out : out  STD_LOGIC_VECTOR (15 downto 0);
+           instruction_out : out  STD_LOGIC_VECTOR (15 downto 0) := x"0800";
            pc_out : out  STD_LOGIC_VECTOR (15 downto 0);
 
            clk : in  STD_LOGIC;
@@ -50,7 +50,7 @@ begin
 	begin
 	
 		if (rst = '0') then
-			instruction_out <= (others => '0');
+			instruction_out <= x"0800";
 			pc_out <= (others => '0');
 		elsif (clk'event and clk = '1') then
 			if (stall = '1') then

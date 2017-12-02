@@ -3,9 +3,9 @@
 <!--The data in this file is primarily intended for consumption by Xilinx tools.
 The structure and the elements are likely to change over the next few releases.
 This means code written to parse this file will need to be revisited each subsequent release.-->
-<application name="pa" timeStamp="Sat Dec 02 18:16:19 2017">
+<application name="pa" timeStamp="Sat Dec 02 21:47:29 2017">
 <section name="Project Information" visible="false">
-<property name="ProjectID" value="689014382db64a048b110bd15fc6bd1e" type="ProjectID"/>
+<property name="ProjectID" value="064f216fd00e43189400fdea3674d633" type="ProjectID"/>
 <property name="ProjectIteration" value="1" type="ProjectIteration"/>
 </section>
 <section name="PlanAhead Usage" visible="true">
@@ -15,11 +15,14 @@ This means code written to parse this file will need to be revisited each subseq
 <property name="DesignMode" value="GateLvl" type="DesignMode"/>
 <property name="ImplStrategy" value="ISE Defaults" type="ImplStrategy"/>
 </item>
+<item name="Java Command Handlers">
+<property name="SaveDesign" value="1" type="JavaHandler"/>
+</item>
 <item name="Other">
 <property name="GuiMode" value="0" type="GuiMode"/>
 <property name="BatchMode" value="0" type="BatchMode"/>
 <property name="TclMode" value="0" type="TclMode"/>
-<property name="ISEMode" value="13" type="ISEMode"/>
+<property name="ISEMode" value="18" type="ISEMode"/>
 </item>
 </section>
 </application>

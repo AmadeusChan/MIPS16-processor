@@ -79,7 +79,7 @@ BEGIN
       wait for 20 ns;	
 		
 		-- addiu
-		instruction <= "0100101010001000";
+		instruction <= "0111100001000000";
 		wait for 20ns;
 		
 		-- addiu3

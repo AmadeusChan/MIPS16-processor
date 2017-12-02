@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/cslab/Downloads/MIPS16-processor-master/processor/t_vga_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="t_vga" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/t_vga/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/clock" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/writeen" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">writeen</obj_property>
+      <obj_property name="ObjectShortName">writeen</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/writeaddress" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">writeaddress[11:0]</obj_property>
+      <obj_property name="ObjectShortName">writeaddress[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/writedata" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">writedata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">writedata[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/hs" type="logic" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">hs</obj_property>
+      <obj_property name="ObjectShortName">hs</obj_property>
+      <obj_property name="label">hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/vs" type="logic" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">vs</obj_property>
+      <obj_property name="ObjectShortName">vs</obj_property>
+      <obj_property name="label">vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r[2:0]</obj_property>
+      <obj_property name="ObjectShortName">r[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g[2:0]</obj_property>
+      <obj_property name="ObjectShortName">g[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b[2:0]</obj_property>
+      <obj_property name="ObjectShortName">b[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/t_vga/clock_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clock_period</obj_property>
+      <obj_property name="ObjectShortName">clock_period</obj_property>
+   </wvobject>
+</wave_config>

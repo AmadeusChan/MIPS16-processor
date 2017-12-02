@@ -1,28 +1,34 @@
 
-****** PlanAhead v14.7 (64-bit)
-  **** Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
-    ** Copyright 1986-1999, 2001-2013 Xilinx, Inc. All Rights Reserved.
+****** PlanAhead v14.6
+  **** Build 269223 by xbuild on Wed Jun  5 11:17:50 MDT 2013
+    ** Copyright 1986-1999, 2001-2012 Xilinx, Inc. All Rights Reserved.
 
 INFO: [Common 17-78] Attempting to get a license: PlanAhead
 INFO: [Common 17-290] Got license for PlanAhead
-INFO: [Device 21-36] Loading parts and site information from C:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/arch.xml
-Parsing RTL primitives file [C:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
-Finished parsing RTL primitives file [C:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
+INFO: [Common 17-86] Your PlanAhead license expires in -366 day(s)
+INFO: [Device 21-36] Loading parts and site information from C:/Xilinx/14.6/ISE_DS/PlanAhead/data/parts/arch.xml
+Parsing RTL primitives file [C:/Xilinx/14.6/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
+Finished parsing RTL primitives file [C:/Xilinx/14.6/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
 start_gui
-source Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/pa.fromNetlist.tcl
-# create_project -name processor -dir "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/planAhead_run_4" -part xc3s1200efg320-4
+source C:/Users/cslab/Downloads/MIPS16-processor-master/processor/pa.fromNetlist.tcl
+# create_project -name processor -dir "C:/Users/cslab/Downloads/MIPS16-processor-master/processor/planAhead_run_4" -part xc3s1200efg320-4
 # set_property design_mode GateLvl [get_property srcset [current_run -impl]]
-# set_property edif_top_file "Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/processor.ngc" [ get_property srcset [ current_run ] ]
-# add_files -norecurse { {Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor} }
+# set_property edif_top_file "C:/Users/cslab/Downloads/MIPS16-processor-master/processor/processor.ngc" [ get_property srcset [ current_run ] ]
+# add_files -norecurse { {C:/Users/cslab/Downloads/MIPS16-processor-master/processor} {ipcore_dir} }
+# add_files [list {ipcore_dir/font.ncf}] -fileset [get_property constrset [current_run]]
 # set_param project.pinAheadLayout  yes
-# set_property target_constrs_file "processor.ucf" [current_fileset -constrset]
-Adding file 'Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/processor.ucf' to fileset 'constrs_1'
+# set_property target_constrs_file "C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf" [current_fileset -constrset]
+Adding file 'C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf' to fileset 'constrs_1'
 # add_files [list {processor.ucf}] -fileset [get_property constrset [current_run]]
+# add_files [list {C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf}] -fileset [get_property constrset [current_run]]
 # link_design
 Design is defaulting to srcset: sources_1
 Design is defaulting to constrset: constrs_1
 Design is defaulting to project part: xc3s1200efg320-4
-Release 14.7 - ngc2edif P.20131013 (nt64)
+Release 14.6 - ngc2edif P.68d (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Release 14.6 - ngc2edif P.68d (nt)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 Reading design processor.ngc ...
 WARNING:NetListWriters:298 - No output is written to processor.xncf, ignored.
@@ -32,79 +38,84 @@ Processing design ...
 WARNING:NetListWriters:306 - Signal bus ID_ALU_regs_imp/immediate_out<15 : 0> on
    block processor is not reconstructed, because there are some missing bus
    signals.
-WARNING:NetListWriters:306 - Signal bus register_module_imp/read_data2_tmp<15 :
-   0> on block processor is not reconstructed, because there are some missing
-   bus signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_not0000<8 : 1> on block
+   processor is not reconstructed, because there are some missing bus signals.
   finished :Prep
 Writing EDIF netlist file processor.edif ...
-ngc2edif: Total memory usage is 85988 kilobytes
+ngc2edif: Total memory usage is 66420 kilobytes
 
 Parsing EDIF File [./planAhead_run_4/processor.data/cache/processor_ngc_zx.edif]
 Finished Parsing EDIF File [./planAhead_run_4/processor.data/cache/processor_ngc_zx.edif]
-INFO: [Designutils 20-910] Reading macro library C:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn
-Parsing EDIF File [C:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
-Finished Parsing EDIF File [C:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
+Release 14.6 - ngc2edif P.68d (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Release 14.6 - ngc2edif P.68d (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design font.ngc ...
+WARNING:NetListWriters:298 - No output is written to font.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+  finished :Prep
+Writing EDIF netlist file font.edif ...
+ngc2edif: Total memory usage is 64116 kilobytes
+
+Reading core file 'C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/font.ngc' for (cell view 'font', library 'processor_lib', file 'processor.ngc')
+Parsing EDIF File [./planAhead_run_4/processor.data/cache/font_ngc_zx.edif]
+Finished Parsing EDIF File [./planAhead_run_4/processor.data/cache/font_ngc_zx.edif]
+INFO: [Designutils 20-910] Reading macro library C:/Xilinx/14.6/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn
+Parsing EDIF File [C:/Xilinx/14.6/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
+Finished Parsing EDIF File [C:/Xilinx/14.6/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
 WARNING: [Netlist 29-43] Netlist 'processor' is not ideal for floorplanning, since the cellview 'processor' defined in file 'processor.ngc' contains large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
-Loading clock regions from C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/ClockRegion.xml
-Loading clock buffers from C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/ClockBuffers.xml
-Loading package from C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/fg320/Package.xml
-Loading io standards from C:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/IOStandards.xml
-INFO: [Device 21-19] Loading pkg sso from C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/fg320/SSORules.xml
-Loading list of drcs for the architecture : C:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/drc.xml
-INFO: [Timing 38-77] Reading timing library C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
-INFO: [Timing 38-34] Done reading timing library C:/Xilinx/14.7/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
-Parsing UCF File [Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/processor.ucf]
-Finished Parsing UCF File [Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/processor.ucf]
+Loading clock regions from C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/ClockRegion.xml
+Loading clock buffers from C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/ClockBuffers.xml
+Loading package from C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/fg320/Package.xml
+Loading io standards from C:/Xilinx/14.6/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/IOStandards.xml
+INFO: [Device 21-19] Loading pkg sso from C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/xc3s1200e/fg320/SSORules.xml
+Loading list of drcs for the architecture : C:/Xilinx/14.6/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/drc.xml
+INFO: [Timing 38-77] Reading timing library C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
+INFO: [Timing 38-34] Done reading timing library C:/Xilinx/14.6/ISE_DS/PlanAhead/data\parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
+Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/font.ncf]
+Finished Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/font.ncf]
+Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:4]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLK_FEEDBACK' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:4]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:5]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKDV_DIVIDE' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:5]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:6]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKFX_DIVIDE' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:6]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:7]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKFX_MULTIPLY' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:7]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:8]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKIN_DIVIDE_BY_2' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:8]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:9]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKIN_PERIOD' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:9]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:10]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'CLKOUT_PHASE_SHIFT' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:10]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:11]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'DESKEW_ADJUST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:11]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:12]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'DFS_FREQUENCY_MODE' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:12]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:13]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'DLL_FREQUENCY_MODE' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:13]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:14]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'DUTY_CYCLE_CORRECTION' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:14]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:15]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'FACTORY_JF' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:15]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:16]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'PHASE_SHIFT' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:16]
+CRITICAL WARNING: [Constraints 18-11] Could not find cell 'DCM_SP_INST' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:17]
+CRITICAL WARNING: [Constraints 18-10] Could not create constraint 'STARTUP_WAIT' [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf:17]
+Finished Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/ipcore_dir/tmp_arwz.ucf]
+Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/processor.ucf]
+Finished Parsing UCF File [C:/Users/cslab/Downloads/MIPS16-processor-master/processor/processor.ucf]
+INFO: [Designutils 20-20] Invalid constraints found, use command 'write_ucf -constraints invalid <file>' to save all the invalid constraints to a file
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Phase 0 | Netlist Checksum: 51c509aa
-link_design: Time (s): elapsed = 00:00:09 . Memory (MB): peak = 628.027 ; gain = 135.332
-set_property package_pin "" [get_ports [list  {disp0[5]}]]
-startgroup
-set_property package_pin C7 [get_ports {disp0[6]}]
-endgroup
-startgroup
-set_property package_pin D7 [get_ports {disp0[5]}]
-endgroup
-startgroup
-set_property package_pin E7 [get_ports {disp0[4]}]
-endgroup
-startgroup
-set_property package_pin F7 [get_ports {disp0[3]}]
-endgroup
-startgroup
-set_property package_pin A7 [get_ports {disp0[2]}]
-endgroup
-startgroup
-set_property package_pin E8 [get_ports {disp0[1]}]
-endgroup
-startgroup
-set_property package_pin F8 [get_ports {disp0[0]}]
-endgroup
-startgroup
-set_property package_pin C9 [get_ports {disp1[6]}]
-endgroup
-startgroup
-set_property package_pin D9 [get_ports {disp1[5]}]
-endgroup
-startgroup
-set_property package_pin E9 [get_ports {disp1[4]}]
-endgroup
-startgroup
-set_property package_pin F9 [get_ports {disp1[3]}]
-endgroup
-startgroup
-set_property package_pin G9 [get_ports {disp1[2]}]
-endgroup
-startgroup
-set_property package_pin A10 [get_ports {disp1[1]}]
-endgroup
-startgroup
-set_property package_pin B10 [get_ports {disp1[0]}]
-endgroup
-save_constraints
-startgroup
-set_property package_pin A8 [get_ports {disp0[2]}]
-endgroup
-save_constraints
+Phase 0 | Netlist Checksum: 11760afb
+link_design: Time (s): elapsed = 00:00:10 . Memory (MB): peak = 485.293 ; gain = 82.719
+exit
+ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
+INFO: [Common 17-206] Exiting PlanAhead at Sat Dec 02 22:01:18 2017...
+INFO: [Common 17-83] Releasing license: PlanAhead

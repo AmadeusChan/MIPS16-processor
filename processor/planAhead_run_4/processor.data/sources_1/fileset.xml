@@ -8,59 +8,11 @@
         <Attr Name="UsedInImplementation" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../structural_hazard_detector.ngc">
+    <File Path="$PPRDIR/../ipcore_dir/font.ngc">
       <FileInfo>
         <Attr Name="UsedInSynthesis" Val="1"/>
         <Attr Name="UsedInImplementation" Val="1"/>
       </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../registers.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../UAL_hazard_detector.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../decoder.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../RAW_hazard_detector_and_forward_unit.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../register_module.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../test_serial_port_on_board.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../controller.ngc">
-      <FileInfo>
-        <Attr Name="UsedInSynthesis" Val="1"/>
-        <Attr Name="UsedInImplementation" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PDATADIR/sources_1/ports.xml">
-      <FileInfo SFType="PortsDb"/>
-    </File>
-    <File Path="$PDATADIR/sources_1/chipscope.xml">
-      <FileInfo SFType="ChipscopeDb"/>
     </File>
     <Config>
       <Option Name="DesignMode" Val="GateLvl"/>

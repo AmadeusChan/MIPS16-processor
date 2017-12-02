@@ -65,7 +65,12 @@ entity processor is
 	rdn : out  STD_LOGIC;
 	tbre : in  STD_LOGIC;
 	tsre : in  STD_LOGIC;
-	wrn : out  STD_LOGIC
+	wrn : out  STD_LOGIC;
+
+	hs,vs	: out std_logic;
+	oRed	: out std_logic_vector (2 downto 0);
+	oGreen	: out std_logic_vector (2 downto 0);
+	oBlue	: out std_logic_vector (2 downto 0)
 	
 	-- VGA monitor
 	--rgb: out STD_LOGIC_VECTOR(8 downto 0);
@@ -103,7 +108,7 @@ architecture Behavioral of processor is
 			data_in: in STD_LOGIC_VECTOR(15 downto 0);
 		
 			instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
-			pc_out: buffer STD_LOGIC_VECTOR(15 downto 0);
+			pc_out: out STD_LOGIC_VECTOR(15 downto 0);
 			
 			pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
 			clk, rst: in STD_LOGIC
@@ -153,7 +158,7 @@ architecture Behavioral of processor is
 	           mem_write_out : out  STD_LOGIC;
 	    		
 	     	   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
-				reg_debug: out STD_LOGIC_VECTOR(15 downto 0);
+				reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7: out STD_LOGIC_VECTOR(15 downto 0);
 
 		   clk, rst: in STD_LOGIC);
 	end component;
@@ -417,8 +422,94 @@ architecture Behavioral of processor is
 	
 	signal reg_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
+	COMPONENT font is
+	PORT (
+	clka : IN STD_LOGIC;
+	addra : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+	douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+	);
+	END COMPONENT;
+
+	COMPONENT VGA_Controller
+	port (
+	reset : in std_logic;
+	CLK_in : in std_logic;
+	
+	-- data
+	r0, r1, r2, r3, r4,r5,r6,r7 : in std_logic_vector(15 downto 0);
+
+	PC : in std_logic_vector(15 downto 0);
+	RA : in std_logic_vector(15 downto 0);
+	Tdata : in std_logic_vector(15 downto 0);
+	SPdata : in std_logic_vector(15 downto 0);
+	IHdata : in std_logic_vector(15 downto 0);
+
+	-- font rom
+	romAddr : out std_logic_vector(10 downto 0);
+	romData : in std_logic_vector(7 downto 0);
+	--VGA Side
+	hs,vs : out std_logic;
+	oRed : out std_logic_vector (2 downto 0);
+	oGreen : out std_logic_vector (2 downto 0);
+	oBlue : out std_logic_vector (2 downto 0)
+	);
+	end component;
+	
+		-- VGA-DEBUG --
+	signal r1, r2, r3, r4, r5, r6, r7, rPC, rRA, rTdata, rSPdata, rIHdata : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+
+	signal fontAddr : STD_LOGIC_VECTOR(10 downto 0);
+	signal fontData : STD_LOGIC_VECTOR(7 downto 0);
+
+	--------------process-------------------
+	
+	signal hazard_debug, enable_debug, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
+	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
+	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
+	 r5_debug <= x"000" & write_back_reg_to_alu_tmp;
+	 hazard_debug <= x"000" & "00" & is_hazard_1_to_id_tmp & is_hazard_2_to_id_tmp;
+	 enable_debug <= "000" & reg_write_enable_from_id_tmp & "000" & write_back_enable_to_wb_tmp & "000" & reg_write_enable_to_mem_tmp & "000" & reg_write_enable_to_alu_tmp;
+	-------------- VGA-DEBUGGER -------------
+	VGA: VGA_Controller port map (
+	reset => rst,
+ 	CLK_in => CLK_manual,
+
+	-- data
+	r0 => reg_debug_tmp,
+	r1 => r1,
+	r2 => r2,
+	r3 => r3_debug,
+	r4 => r4_debug,
+	r5 => r5_debug,
+	r6 => enable_debug,
+	r7 => hazard_debug,
+
+	PC => pc_from_if_tmp,
+	RA => instruction_to_id_tmp,
+	Tdata => alu_result_from_alu_tmp,
+	SPdata => wb_data_from_reg_from_id_tmp,
+	IHdata => write_back_data_from_alu_tmp,
+
+	-- font rom
+	romAddr => fontAddr,
+	romData => fontData,
+	--VGA Side
+	hs => hs,
+	vs => vs,
+	oRed => oRed,
+	oGreen => oGreen,
+	oBlue => oBlue
+	);
+
+	fontMem: font port map (
+	clka => clk_manual,
+	addra => fontAddr,
+	douta => fontData
+	);
+
+
 	led(7 downto 0) <= reg_debug_tmp(7 downto 0);
 	led(15 downto 8) <= instruction_to_id_tmp(7 downto 0);
 	
@@ -587,7 +678,8 @@ begin
 		write_back_data_in => write_back_data_to_wb_tmp,
 		write_back_reg_in => write_back_reg_to_wb_tmp,
 		reg_write_enable_in => write_back_enable_to_wb_tmp,
-
+		
+		-- for debug
 		is_hazard_1_in => is_hazard_1_to_id_tmp,
 		is_hazard_2_in => is_hazard_2_to_id_tmp,
 		forward_data_1_in => forward_data_1_to_id_tmp,
@@ -618,6 +710,13 @@ begin
 		read_reg_2_out => read_reg_2_from_id,
 		
 		reg_debug => reg_debug_tmp,
+		reg_1 => r1,
+		reg_2 => r2,
+		reg_3 => r3,
+		reg_4 => r4,
+		reg_5 => r5,
+		reg_6 => r6,
+		reg_7 => r7,
 
 		clk => clk,
 		rst => rst
