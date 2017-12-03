@@ -1,36 +1,36 @@
 # Description
 A MIPS processor designed in VHDL, which supports the following instructions: (This is the final project of Computer Orgnization in Tsinghua University)
 
--[x] ADDIU 
--[x] ADDIU3
--[x] ADDSP
--[x] ADDU
--[x] AND
--[x] B
--[x] BEQZ
--[x] BNEZ
--[x] BTEQZ
--[x] CMP
--[x] JR
--[x] LI
--[ ] LW
--[ ] LW_SP
--[x] MFIH
--[x] MFPC
--[x] MTIH
--[x] MTSP
--[x] NOP
--[x] OR
--[x] SLL
--[x] SRA
--[x] SUBU
--[ ] SW
--[ ] SW_SP
--[x] MOVE	
--[x] SLLV	
--[x] BTNEZ	
--[ ] SW_RS	
--[x] ADDSP3
+- [x] ADDIU 
+- [x] ADDIU3
+- [x] ADDSP
+- [x] ADDU
+- [x] AND
+- [x] B
+- [x] BEQZ
+- [x] BNEZ
+- [x] BTEQZ
+- [x] CMP
+- [x] JR
+- [x] LI
+- [ ] LW
+- [ ] LW_SP
+- [x] MFIH
+- [x] MFPC
+- [x] MTIH
+- [x] MTSP
+- [x] NOP
+- [x] OR
+- [x] SLL
+- [x] SRA
+- [x] SUBU
+- [ ] SW
+- [ ] SW_SP
+- [x] MOVE	
+- [x] SLLV	
+- [x] BTNEZ	
+- [ ] SW_RS	
+- [x] ADDSP3
 
 ## recent updates:
 - delete control signal wb_from_reg_src, mem_from_reg_src(meaningless), load_from_mem(exactly the same as mem_read)
