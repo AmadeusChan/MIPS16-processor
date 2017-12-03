@@ -59,7 +59,7 @@ entity processor is
 	
 	disp0 : out  STD_LOGIC_VECTOR (6 downto 0);
 	disp1 : out  STD_LOGIC_VECTOR (6 downto 0);
-	
+	 
 	-- serial port
 	data_ready : in  STD_LOGIC;
 	rdn : out  STD_LOGIC;
@@ -159,6 +159,10 @@ architecture Behavioral of processor is
 	    		
 	     	   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
 				reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7: out STD_LOGIC_VECTOR(15 downto 0);
+				  ih_debug: out STD_LOGIC_VECTOR(15 downto 0);      
+				  ra_debug: out STD_LOGIC_VECTOR(15 downto 0);      
+				  t_debug: out STD_LOGIC_VECTOR(15 downto 0);      
+				  sp_debug: out STD_LOGIC_VECTOR(15 downto 0);      
 
 		   clk, rst: in STD_LOGIC);
 	end component;
@@ -487,10 +491,10 @@ begin
 	r7 => hazard_debug,
 
 	PC => pc_from_if_tmp,
-	RA => instruction_to_id_tmp,
-	Tdata => jump_target_from_id_tmp,
-	SPdata => wb_data_from_reg_from_id_tmp,
-	IHdata => write_back_data_from_alu_tmp,
+	RA => rRA,
+	Tdata => rTdata,
+	SPdata => rSPdata,
+	IHdata => rIHdata,
 
 	-- font rom
 	romAddr => fontAddr,
@@ -584,7 +588,7 @@ begin
 		wb_reg_write_enable => write_back_enable_to_wb_tmp,
 		mem_reg_write_enable => reg_write_enable_to_mem_tmp,
 		alu_reg_write_enable => reg_write_enable_to_alu_tmp,
-	
+	 
 		wb_write_back_reg => write_back_reg_to_wb_tmp,
 		mem_write_back_reg => write_back_reg_to_mem_tmp,
 		alu_write_back_reg => write_back_reg_to_alu_tmp,
@@ -717,6 +721,10 @@ begin
 		reg_5 => r5,
 		reg_6 => r6,
 		reg_7 => r7,
+				  ih_debug => rIHdata,
+				  ra_debug => rRA,
+				  t_debug => rTdata,      
+				  sp_debug => rSPdata,
 
 		clk => clk,
 		rst => rst

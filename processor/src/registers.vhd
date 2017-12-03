@@ -46,7 +46,7 @@ entity registers is
            is_hazard_2 : in  STD_LOGIC;
            read_data1 : out  STD_LOGIC_VECTOR (15 downto 0);
            read_data2 : out  STD_LOGIC_VECTOR (15 downto 0);
-			  reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7: out STD_LOGIC_VECTOR(15 downto 0); -- for debug
+			  reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7, ih_debug, ra_debug, t_debug, sp_debug: out STD_LOGIC_VECTOR(15 downto 0); -- for debug
 	   clk, rst: in STD_LOGIC
 	);
 end registers;
@@ -69,6 +69,10 @@ begin
 	reg_5 <= regs(5);
 	reg_6 <= regs(6);
 	reg_7 <= regs(7);
+	ih_debug <= ih;
+	ra_debug <= ra;
+	t_debug <= t;
+	sp_debug <= sp;
 
 	process (clk, rst) 
 	begin

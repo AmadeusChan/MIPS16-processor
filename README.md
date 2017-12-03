@@ -3,34 +3,34 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 
 -[x] ADDIU 
 -[x] ADDIU3
--[ ] ADDSP
+-[x] ADDSP
 -[x] ADDU
 -[x] AND
 -[x] B
--[ ] BEQZ
--[ ] BNEZ
--[ ] BTEQZ
--[ ] CMP
+-[x] BEQZ
+-[x] BNEZ
+-[x] BTEQZ
+-[x] CMP
 -[x] JR
 -[x] LI
 -[ ] LW
 -[ ] LW_SP
--[ ] MFIH
--[ ] MFPC
--[ ] MTIH
--[ ] MTSP
+-[x] MFIH
+-[x] MFPC
+-[x] MTIH
+-[x] MTSP
 -[x] NOP
 -[x] OR
 -[x] SLL
--[ ] SRA
--[ ] SUBU
+-[x] SRA
+-[x] SUBU
 -[ ] SW
 -[ ] SW_SP
--[ ] MOVE	
+-[x] MOVE	
 -[x] SLLV	
--[ ] BTNEZ	
+-[x] BTNEZ	
 -[ ] SW_RS	
--[ ] ADDSP3
+-[x] ADDSP3
 
 ## recent updates:
 - delete control signal wb_from_reg_src, mem_from_reg_src(meaningless), load_from_mem(exactly the same as mem_read)
