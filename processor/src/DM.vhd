@@ -66,6 +66,15 @@ begin
 	Ram1EN <= '0' when (MemEn = '1') else '1';
 	Ram1WE <= '0' when (judge = '1' and MemWrite = '1' and clk = '0') else '1';
 	Ram1OE <= '0' when (judge = '1' and MemRead = '1') else '1';
+	
+-- Ram1Addr <= (others => '0') when rst = '0' else
+--					"00" & AddrIn;
+--	DataOut <= (others => '0') when rst = '0' else
+--					"00000000000000" & data_ready & (tsre and tbre) when MemRead = '1' and AddrIn = x"BF01" else
+--					Ram1Data;
+--	Ram1Data <= (others => '0') when MemRead = '1' and AddrIn = x"BF01" else
+--					(others => 'Z') when MemRead = '1' else
+--					DataIn;
 		
 	process(clk, rst, AddrIn)
 	begin

@@ -56,7 +56,7 @@ begin
 			if (stall = '1') then
 				null;
 			elsif (bubble = '1') then
-				instruction_out <= "0000100000000000";
+				instruction_out <= x"0800";
 				pc_out <= pc_in;
 			else
 				instruction_out <= instruction_in;

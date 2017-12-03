@@ -59,8 +59,7 @@ begin
 	Ram2Addr <= (others => '0') when rst = '0' else 
 		    "00" & PCIn when MemRead = '1' else 
 		    "00" & AddrIn;
-	InstOut <= Ram2Data;
-	
+	InstOut <= (others => '0') when rst = '0' else Ram2Data;
 	Ram2Data <= (others => 'Z') when MemRead = '1' else InstIn;
 	
 --	process(clk, rst, MemWrite, MemRead, Ram2Data)
@@ -69,21 +68,15 @@ begin
 --		if (rst = '0') then
 --			Ram2Addr <= (others => '0');
 --			InstOut <= (others => '0');			
---		elsif clk'event and clk = '1' then
+--		else
 --			if (MemWrite = '1' and AddrIn <= x"7FFF") then	--write
+--				Ram2Addr(15 downto 0) <= AddrIn;
 --				Ram2Data <= InstIn;
---			else 
+--			elsif (MemRead = '1') then								--read
+--				Ram2Addr(15 downto 0) <= PCIn;
 --				Ram2Data <= (others => 'Z');
+--				InstOut <= Ram2Data;
 --			end if;
---		end if;
-----			if (MemWrite = '1' and AddrIn <= x"7FFF") then	--write
-----				Ram2Addr(15 downto 0) <= AddrIn;
-----				Ram2Data <= InstIn;
-----			elsif (MemRead = '1') then								--read
-----				Ram2Addr(15 downto 0) <= PCIn;
-----				Ram2Data <= (others => 'Z');
-----				InstOut <= Ram2Data;
-----			end if;
 --		end if;
 --
 --	end process;
