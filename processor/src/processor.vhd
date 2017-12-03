@@ -70,7 +70,11 @@ entity processor is
 	hs,vs	: out std_logic;
 	oRed	: out std_logic_vector (2 downto 0);
 	oGreen	: out std_logic_vector (2 downto 0);
-	oBlue	: out std_logic_vector (2 downto 0)
+	oBlue	: out std_logic_vector (2 downto 0);
+
+	ps2clk: in std_logic;
+	ps2data: in std_logic
+	
 	
 	-- VGA monitor
 	--rgb: out STD_LOGIC_VECTOR(8 downto 0);
@@ -346,6 +350,9 @@ architecture Behavioral of processor is
 			Ram1EN : out  STD_LOGIC;
 			Ram1Addr : out  STD_LOGIC_VECTOR (17 downto 0);
 			Ram1Data : inout  STD_LOGIC_VECTOR (15 downto 0);
+
+			keyboard_key_value: in std_logic_vector(15 downto 0);
+
 			
 			MemEN : in  STD_LOGIC;
 			MemRead : in  STD_LOGIC;		
@@ -464,6 +471,22 @@ architecture Behavioral of processor is
 
 	signal fontAddr : STD_LOGIC_VECTOR(10 downto 0);
 	signal fontData : STD_LOGIC_VECTOR(7 downto 0);
+
+	component keyboard
+	PORT(
+		rst: in std_logic;
+		clk50M: in std_logic;
+	
+		ps2clk: in std_logic;
+		ps2data: in std_logic;
+
+		data_ready: out std_logic; -- 常0，有数据到来时变成1，至少保持两个CPU周期
+		key_value: out std_logic_vector(15 downto 0) -- 总是保持前一次的结果
+	);
+	end component;
+	
+	signal keyboard_data_ready: std_logic;
+	signal keyboard_key_value: std_logic_vector(15 downto 0);
 
 	--------------process-------------------
 	
@@ -880,12 +903,24 @@ begin
 		Ram1Addr => ram1_addr,
 		Ram1Data => ram1_data,
 		
+		keyboard_key_value => keyboard_key_value,
+
 		MemEN => mem_enable_to_mem_tmp,
 		MemRead => mem_read_to_mem_tmp,
 		MemWrite => mem_write_to_mem_tmp,
 		AddrIn => mem_address_to_mem_tmp,
 		DataIn => mem_data_to_mem_tmp,
 		DataOut => mem_data_out_from_mem_tmp
+		
+	);
+
+	keyboard_imp: keyboard PORT MAP(
+		rst => rst,
+		clk50M => clk_manual,
+		ps2clk => ps2clk,
+		ps2data => ps2data,
+		data_ready => keyboard_data_ready, -- 常0，有数据到来时变成1
+		key_value => keyboard_key_value -- 总是保持前一次的结果
 	);
 
 	-- memory access module
