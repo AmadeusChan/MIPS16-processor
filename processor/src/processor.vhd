@@ -473,7 +473,7 @@ begin
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
 	 r5_debug <= x"000" & write_back_reg_to_alu_tmp;
-	 hazard_debug <= "000" & is_jump_from_id_tmp & x"00" & "00" & is_hazard_1_to_id_tmp & is_hazard_2_to_id_tmp;
+	 hazard_debug <= "000" & is_jump_from_id_tmp & "000" & is_structural_hazard_to_if_tmp & "000" & is_hazard_1_to_id_tmp & "000" & is_hazard_2_to_id_tmp;
 	 enable_debug <= "000" & reg_write_enable_from_id_tmp & "000" & write_back_enable_to_wb_tmp & "000" & reg_write_enable_to_mem_tmp & "000" & reg_write_enable_to_alu_tmp;
 	-------------- VGA-DEBUGGER -------------
 	VGA: VGA_Controller port map (
@@ -484,9 +484,9 @@ begin
 	r0 => reg_debug_tmp,
 	r1 => r1,
 	r2 => r2,
-	r3 => r3_debug,
-	r4 => r4_debug,
-	r5 => r5_debug,
+	r3 => r3,
+	r4 => r4,
+	r5 => r5,
 	r6 => enable_debug,
 	r7 => hazard_debug,
 

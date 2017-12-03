@@ -13,8 +13,8 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - [x] CMP
 - [x] JR
 - [x] LI
-- [ ] LW
-- [ ] LW_SP
+- [x] LW
+- [x] LW_SP
 - [x] MFIH
 - [x] MFPC
 - [x] MTIH
@@ -24,13 +24,14 @@ A MIPS processor designed in VHDL, which supports the following instructions: (T
 - [x] SLL
 - [x] SRA
 - [x] SUBU
-- [ ] SW
-- [ ] SW_SP
+- [x] SW
+- [x] SW_SP
 - [x] MOVE	
 - [x] SLLV	
 - [x] BTNEZ	
-- [ ] SW_RS	
+- [x] SW_RS	
 - [x] ADDSP3
+- [x] Serial Port
 
 ## recent updates:
 - delete control signal wb_from_reg_src, mem_from_reg_src(meaningless), load_from_mem(exactly the same as mem_read)
