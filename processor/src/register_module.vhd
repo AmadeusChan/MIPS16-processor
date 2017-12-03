@@ -188,9 +188,9 @@ begin
 
 	cin_out <= '0';
 
-	branch_target_out <= pc_in + immediate_tmp;
+	branch_target_out <= pc_in + immediate_tmp + x"0001";
 
-	jump_target_out <= pc_in + immediate_tmp when instruction_in(15 downto 11) = ib else read_data1_tmp;
+	jump_target_out <= pc_in + immediate_tmp + x"0001" when instruction_in(15 downto 11) = ib else read_data1_tmp;
 
 	branch_relative_reg_data_out <= read_data1_tmp;
 	

@@ -83,6 +83,9 @@ architecture Behavioral of instruction_fetch_module is
 		);
 	end component;
 
+	signal pc_out_tmp: STD_LOGIC_VECTOR(15 downto 0);
+	signal is_branch_verified: STD_LOGIC;
+
 begin
 	pc_debug <= pc_in;
 
@@ -98,13 +101,42 @@ begin
 				MemEN => ram2_en_in,
 				MemRead => ram2_oe_in,
 				MemWrite => ram2_we_in,
-				PCIn => pc_in,
+				PCIn => pc_out_tmp,
 				AddrIn => addr_in,
 				InstIn => data_in,
 				InstOut => instruction_out
 	);	
 	
-	pc_out <= pc_in;
+	process(is_branch_in, branch_relative_reg_data_in, branch_type_in)
+	begin
+		if is_branch_in = '1' then
+			case branch_type_in is
+				when equal_branch => 
+					if (branch_relative_reg_data_in = x"0000") then
+						is_branch_verified <= '1';
+					else
+						is_branch_verified <= '0';
+					end if;
+				when not_equal_branch => 
+					if (branch_relative_reg_data_in = x"0000") then
+						is_branch_verified <= '0';
+					else
+						is_branch_verified <= '1';
+					end if;
+				when others => 
+					is_branch_verified <= '0';
+			end case;
+		else
+			is_branch_verified <= '0';
+		end if;
+	end process;
+
+	--pc_out <= pc_in;
+	pc_out <= pc_out_tmp;
+
+	pc_out_tmp <= branch_target_in when is_branch_verified = '1' else
+		      jump_target_in when is_jump_in = '1' else
+		      pc_in;
 	
 	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
 	begin
@@ -113,28 +145,31 @@ begin
 		elsif (clk'event and clk = '1') then
 			if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 				pc_in <= pc_in;
-			elsif (is_jump_in = '1') then
-				pc_in <= jump_target_in;
-			elsif (is_branch_in = '1') then
-				case branch_type_in is
-					when equal_branch =>
-						if (branch_relative_reg_data_in = x"0000") then
-							pc_in <= branch_target_in;
-						else
-							pc_in <= pc_in + '1';
-						end if;
-					when not_equal_branch =>
-						if (branch_relative_reg_data_in = x"0001") then
-							pc_in <= branch_target_in;
-						else
-							pc_in <= pc_in + '1';
-						end if;
-					when others =>
-						pc_in <= pc_in + '1';
-				end case;
 			else
-				pc_in <= pc_in + '1';
+				pc_in <= pc_out_tmp + x"0001";
 			end if;
+--			elsif (is_jump_in = '1') then
+--				pc_in <= jump_target_in;
+--			elsif (is_branch_in = '1') then
+--				case branch_type_in is
+--					when equal_branch =>
+--						if (branch_relative_reg_data_in = x"0000") then
+--							pc_in <= branch_target_in;
+--						else
+--							pc_in <= pc_in + '1';
+--						end if;
+--					when not_equal_branch =>
+--						if (branch_relative_reg_data_in = x"0001") then
+--							pc_in <= branch_target_in;
+--						else
+--							pc_in <= pc_in + '1';
+--						end if;
+--					when others =>
+--						pc_in <= pc_in + '1';
+--				end case;
+--			else
+--				pc_in <= pc_in + '1';
+--			end if;
 		end if;
 	end process;
 
