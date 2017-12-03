@@ -100,7 +100,6 @@ NET "switch[3]" LOC = V4;
 NET "switch[2]" LOC = U8;
 NET "switch[1]" LOC = R7;
 NET "switch[0]" LOC = T7;
-NET "clk" LOC = U9;
 NET "clk_manual" LOC = B9;
 NET "clk_serial_port" LOC = B8;
 NET "data_ready" LOC = A16;
@@ -132,7 +131,6 @@ NET "disp1[1]" LOC = A10;
 NET "disp1[0]" LOC = B10;
 NET "disp0[2]" LOC = A8;
 
-# PlanAhead Generated physical constraints 
 
 NET "oBlue[2]" LOC = B6;
 NET "oBlue[1]" LOC = A6;
@@ -145,3 +143,7 @@ NET "oRed[1]" LOC = C3;
 NET "oRed[0]" LOC = A7;
 NET "hs" LOC = D6;
 NET "vs" LOC = E6;
+
+# PlanAhead Generated physical constraints 
+
+NET "clk" LOC = U9;
