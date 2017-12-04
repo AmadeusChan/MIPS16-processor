@@ -478,7 +478,7 @@ begin
 	-------------- VGA-DEBUGGER -------------
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => CLK_manual,
+ 	CLK_in => CLK,
 
 	-- data
 	r0 => reg_debug_tmp,

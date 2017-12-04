@@ -1,6 +1,6 @@
 
 
-NET "clk" LOC = U9;
+NET "clk" LOC = B9;
 NET "data_ready" LOC = A16;
 NET "ram1en" LOC = M15;
 NET "ram1oe" LOC = M16;
@@ -68,4 +68,3 @@ NET "ram1data[2]" LOC = J14;
 NET "ram1data[1]" LOC = J13;
 NET "ram1data[0]" LOC = J12;
 
-# PlanAhead Generated physical constraints 

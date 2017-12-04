@@ -8,13 +8,13 @@
         <Attr Name="UsedInImplementation" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../processor.ngc">
+    <File Path="$PPRDIR/../fpga_instruction_fetch_module.ngc">
       <FileInfo>
         <Attr Name="UsedInSynthesis" Val="1"/>
         <Attr Name="UsedInImplementation" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../fpga_IM.ngc">
+    <File Path="$PPRDIR/../ipcore_dir/font.ngc">
       <FileInfo>
         <Attr Name="UsedInSynthesis" Val="1"/>
         <Attr Name="UsedInImplementation" Val="1"/>

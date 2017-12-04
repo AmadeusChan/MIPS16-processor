@@ -72,8 +72,7 @@ begin
 	DataOut <= (others => '0') when rst = '0' else
 					"00000000000000" & data_ready & (tsre and tbre) when MemRead = '1' and AddrIn = x"BF01" else
 					Ram1Data;
-	Ram1Data <= (others => '0') when MemRead = '1' and AddrIn = x"BF01" else
-					(others => 'Z') when MemRead = '1' else
+	Ram1Data <= (others => 'Z') when MemRead = '1' else
 					DataIn;
 		
 --	process(clk, rst, AddrIn)
