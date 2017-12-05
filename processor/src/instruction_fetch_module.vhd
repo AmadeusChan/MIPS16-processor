@@ -50,6 +50,7 @@ entity instruction_fetch_module is
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
 		addr_in, data_in: in STD_LOGIC_VECTOR(15 downto 0); --write back signals
+		data_out: out STD_LOGIC_VECTOR(15 downto 0); --load signals
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
@@ -77,9 +78,10 @@ architecture Behavioral of instruction_fetch_module is
            MemRead : in  STD_LOGIC;		--read IM signal, '1' for read 
            MemWrite : in  STD_LOGIC;	--write IM signal, '1' for write 
            PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--address when fetch instruction from IM
+			  InstOut : out  STD_LOGIC_VECTOR (15 downto 0);--data when fetch instruction from IM
            AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--address when write IM
-           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--data when write IM
-           InstOut : out  STD_LOGIC_VECTOR (15 downto 0)
+           DataIn : in  STD_LOGIC_VECTOR (15 downto 0);	--data when write IM
+           DataOut : out STD_LOGIC_VECTOR (15 downto 0)	--data when load IM
 		);
 	end component;
 
@@ -102,9 +104,10 @@ begin
 				MemRead => ram2_oe_in,
 				MemWrite => ram2_we_in,
 				PCIn => pc_out_tmp,
+				InstOut => instruction_out,
 				AddrIn => addr_in,
-				InstIn => data_in,
-				InstOut => instruction_out
+				DataIn => data_in,
+				DataOut => data_out
 	);	
 	
 	process(is_branch_in, branch_relative_reg_data_in, branch_type_in)

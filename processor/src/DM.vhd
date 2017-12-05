@@ -94,7 +94,6 @@ begin
 --					DataOut(15 downto 2) <= (others => '0');
 --					DataOut(1) <= data_ready;		--judge for read
 --					DataOut(0) <= tsre and tbre;	--judge for write
---					Ram1Data <= (others => '0');
 --				elsif (AddrIn = x"BF00") then		--read serial port
 --					Ram1Data <= (others => 'Z');
 --					DataOut(15 downto 8) <= (others => '0');
