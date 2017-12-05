@@ -1,14 +1,10 @@
 #-----------------------------------------------------------
 # PlanAhead v14.7 (64-bit)
 # Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
-# Start of session at: Mon Dec 04 13:12:41 2017
-# Process ID: 13424
+# Start of session at: Tue Dec 05 20:46:59 2017
+# Process ID: 5420
 # Log file: D:/yi__c/MIPS16-processor/processor/planAhead_run_1/planAhead.log
 # Journal file: D:/yi__c/MIPS16-processor/processor/planAhead_run_1/planAhead.jou
 #-----------------------------------------------------------
 start_gui
 source D:/yi__c/MIPS16-processor/processor/pa.fromNetlist.tcl
-startgroup
-set_property package_pin U9 [get_ports clk]
-endgroup
-save_constraints

@@ -36,7 +36,7 @@ use work.constants.all;
 
 entity processor is
     Port ( 
-	clk : in  STD_LOGIC; -- 50 MHz
+	clk_11 : in  STD_LOGIC; -- 50 MHz
 	rst : in  STD_LOGIC;
 	clk_serial_port : in  STD_LOGIC; -- 11.0592 MHz
 	clk_manual : in  STD_LOGIC;
@@ -467,18 +467,24 @@ architecture Behavioral of processor is
 
 	--------------process-------------------
 	
-	signal hazard_debug, enable_debug, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
-
+	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
+	
+	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
+	signal clk, clk_1: STD_LOGIC := '0';
+	
 begin
+
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
 	 r5_debug <= x"000" & write_back_reg_to_alu_tmp;
 	 hazard_debug <= "000" & is_jump_from_id_tmp & "000" & is_structural_hazard_to_if_tmp & "000" & is_hazard_1_to_id_tmp & "000" & is_hazard_2_to_id_tmp;
 	 enable_debug <= "000" & reg_write_enable_from_id_tmp & "000" & write_back_enable_to_wb_tmp & "000" & reg_write_enable_to_mem_tmp & "000" & reg_write_enable_to_alu_tmp;
+	 enable_instruction <= x"00" & "000" & ram2_we_to_if_tmp & "000" & ram2_oe_to_if_tmp;
 	-------------- VGA-DEBUGGER -------------
+		
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => CLK,
+ 	CLK_in => CLK_manual,
 
 	-- data
 	r0 => reg_debug_tmp,
@@ -487,13 +493,13 @@ begin
 	r3 => r3,
 	r4 => r4,
 	r5 => r5,
-	r6 => enable_debug,
-	r7 => hazard_debug,
+	r6 => hazard_debug,
+	r7 => enable_debug,
 
 	PC => pc_from_if_tmp,
-	RA => rRA,
-	Tdata => rTdata,
-	SPdata => rSPdata,
+	RA => address_in_to_if_tmp,
+	Tdata => data_in_to_if_tmp,
+	SPdata => enable_instruction,
 	IHdata => rIHdata,
 
 	-- font rom
@@ -909,6 +915,22 @@ begin
 		write_enable_out => write_back_enable_to_wb_tmp
 	);
 
+
+
+	process(clk_11)
+	begin
+		if clk_11'event and clk_11 = '1' then
+			if cnt = x"04c4b4" then
+				cnt <= x"000000";
+				clk_1 <= not clk_1;
+			else 
+			 cnt <= cnt + x"000001";
+			end if;
+		end if;
+	
+	end process;
+	
+	clk <= clk_1 when switch(0) = '1' else clk_11;
 
 end Behavioral;
 

@@ -13,6 +13,12 @@
         <Attr Name="UsedInImplementation" Val="1"/>
       </FileInfo>
     </File>
+    <File Path="$PDATADIR/constrs_1/designprops.xml">
+      <FileInfo SFType="CompatPartsDb"/>
+    </File>
+    <File Path="$PDATADIR/constrs_1/usercols.xml">
+      <FileInfo SFType="UserColsDb"/>
+    </File>
     <Config>
       <Option Name="TargetConstrsFile" Val="$PPRDIR/../processor.ucf"/>
       <Option Name="ConstrsType" Val="UCF"/>

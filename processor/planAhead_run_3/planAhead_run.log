@@ -10,7 +10,7 @@ Parsing RTL primitives file [D:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/r
 Finished parsing RTL primitives file [D:/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
 start_gui
 source D:/yi__c/MIPS16-processor/processor/pa.fromNetlist.tcl
-# create_project -name processor -dir "D:/yi__c/MIPS16-processor/processor/planAhead_run_1" -part xc3s1200efg320-4
+# create_project -name processor -dir "D:/yi__c/MIPS16-processor/processor/planAhead_run_3" -part xc3s1200efg320-4
 # set_property design_mode GateLvl [get_property srcset [current_run -impl]]
 # set_property edif_top_file "D:/yi__c/MIPS16-processor/processor/processor.ngc" [ get_property srcset [ current_run ] ]
 # add_files -norecurse { {D:/yi__c/MIPS16-processor/processor} {ipcore_dir} }
@@ -45,8 +45,8 @@ WARNING:NetListWriters:306 - Signal bus
 Writing EDIF netlist file processor.edif ...
 ngc2edif: Total memory usage is 96284 kilobytes
 
-Parsing EDIF File [./planAhead_run_1/processor.data/cache/processor_ngc_zx.edif]
-Finished Parsing EDIF File [./planAhead_run_1/processor.data/cache/processor_ngc_zx.edif]
+Parsing EDIF File [./planAhead_run_3/processor.data/cache/processor_ngc_zx.edif]
+Finished Parsing EDIF File [./planAhead_run_3/processor.data/cache/processor_ngc_zx.edif]
 Release 14.7 - ngc2edif P.20131013 (nt64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 Reading design font.ngc ...
@@ -59,8 +59,8 @@ Writing EDIF netlist file font.edif ...
 ngc2edif: Total memory usage is 83996 kilobytes
 
 Reading core file 'D:/yi__c/MIPS16-processor/processor/ipcore_dir/font.ngc' for (cell view 'font', library 'processor_lib', file 'processor.ngc')
-Parsing EDIF File [./planAhead_run_1/processor.data/cache/font_ngc_zx.edif]
-Finished Parsing EDIF File [./planAhead_run_1/processor.data/cache/font_ngc_zx.edif]
+Parsing EDIF File [./planAhead_run_3/processor.data/cache/font_ngc_zx.edif]
+Finished Parsing EDIF File [./planAhead_run_3/processor.data/cache/font_ngc_zx.edif]
 INFO: [Designutils 20-910] Reading macro library D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn
 Parsing EDIF File [D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
 Finished Parsing EDIF File [D:/Xilinx/14.7/ISE_DS/PlanAhead/data\./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
@@ -82,9 +82,14 @@ INFO: [Designutils 20-20] Invalid constraints found, use command 'write_ucf -con
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Phase 0 | Netlist Checksum: a42da676
-link_design: Time (s): elapsed = 00:00:09 . Memory (MB): peak = 620.965 ; gain = 152.789
+Phase 0 | Netlist Checksum: 0de170b1
+link_design: Time (s): elapsed = 00:00:09 . Memory (MB): peak = 617.270 ; gain = 164.535
+set_property package_pin "" [get_ports [list  clk_11]]
+startgroup
+set_property package_pin B8 [get_ports clk_11]
+endgroup
+save_constraints
 exit
 ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
-INFO: [Common 17-206] Exiting PlanAhead at Tue Dec 05 20:47:27 2017...
+INFO: [Common 17-206] Exiting PlanAhead at Tue Dec 05 20:08:24 2017...
 INFO: [Common 17-83] Releasing license: PlanAhead

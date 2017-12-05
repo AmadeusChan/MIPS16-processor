@@ -44,8 +44,8 @@ entity IM is
            PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--读IM时，PC输入
 			  InstOut : out  STD_LOGIC_VECTOR (15 downto 0);	--读IM时，PC读出的指令
            AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--读/写内存时，地址输入
-           DataIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写内存时，要写入IM的数据
-           DataOut : out  STD_LOGIC_VECTOR (15 downto 0));	--读内存时，读出的IM数据
+           DataIn : in  STD_LOGIC_VECTOR (15 downto 0));	--写内存时，要写入IM的数据
+--           DataOut : out  STD_LOGIC_VECTOR (15 downto 0));	--读内存时，读出的IM数据
 			  
 end IM;
 
@@ -55,14 +55,14 @@ begin
 
 	Ram2EN <= '0' when (MemEn = '1') else '1';
 	Ram2WE <= '0' when (MemWrite = '1' and clk = '0') else '1';
-	Ram2OE <= '0' when (MemRead = '1') else '1';    
+	Ram2OE <= '0' when (MemRead = '1' and MemWrite = '0') else '1';    
 
 	Ram2Addr <= (others => '0') when rst = '0' else 
-		    "00" & PCIn when MemRead = '1' and AddrIn > x"7FFF" else
-		    "00" & AddrIn;
-	Ram2Data <= (others => 'Z') when MemRead = '1' else DataIn;
-	InstOut <= (others => '0') when rst = '0' else Ram2Data when (AddrIn > x"7FFF");
-	DataOut <= (others => '0') when rst = '0' else Ram2Data when (AddrIn <= x"7FFF");
+		    "00" & AddrIn when MemWrite = '1' else
+		    "00" & PCIn;
+	Ram2Data <= DataIn when MemWrite = '1' else (others => 'Z');
+	InstOut <= (others => '0') when rst = '0' else Ram2Data; --when (AddrIn > x"7FFF");
+--	DataOut <= (others => '0') when rst = '0' else Ram2Data when (AddrIn <= x"7FFF");
 	
 --	process(clk, rst, MemWrite, MemRead, Ram2Data)
 --	begin
