@@ -164,7 +164,7 @@ architecture Behavioral of processor is
 	     	   read_reg_1_out, read_reg_2_out: out STD_LOGIC_VECTOR(3 downto 0);
 				reg_debug, reg_1, reg_2, reg_3, reg_4, reg_5, reg_6, reg_7: out STD_LOGIC_VECTOR(15 downto 0);
 				  ih_debug: out STD_LOGIC_VECTOR(15 downto 0);      
-				  ra_debug: out STD_LOGIC_VECTOR(15 downto 0);      
+ 				  ra_debug: out STD_LOGIC_VECTOR(15 downto 0);        
 				  t_debug: out STD_LOGIC_VECTOR(15 downto 0);      
 				  sp_debug: out STD_LOGIC_VECTOR(15 downto 0);      
 
@@ -454,6 +454,8 @@ architecture Behavioral of processor is
 	Tdata : in std_logic_vector(15 downto 0);
 	SPdata : in std_logic_vector(15 downto 0);
 	IHdata : in std_logic_vector(15 downto 0);
+	
+	PSdata : in std_logic_vector(15 downto 0);
 
 	-- font rom
 	romAddr : out std_logic_vector(10 downto 0);
@@ -467,7 +469,7 @@ architecture Behavioral of processor is
 	end component;
 	
 		-- VGA-DEBUG --
-	signal r1, r2, r3, r4, r5, r6, r7, rPC, rRA, rTdata, rSPdata, rIHdata : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+	signal r1, r2, r3, r4, r5, r6, r7, rPC, rRA, rTdata, rSPdata, rIHdata, PSdata: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 
 	signal fontAddr : STD_LOGIC_VECTOR(10 downto 0);
 	signal fontData : STD_LOGIC_VECTOR(7 downto 0);
@@ -480,7 +482,7 @@ architecture Behavioral of processor is
 		ps2clk: in std_logic;
 		ps2data: in std_logic;
 
-		data_ready: out std_logic; -- 常0，有数据到来时变成1，至少保持两个CPU周期
+		data_ready: out std_logic; -- �，有数据到来时变�，至少保持两个CPU周期
 		key_value: out std_logic_vector(15 downto 0) -- 总是保持前一次的结果
 	);
 	end component;
@@ -518,6 +520,8 @@ begin
 	Tdata => rTdata,
 	SPdata => rSPdata,
 	IHdata => rIHdata,
+	
+	psdata => keyboard_key_value,
 
 	-- font rom
 	romAddr => fontAddr,
@@ -919,7 +923,7 @@ begin
 		clk50M => clk_manual,
 		ps2clk => ps2clk,
 		ps2data => ps2data,
-		data_ready => keyboard_data_ready, -- 常0，有数据到来时变成1
+		data_ready => keyboard_data_ready, -- �，有数据到来时变�
 		key_value => keyboard_key_value -- 总是保持前一次的结果
 	);
 
