@@ -171,7 +171,6 @@ NET "vs" LOC = E6;
 
 
 
-NET "clk" LOC = B8;
 
 
 NET "clk_11" LOC = B8;

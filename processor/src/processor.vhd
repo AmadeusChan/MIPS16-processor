@@ -475,7 +475,8 @@ architecture Behavioral of processor is
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
 	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
-	signal clk, clk_25: STD_LOGIC := '0';
+	signal clk : STD_LOGIC := '0';
+	signal clk_25: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	
@@ -956,12 +957,13 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 
 	process(clk_50M)
 	begin
-		if clk_50M'event and clk_50M = '1' then
+		if rising_edge(clk_50M) then
 			clk_25 <= not clk_25;
 		end if;
 	end process;
 	
-	clk <= clk_manual when switch(0) = '1' else clk_11;
+	--clk <= clk_manual when switch(0) = '1' else clk_11;
+	clk <= clk_50M;
 
 end Behavioral;
 
