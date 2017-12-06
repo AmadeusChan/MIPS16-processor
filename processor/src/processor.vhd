@@ -473,15 +473,6 @@ architecture Behavioral of processor is
 	);
 	end component;
 	
-	COMPONENT clock
-	PORT(
-		CLKIN_IN : IN std_logic;
-		RST_IN : IN std_logic;          
-		CLKFX_OUT : OUT std_logic;
-		CLK0_OUT : OUT std_logic
-		);
-	END COMPONENT;
-	
 		-- VGA-DEBUG --
 	signal r1, r2, r3, r4, r5, r6, r7, rPC, rRA, rTdata, rSPdata, rIHdata, PSdata: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 
@@ -516,7 +507,7 @@ architecture Behavioral of processor is
 	signal stall_to_if_id_tmp_from_ual_tmp: STD_LOGIC;
 	signal is_structural_hazard_pred: STD_LOGIC;
 	
-		COMPONENT clock
+	COMPONENT clock
 	PORT(
 		CLKIN_IN : IN std_logic;          
 		CLKFX_OUT : OUT std_logic;

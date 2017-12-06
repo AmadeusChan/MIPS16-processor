@@ -7,7 +7,7 @@
 -- \   \   \/     Version : 14.7
 --  \   \         Application : xaw2vhdl
 --  /   /         Filename : clock.vhd
--- /___/   /\     Timestamp : 12/07/2017 02:42:15
+-- /___/   /\     Timestamp : 12/07/2017 03:33:22
 -- \   \  /  \ 
 --  \___\/\___\ 
 --
