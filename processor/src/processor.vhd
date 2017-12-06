@@ -527,19 +527,11 @@ begin
 	r7 => enable_debug,
 
 	PC => pc_from_if_tmp,
-<<<<<<< HEAD
 	RA => address_in_to_if_tmp,
 	Tdata => data_in_to_if_tmp,
 	SPdata => enable_instruction,
-	IHdata => rIHdata,
-=======
-	RA => rRA,
-	Tdata => rTdata,
-	SPdata => rSPdata,
-	IHdata => rIHdata,
-	
+	IHdata => rIHdata,	
 	psdata => keyboard_key_value,
->>>>>>> origin/dev_mushroom
 
 	-- font rom
 	romAddr => fontAddr,
