@@ -31,24 +31,28 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ID_forward_IF_regs is
     Port ( bubble : in  STD_LOGIC;
-           stall : in  STD_LOGIC;
+           -- stall : in  STD_LOGIC;
+    	   stall_next_period: in STD_LOGIC;
            branch_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
            jump_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
            is_jump_in : in  STD_LOGIC;
            is_branch_in : in  STD_LOGIC;
            branch_type_in : in  STD_LOGIC;
            branch_relative_reg_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
-           branch_target_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           jump_target_out : out  STD_LOGIC_VECTOR (15 downto 0);
-           is_jump_out : out  STD_LOGIC;
-           is_branch_out : out  STD_LOGIC;
-           branch_type_out : out  STD_LOGIC;
-           branch_relative_reg_data_out : out  STD_LOGIC_VECTOR (15 downto 0);
+           branch_target_out : buffer STD_LOGIC_VECTOR (15 downto 0);
+           jump_target_out : buffer STD_LOGIC_VECTOR (15 downto 0);
+           is_jump_out : buffer STD_LOGIC;
+           is_branch_out : buffer STD_LOGIC;
+           branch_type_out : buffer STD_LOGIC;
+           branch_relative_reg_data_out : buffer STD_LOGIC_VECTOR (15 downto 0);
+
 			  clk, rst: in STD_LOGIC
 			  );
 end ID_forward_IF_regs;
 
 architecture Behavioral of ID_forward_IF_regs is
+
+	signal stall: STD_LOGIC := '0';
 
 begin
 
@@ -62,6 +66,7 @@ begin
 			is_branch_out <= '0';
 			branch_type_out <= '0';
 			branch_relative_reg_data_out <= (others => '0');
+			stall <= '0';
 		elsif (clk'event and clk = '1') then
 			if (stall = '1') then
 				null;
@@ -80,6 +85,7 @@ begin
 				branch_type_out <= branch_type_in;
 				branch_relative_reg_data_out <= branch_relative_reg_data_in;
 			end if;
+			stall <= stall_next_period;
 		end if;
 	
 	end process;

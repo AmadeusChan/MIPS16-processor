@@ -45,7 +45,7 @@ WARNING:NetListWriters:306 - Signal bus
    not reconstructed, because there are some missing bus signals.
   finished :Prep
 Writing EDIF netlist file processor.edif ...
-ngc2edif: Total memory usage is 87780 kilobytes
+ngc2edif: Total memory usage is 87908 kilobytes
 
 Parsing EDIF File [./planAhead_run_2/processor.data/cache/processor_ngc_zx.edif]
 Finished Parsing EDIF File [./planAhead_run_2/processor.data/cache/processor_ngc_zx.edif]
@@ -58,7 +58,7 @@ Processing design ...
    Preping design's macros ...
   finished :Prep
 Writing EDIF netlist file font.edif ...
-ngc2edif: Total memory usage is 81636 kilobytes
+ngc2edif: Total memory usage is 82340 kilobytes
 
 Reading core file 'Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/ipcore_dir/font.ngc' for (cell view 'font', library 'processor_lib', file 'processor.ngc')
 Parsing EDIF File [./planAhead_run_2/processor.data/cache/font_ngc_zx.edif]
@@ -84,9 +84,9 @@ INFO: [Designutils 20-20] Invalid constraints found, use command 'write_ucf -con
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Phase 0 | Netlist Checksum: d517f933
-link_design: Time (s): elapsed = 00:00:12 . Memory (MB): peak = 628.348 ; gain = 120.961
+Phase 0 | Netlist Checksum: 6a43b3c5
+link_design: Time (s): elapsed = 00:00:10 . Memory (MB): peak = 620.836 ; gain = 121.070
 exit
 ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
-INFO: [Common 17-206] Exiting PlanAhead at Wed Dec 06 13:23:55 2017...
+INFO: [Common 17-206] Exiting PlanAhead at Wed Dec 06 19:07:54 2017...
 INFO: [Common 17-83] Releasing license: PlanAhead

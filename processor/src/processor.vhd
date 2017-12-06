@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL; 
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-library work;
+library work; 
 use work.constants.all; 
 
 -- Uncomment the following library declaration if using
@@ -205,7 +205,7 @@ architecture Behavioral of processor is
 
 	component ID_forward_IF_regs is
 		Port (  bubble : in  STD_LOGIC;
-			stall : in  STD_LOGIC;
+			stall_next_period : in  STD_LOGIC;
 			branch_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
 			jump_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
 			is_jump_in : in  STD_LOGIC;
@@ -473,7 +473,7 @@ architecture Behavioral of processor is
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
 	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
-	signal clk, clk_1: STD_LOGIC := '0';
+	signal clk, clk_25: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	
@@ -482,7 +482,7 @@ begin
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
 	 r5_debug <= x"000" & write_back_reg_to_alu_tmp;
-	 hazard_debug <= "000" & is_jump_from_id_tmp & "000" & is_structural_hazard_to_if_tmp & "000" & is_hazard_1_to_id_tmp & "000" & is_hazard_2_to_id_tmp;
+	 hazard_debug <= "000" & is_jump_to_if_tmp & "000" & is_structural_hazard_to_if_tmp & "000" & is_hazard_1_to_id_tmp & "000" & stall_to_id_if_tmp;
 	 enable_debug <= "000" & reg_write_enable_from_id_tmp & "000" & write_back_enable_to_wb_tmp & "000" & reg_write_enable_to_mem_tmp & "000" & reg_write_enable_to_alu_tmp;
 	 enable_instruction <= x"00" & "000" & ram2_we_to_if_tmp & "000" & ram2_oe_to_if_tmp;
 	-------------- VGA-DEBUGGER -------------
@@ -765,7 +765,7 @@ begin
 	ID_forward_IF_regs_imp: ID_forward_IF_regs 
 	port map (
 		bubble => bubble_to_id_if_tmp,
-		stall => stall_to_id_if_tmp,
+		stall_next_period => stall_to_id_if_tmp,
 	
 		branch_target_in => branch_target_from_id_tmp,
 		jump_target_in => jump_target_from_id_tmp,
@@ -931,20 +931,14 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 
 
 
-	process(clk_11)
+	process(clk_50M)
 	begin
-		if clk_11'event and clk_11 = '1' then
-			if cnt = x"04c4b4" then
-				cnt <= x"000000";
-				clk_1 <= not clk_1;
-			else 
-			 cnt <= cnt + x"000001";
-			end if;
+		if clk_50M'event and clk_50M = '1' then
+			clk_25 <= not clk_25;
 		end if;
-	
 	end process;
 	
-	clk <= clk_manual when switch(0) = '1' else clk_11;
+	clk <= clk_manual when switch(0) = '1' else clk_25;
 
 end Behavioral;
 
