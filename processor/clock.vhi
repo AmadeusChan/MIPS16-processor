@@ -1,23 +1,25 @@
 
--- VHDL Instantiation Created from source file tmp.vhd -- 13:42:54 12/06/2017
+-- VHDL Instantiation Created from source file clock.vhd -- 18:55:44 12/06/2017
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types
 -- std_logic and std_logic_vector for the ports of the instantiated module
 -- 2) To use this template to instantiate this entity, cut-and-paste and then edit
 
-	COMPONENT tmp
+	COMPONENT clock
 	PORT(
 		CLKIN_IN : IN std_logic;
 		RST_IN : IN std_logic;          
-		CLKFX_OUT : OUT std_logic
+		CLKFX_OUT : OUT std_logic;
+		CLK0_OUT : OUT std_logic
 		);
 	END COMPONENT;
 
-	Inst_tmp: tmp PORT MAP(
+	Inst_clock: clock PORT MAP(
 		CLKIN_IN => ,
 		RST_IN => ,
-		CLKFX_OUT => 
+		CLKFX_OUT => ,
+		CLK0_OUT => 
 	);
 
 

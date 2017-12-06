@@ -97,32 +97,33 @@ begin
 --		end case;
 --	end process;
 
-	process (is_ual_hazard_1_tmp, is_ual_hazard_2_tmp)
-	begin
+ 
 		bubble <= is_ual_hazard_1_tmp or is_ual_hazard_2_tmp;
 		stall <= is_ual_hazard_1_tmp or is_ual_hazard_2_tmp;
-	end process;
+		
+		is_ual_hazard_1_tmp <= '1' when mem_read = enable and reg_write_enable = enable and read_reg1 = write_back_reg else '0';
+		is_ual_hazard_2_tmp <= '1' when mem_read = enable and reg_write_enable = enable and read_reg2 = write_back_reg else '0';
 
-	process (read_reg1, read_reg2, write_back_reg, reg_write_enable, mem_read, state)
-	begin 
-		--if state = detecting then 
-			if mem_read = enable and reg_write_enable = enable then
-					if read_reg1 = write_back_reg then
-							is_ual_hazard_1_tmp <= '1';
-							is_ual_hazard_2_tmp <= '0';
-						elsif read_reg2 = write_back_reg then
-								is_ual_hazard_1_tmp <= '0';
-								is_ual_hazard_2_tmp <= '1';
-							else 
-								is_ual_hazard_1_tmp <= '0';
-								is_ual_hazard_2_tmp <= '0';
-							end if;
-				else 
-					is_ual_hazard_1_tmp <= '0';
-					is_ual_hazard_2_tmp <= '0';
-				end if;
-		--end if;
-	end process;
+--	process (read_reg1, read_reg2, write_back_reg, reg_write_enable, mem_read, state)
+--	begin 
+--		--if state = detecting then 
+--			if mem_read = enable and reg_write_enable = enable then
+--					if read_reg1 = write_back_reg then
+--							is_ual_hazard_1_tmp <= '1';
+--							is_ual_hazard_2_tmp <= '0';
+--						elsif read_reg2 = write_back_reg then
+--								is_ual_hazard_1_tmp <= '0';
+--								is_ual_hazard_2_tmp <= '1';
+--							else 
+--								is_ual_hazard_1_tmp <= '0';
+--								is_ual_hazard_2_tmp <= '0';
+--							end if;
+--				else 
+--					is_ual_hazard_1_tmp <= '0';
+--					is_ual_hazard_2_tmp <= '0';
+--				end if;
+--		--end if;
+--	end process;
 
 
 end Behavioral;

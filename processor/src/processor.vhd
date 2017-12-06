@@ -471,6 +471,15 @@ architecture Behavioral of processor is
 	);
 	end component;
 	
+	COMPONENT clock
+	PORT(
+		CLKIN_IN : IN std_logic;
+		RST_IN : IN std_logic;          
+		CLKFX_OUT : OUT std_logic;
+		CLK0_OUT : OUT std_logic
+		);
+	END COMPONENT;
+	
 		-- VGA-DEBUG --
 	signal r1, r2, r3, r4, r5, r6, r7, rPC, rRA, rTdata, rSPdata, rIHdata, PSdata: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 
@@ -497,11 +506,10 @@ architecture Behavioral of processor is
 	
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
-	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
-	signal clk, clk_25: STD_LOGIC := '0';
+	signal clk, rst_fake, clk_tmp, clk_50: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
-	
+		
 begin
 
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
@@ -530,7 +538,7 @@ begin
 	RA => address_in_to_if_tmp,
 	Tdata => data_in_to_if_tmp,
 	SPdata => enable_instruction,
-	IHdata => rIHdata,	
+	IHdata => instruction_from_if_tmp,	
 	psdata => keyboard_key_value,
 
 	-- font rom
@@ -966,17 +974,15 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 		write_enable_in => write_enable_from_mem_tmp,
 		write_enable_out => write_back_enable_to_wb_tmp
 	);
-
-
-
-	process(clk_50M)
-	begin
-		if clk_50M'event and clk_50M = '1' then
-			clk_25 <= not clk_25;
-		end if;
-	end process;
 	
-	clk <= clk_manual when switch(0) = '1' else clk_25;
+	clk_tmp <= clk_manual when switch(0) = '1' else clk_11 ;
+	
+	Inst_clock: clock PORT MAP(
+		CLKIN_IN => clk_50M,
+		RST_IN => rst_fake,
+		CLKFX_OUT => clk,
+		CLK0_OUT => clk_50
+	);
 
 end Behavioral;
 
