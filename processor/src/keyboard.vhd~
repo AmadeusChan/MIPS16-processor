@@ -104,7 +104,7 @@ begin
 						if not(key_code_hold = "00000000") then
 							lock_key_code <= key_code_hold;
 							stat <= "00";
-							hold_time <= 1;
+							hold_time <= 8;
 						end if;
 					end if;
 
