@@ -172,11 +172,13 @@ NET "vs" LOC = E6;
 
 
 NET "clk" LOC = B8;
-NET "clk_manual" LOC = B9;
 
 
-NET "clk_serial_port" LOC = U9;
+NET "clk_11" LOC = B8;
+
+
+NET "clk_manual" LOC = U9;
 
 # PlanAhead Generated physical constraints 
 
-NET "clk_11" LOC = B8;
+NET "clk_50M" LOC = B9;

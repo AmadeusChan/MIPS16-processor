@@ -1016,3 +1016,108 @@ Processing design ...
 Writing EDIF netlist file font.edif ...
 ngc2edif: Total memory usage is 83996 kilobytes
 
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design processor.ngc ...
+WARNING:NetListWriters:298 - No output is written to processor.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus ID_ALU_regs_imp/immediate_out<15 : 0> on
+   block processor is not reconstructed, because there are some missing bus
+   signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_addsub0000_Madd_cy<4 :
+   1> on block processor is not reconstructed, because there are some missing
+   bus signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_not0000<8 : 1> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus address_in_to_if_tmp<15 : 0> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus
+   register_module_imp/registers_imp/_varindex0001<15 : 0> on block processor is
+   not reconstructed, because there are some missing bus signals.
+  finished :Prep
+Writing EDIF netlist file processor.edif ...
+ngc2edif: Total memory usage is 87780 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design font.ngc ...
+WARNING:NetListWriters:298 - No output is written to font.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+  finished :Prep
+Writing EDIF netlist file font.edif ...
+ngc2edif: Total memory usage is 81636 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design processor.ngc ...
+WARNING:NetListWriters:298 - No output is written to processor.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus ID_ALU_regs_imp/immediate_out<15 : 0> on
+   block processor is not reconstructed, because there are some missing bus
+   signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_addsub0000_Madd_cy<4 :
+   1> on block processor is not reconstructed, because there are some missing
+   bus signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_not0000<8 : 1> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus address_in_to_if_tmp<15 : 0> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus
+   register_module_imp/registers_imp/_varindex0001<15 : 0> on block processor is
+   not reconstructed, because there are some missing bus signals.
+  finished :Prep
+Writing EDIF netlist file processor.edif ...
+ngc2edif: Total memory usage is 88036 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design font.ngc ...
+WARNING:NetListWriters:298 - No output is written to font.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+  finished :Prep
+Writing EDIF netlist file font.edif ...
+ngc2edif: Total memory usage is 81892 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design processor.ngc ...
+WARNING:NetListWriters:298 - No output is written to processor.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+WARNING:NetListWriters:306 - Signal bus ID_ALU_regs_imp/immediate_out<15 : 0> on
+   block processor is not reconstructed, because there are some missing bus
+   signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_addsub0000_Madd_cy<4 :
+   1> on block processor is not reconstructed, because there are some missing
+   bus signals.
+WARNING:NetListWriters:306 - Signal bus VGA/Madd_romAddr_not0000<8 : 1> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus address_in_to_if_tmp<15 : 0> on block
+   processor is not reconstructed, because there are some missing bus signals.
+WARNING:NetListWriters:306 - Signal bus
+   register_module_imp/registers_imp/_varindex0001<15 : 0> on block processor is
+   not reconstructed, because there are some missing bus signals.
+  finished :Prep
+Writing EDIF netlist file processor.edif ...
+ngc2edif: Total memory usage is 88036 kilobytes
+
+Release 14.7 - ngc2edif P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design font.ngc ...
+WARNING:NetListWriters:298 - No output is written to font.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+  finished :Prep
+Writing EDIF netlist file font.edif ...
+ngc2edif: Total memory usage is 81892 kilobytes
+

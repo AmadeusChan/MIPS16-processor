@@ -36,9 +36,9 @@ use work.constants.all;
 
 entity processor is
     Port ( 
-	clk_11 : in  STD_LOGIC; -- 50 MHz
+	clk_11 : in  STD_LOGIC; -- 11M
 	rst : in  STD_LOGIC;
-	clk_serial_port : in  STD_LOGIC; -- 11.0592 MHz
+	clk_50M : in  STD_LOGIC; -- 50M
 	clk_manual : in  STD_LOGIC;
 	switch : in  STD_LOGIC_VECTOR (15 downto 0);  
 	led : out  STD_LOGIC_VECTOR (15 downto 0);
@@ -86,7 +86,7 @@ entity processor is
 	 
 	);
 end processor;
-
+ 
 architecture Behavioral of processor is
 
 	component instruction_fetch_module is  
@@ -106,7 +106,7 @@ architecture Behavioral of processor is
 
 			addr_in: in STD_LOGIC_VECTOR(15 downto 0); 
 			data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		
+			data_out: out STD_LOGIC_VECTOR(15 downto 0);
 			instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 			pc_out: out STD_LOGIC_VECTOR(15 downto 0);
 			
@@ -114,7 +114,7 @@ architecture Behavioral of processor is
 			clk, rst: in STD_LOGIC
 		);
 	end component; 
-	
+	 
 	signal pc_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 	signal ram2_we_to_if_tmp, ram2_oe_to_if_tmp, is_structural_hazard_to_if_tmp, is_ual_hazard_to_if_tmp: STD_LOGIC;
@@ -378,6 +378,9 @@ architecture Behavioral of processor is
 
 	component structural_hazard_detector is
 	    Port ( mem_write_in : in  STD_LOGIC;
+	    	   mem_read_in : in STD_LOGIC;
+	    	   mem_enable_in : in STD_LOGIC;
+	
 	           mem_address_in : in  STD_LOGIC_VECTOR (15 downto 0);
 	           mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
 	
@@ -386,7 +389,7 @@ architecture Behavioral of processor is
 	           ram2_we : out  STD_LOGIC;
 	           ram2_in_data : out  STD_LOGIC_VECTOR (15 downto 0);
 	           ram2_in_address : out  STD_LOGIC_VECTOR (15 downto 0));
-	end component;
+		end component;
 
 	component UAL_hazard_detector is
 	    Port ( read_reg1 : in  STD_LOGIC_VECTOR (3 downto 0);
@@ -471,6 +474,8 @@ architecture Behavioral of processor is
 	
 	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
 	signal clk, clk_1: STD_LOGIC := '0';
+
+	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	
 begin
 
@@ -484,7 +489,7 @@ begin
 		
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => CLK_manual,
+ 	CLK_in => clk_50M,
 
 	-- data
 	r0 => reg_debug_tmp,
@@ -514,7 +519,7 @@ begin
 	);
 
 	fontMem: font port map (
-	clka => clk_manual,
+	clka => clk_50M,
 	addra => fontAddr,
 	douta => fontData
 	);
@@ -635,6 +640,9 @@ begin
 	structural_hazard_detector_imp: structural_hazard_detector 
 	port map (
 		mem_write_in => mem_write_to_mem_tmp,
+		mem_read_in => mem_read_to_mem_tmp,
+		mem_enable_in => mem_enable_to_mem_tmp,
+
 		mem_address_in => mem_address_to_mem_tmp,
 		mem_data_in => mem_data_to_mem_tmp,
 	
@@ -662,6 +670,7 @@ begin
 
 		addr_in => address_in_to_if_tmp,
 		data_in => data_in_to_if_tmp,
+		data_out => mem_data_out_from_if_tmp,
 
 		branch_type_in => branch_type_to_if_tmp,
 		is_branch_in => is_branch_to_if_tmp,
@@ -895,8 +904,13 @@ begin
 	);
 
 	-- memory access module
-	write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when mem_read_to_mem_tmp = enable else
-					write_back_data_to_mem_tmp;
+	--write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when mem_read_to_mem_tmp = enable else
+	--				write_back_data_to_mem_tmp;
+	-- now it is able to load from instruction memory
+write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_tmp = enable and mem_address_to_mem_tmp(15) = '1') else
+				mem_data_out_from_if_tmp when (mem_read_to_mem_tmp = enable and mem_address_to_mem_tmp(15) = '0') else
+				write_back_data_to_mem_tmp;
+
 	write_back_reg_from_mem_tmp <= write_back_reg_to_mem_tmp;
 	write_enable_from_mem_tmp <= reg_write_enable_to_mem_tmp;
 
@@ -930,7 +944,7 @@ begin
 	
 	end process;
 	
-	clk <= clk_1 when switch(0) = '1' else clk_11;
+	clk <= clk_manual when switch(0) = '1' else clk_11;
 
 end Behavioral;
 
