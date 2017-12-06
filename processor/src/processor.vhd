@@ -500,7 +500,7 @@ architecture Behavioral of processor is
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
 	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
-	signal clk, clk_50, clk_tmp: STD_LOGIC := '0';
+	signal clk, clk_50, clk_tmp, clk_high: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	
@@ -519,9 +519,25 @@ begin
 
 	Inst_clock: clock PORT MAP(
 		CLKIN_IN => clk_50M,
-		CLKFX_OUT => clk,
+		CLKFX_OUT => clk_high,
 		CLK0_OUT => clk_50
 	);
+	
+	process(clk_high, clk)
+	variable cnt: integer := 0;
+	begin
+	if clk_high'event and clk_high = '1' then
+		if clk = '1' and cnt = 1 then
+			cnt := 0;
+			clk <= '0';
+		elsif clk = '0' and cnt = 2 then
+			cnt := 0;
+			clk <= '1';
+		else
+			cnt := cnt + 1;
+		end if;
+	end if;
+	end process;
 
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
