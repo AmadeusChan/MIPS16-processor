@@ -38,7 +38,9 @@ entity instruction_fetch_module is
 	Port (
 		-- ram2
 		ram2_addr_out : out  STD_LOGIC_VECTOR (17 downto 0);
-		ram2_data_out : inout  STD_LOGIC_VECTOR (15 downto 0);
+		--ram2_data_out_out : out  STD_LOGIC_VECTOR (15 downto 0);
+		ram2_data_out: inout  STD_LOGIC_VECTOR (15 downto 0);
+		--ram2_data_out_in: in  STD_LOGIC_VECTOR (15 downto 0);
 		ram2_oe_out : out  STD_LOGIC;
 		ram2_we_out : out  STD_LOGIC;
 		ram2_en_out : out  STD_LOGIC;
@@ -74,6 +76,9 @@ architecture Behavioral of instruction_fetch_module is
            Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
 
+           --Ram2Data_in : in STD_LOGIC_VECTOR (15 downto 0);
+           --Ram2Data_out : out  STD_LOGIC_VECTOR (15 downto 0);
+
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--read IM signal, '1' for read 
            MemWrite : in  STD_LOGIC;	--write IM signal, '1' for write 
@@ -99,6 +104,8 @@ begin
 				Ram2EN => ram2_en_out,
 				Ram2Addr => ram2_addr_out,
 				Ram2Data => ram2_data_out,
+				--Ram2Data_in => ram2_data_out_in,
+				--Ram2Data_out => ram2_data_out_out,
 				
 				MemEN => ram2_en_in,
 				MemRead => ram2_oe_in,

@@ -46,6 +46,8 @@ entity processor is
 	-- ram1
 	ram1_addr : out  STD_LOGIC_VECTOR (17 downto 0);
 	ram1_data : inout  STD_LOGIC_VECTOR (15 downto 0);
+	--ram1_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	--ram1_data_out : out  STD_LOGIC_VECTOR (15 downto 0);
 	ram1_oe : out  STD_LOGIC;
 	ram1_we : out  STD_LOGIC;
 	ram1_en : out  STD_LOGIC;
@@ -53,6 +55,8 @@ entity processor is
 	-- ram2
 	ram2_addr : out  STD_LOGIC_VECTOR (17 downto 0);
 	ram2_data : inout  STD_LOGIC_VECTOR (15 downto 0);
+	--ram2_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+	--ram2_data_out : out  STD_LOGIC_VECTOR (15 downto 0);
 	ram2_oe : out  STD_LOGIC;
 	ram2_we : out  STD_LOGIC;
 	ram2_en : out  STD_LOGIC;
@@ -94,6 +98,8 @@ architecture Behavioral of processor is
 			-- ram2
 			ram2_addr_out : out  STD_LOGIC_VECTOR (17 downto 0);
 			ram2_data_out : inout  STD_LOGIC_VECTOR (15 downto 0);
+			--ram2_data_out_in : in  STD_LOGIC_VECTOR (15 downto 0);
+			--ram2_data_out_out : out  STD_LOGIC_VECTOR (15 downto 0);
 			ram2_oe_out : out  STD_LOGIC;
 			ram2_we_out : out  STD_LOGIC;
 			ram2_en_out : out  STD_LOGIC;
@@ -531,7 +537,8 @@ begin
 
 
 	led(7 downto 0) <= reg_debug_tmp(7 downto 0);
-	led(15 downto 8) <= instruction_to_id_tmp(7 downto 0);
+	led(14 downto 8) <= instruction_to_id_tmp(6 downto 0);
+	led(15) <= rst;
 	
 	process(pc_from_if_tmp(3 downto 0)) 
 	begin
@@ -682,6 +689,8 @@ mem_enable_in => mem_enable_to_mem_tmp,
 	port map(
 		ram2_addr_out => ram2_addr,
 		ram2_data_out => ram2_data,
+		--ram2_data_out_in => ram2_data_in,
+		--ram2_data_out_out => ram2_data_out,
 		ram2_oe_out => ram2_oe,
 		ram2_we_out => ram2_we,
 		ram2_en_out => ram2_en,
@@ -962,8 +971,8 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 		end if;
 	end process;
 	
-	--clk <= clk_manual when switch(0) = '1' else clk_11;
-	clk <= clk_50M;
+	clk <= clk_manual when switch(0) = '1' else clk_11;
+	--clk <= clk_11;
 
 end Behavioral;
 

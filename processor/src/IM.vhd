@@ -37,6 +37,8 @@ entity IM is
            Ram2EN : out  STD_LOGIC;		--永远等于'0'
            Ram2Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram2Data : inout  STD_LOGIC_VECTOR (15 downto 0);
+           --Ram2Data_in : in STD_LOGIC_VECTOR (15 downto 0);
+           --Ram2Data_out : out  STD_LOGIC_VECTOR (15 downto 0);
 
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--控制读IM的信号，='1'代表需要读
@@ -61,7 +63,7 @@ begin
 	Ram2Addr <= (others => '0') when rst = '0' else 
 		    "00" & AddrIn when (AddrIn <= x"7FFF") else
 		    "00" & PCIn;
-	Ram2Data <= DataIn when MemWrite = '1' else (others => 'Z');
+	Ram2Data<= DataIn when MemWrite = '1' else (others => 'Z');
 	InstOut <= (others => '0') when rst = '0' else Ram2Data; --when (AddrIn > x"7FFF");
 	DataOut <= (others => '0') when rst = '0' else Ram2Data; -- when (AddrIn <= x"7FFF");
 	
