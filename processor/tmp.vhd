@@ -7,7 +7,7 @@
 -- \   \   \/     Version : 14.7
 --  \   \         Application : xaw2vhdl
 --  /   /         Filename : tmp.vhd
--- /___/   /\     Timestamp : 12/02/2017 14:15:14
+-- /___/   /\     Timestamp : 12/06/2017 13:42:53
 -- \   \  /  \ 
 --  \___\/\___\ 
 --

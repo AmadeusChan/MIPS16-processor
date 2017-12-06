@@ -71,7 +71,7 @@ begin
 					"00" & AddrIn;
 	DataOut <= (others => '0') when rst = '0' else
 					Ram1Data;
-	Ram1Data <= "00000000000000" & data_ready & (tsre and tbre) when AddrIn = x"BF01" else
+	Ram1Data <= x"000" & "00" & data_ready & (tsre and tbre) when AddrIn = x"BF01" else
 					DataIn when MemWrite = '1' else
 					(others => 'Z');
 		

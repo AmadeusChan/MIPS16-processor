@@ -67,3 +67,5 @@ _xmsgs/
 
 isim/
 isim.log
+
+pa.fromNetlist.tcl

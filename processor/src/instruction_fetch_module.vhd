@@ -141,7 +141,7 @@ begin
 		      jump_target_in when is_jump_in = '1' else
 		      pc_in;
 	
-	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
+	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in)
 	begin
 		if (rst = '0') then
 			pc_in <= (others => '0');
