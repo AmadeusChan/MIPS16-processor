@@ -17,6 +17,8 @@ entity VGA_Controller is
 		SPdata : in std_logic_vector(15 downto 0);
 		IHdata : in std_logic_vector(15 downto 0);
 
+		PSdata : in std_logic_vector(15 downto 0);
+
 	-- font rom
 		romAddr : out std_logic_vector(10 downto 0);
 		romData : in std_logic_vector(7 downto 0);
@@ -718,6 +720,16 @@ CLK<=CLK_2;
 						gt <= (others => romData(dx));
 						bt <= (others => romData(dx));
 					end if;
+				elsif( y>= 144 and y <= 151) then -- PS的P
+					if (x = 149) then
+						inty := conv_integer(y);
+						romAddr <= conv_std_logic_vector( 80 * 8 + inty mod 8, 11);
+					else
+						dx := 7 - (conv_integer(x) - 150);
+						rt <= (others => romData(dx));
+						gt <= (others => romData(dx));
+						bt <= (others => romData(dx));
+					end if;
 				else
 					rt <= (others => '0');
 					gt <= (others => '0');
@@ -770,6 +782,42 @@ CLK<=CLK_2;
 						romAddr <= conv_std_logic_vector( 72 * 8 + inty mod 8, 11);
 					else
 						dx := 7 - (conv_integer(x) - 160);
+						rt <= (others => romData(dx));
+						gt <= (others => romData(dx));
+						bt <= (others => romData(dx));
+					end if;
+				elsif ( y >= 144 and y <= 151) then --PS的S
+					if (x = 159) then
+						inty := conv_integer(y);
+						romAddr <= conv_std_logic_vector( 83 * 8 + inty mod 8, 11);
+					else
+						dx := 7 - (conv_integer(x) - 160);
+						rt <= (others => romData(dx));
+						gt <= (others => romData(dx));
+						bt <= (others => romData(dx));
+					end if;
+				elsif ( y >= 144 and y <= 151) then --PS2的2
+					if (x = 169) then
+						inty := conv_integer(y);
+						romAddr <= conv_std_logic_vector( 50 * 8 + inty mod 8, 11);
+					else
+						dx := 7 - (conv_integer(x) - 160);
+						rt <= (others => romData(dx));
+						gt <= (others => romData(dx));
+						bt <= (others => romData(dx));
+					end if;
+				else
+					rt <= (others => '0');
+					gt <= (others => '0');
+					bt <= (others => '0');
+				end if;
+			elsif (x >= 169 and x <= 177) then
+				if ( y >= 144 and y <= 151) then --PS2的2
+					if (x = 169) then
+						inty := conv_integer(y);
+						romAddr <= conv_std_logic_vector( 50 * 8 + inty mod 8, 11);
+					else
+						dx := 7 - (conv_integer(x) - 170);
 						rt <= (others => romData(dx));
 						gt <= (others => romData(dx));
 						bt <= (others => romData(dx));
@@ -1092,6 +1140,55 @@ CLK<=CLK_2;
 							romAddr <= conv_std_logic_vector( (tmp + 48) * 8 + inty mod 8, 11);
 						else
 							romAddr <= conv_std_logic_vector( (tmp - 10 + 65) * 8 + inty mod 8, 11);
+						end if;
+					else
+						dx := 7 - (conv_integer(x) - 210);
+						rt <= (others => romData(dx));
+						gt <= (others => romData(dx));
+						bt <= (others => romData(dx));
+					end if;
+				--CHANGED!
+				elsif ( y >= 144 and y <= 151) then --Ps2 char
+					if (x = 209) then
+						inty := conv_integer(y);
+						if (PSdata(5 downto 4) = "11") then
+							tmp := conv_integer(PSdata(3 downto 0));
+						else
+							tmp := conv_integer(PSdata(5 downto 0)) + 64;
+						end if;
+
+						if (PSdata(5 downto 0) = "011011") then
+							tmp := 44;
+						end if;
+
+						if (PSdata(5 downto 0) = "011100") then
+							tmp := 46;
+						end if;
+
+						if (PSdata(5 downto 0) = "100100") then
+							tmp := 45;
+						end if;
+
+						if (PSdata(5 downto 0) = "100101") then
+							tmp := 61;
+						end if;
+
+						if (PSdata(5 downto 0) = "100110") then
+							tmp := 27;
+						end if;
+
+						if (PSdata(5 downto 0) = "000000") then
+							tmp := 32;
+						end if;
+
+						if (PSdata(5 downto 0) = "011110") then
+							tmp := 13;
+						end if;
+
+						if (tmp <= 9) then
+							romAddr <= conv_std_logic_vector( (tmp + 48) * 8 + inty mod 8, 11);
+						else
+							romAddr <= conv_std_logic_vector( (tmp) * 8 + inty mod 8, 11);
 						end if;
 					else
 						dx := 7 - (conv_integer(x) - 210);

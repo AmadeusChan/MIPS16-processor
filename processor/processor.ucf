@@ -142,6 +142,7 @@ NET "oRed[0]" LOC = A7;
 NET "hs" LOC = D6;
 NET "vs" LOC = E6;
 
+<<<<<<< HEAD
 
 
 
@@ -182,3 +183,12 @@ NET "clk_manual" LOC = U9;
 # PlanAhead Generated physical constraints 
 
 NET "clk_50M" LOC = B9;
+=======
+
+NET "clk" LOC = U9;
+
+# PlanAhead Generated physical constraints 
+
+NET "ps2clk" LOC = U6;
+NET "ps2data" LOC = V6;
+>>>>>>> origin/dev_mushroom

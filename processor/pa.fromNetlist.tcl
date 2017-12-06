@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PlanAhead Launch Script for Post-Synthesis pin planning, created by Project Navigator
 
 create_project -name processor -dir "D:/yi__c/MIPS16-processor/processor/planAhead_run_4" -part xc3s1200efg320-4
@@ -9,3 +10,5 @@ set_param project.pinAheadLayout  yes
 set_property target_constrs_file "processor.ucf" [current_fileset -constrset]
 add_files [list {processor.ucf}] -fileset [get_property constrset [current_run]]
 link_design
+=======
+>>>>>>> origin/dev_mushroom

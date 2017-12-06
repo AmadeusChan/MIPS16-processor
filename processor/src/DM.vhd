@@ -46,6 +46,8 @@ entity DM is
            Ram1Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram1Data : inout  STD_LOGIC_VECTOR (15 downto 0);
 			  
+			  keyboard_key_value: in std_logic_vector(15 downto 0);
+			  
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--控制读DM的信号，='1'代表需要读
            MemWrite : in  STD_LOGIC;	--控制写DM的信号，='1'代表需要写

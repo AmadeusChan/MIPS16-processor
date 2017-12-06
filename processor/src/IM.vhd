@@ -58,11 +58,11 @@ begin
 
 	judge <= '1' when (AddrIn <= x"7FFF") else '0';
 	Ram2EN <= '0' when (MemEn = '1') else '1';
-	Ram2WE <= '0' when (judge = '1' and MemWrite = '1' and clk = '0') else '1';
-	Ram2OE <= '0' when  (MemWrite = '0') else '1';    
+	Ram2WE <= '0' when (MemWrite = '1' and clk = '0') else '1';
+	Ram2OE <= '0' when (MemWrite = '0') else '1';    
 
 	Ram2Addr <= (others => '0') when rst = '0' else 
-		    "00" & AddrIn when (AddrIn <= x"7FFF") else
+		    "00" & AddrIn when judge = '1' else
 		    "00" & PCIn;
 	InstOut <= x"0800" when rst = '0' else Ram2Data; --when (AddrIn > x"7FFF");
 	Ram2Data <= DataIn when MemWrite = '1' else (others => 'Z');
