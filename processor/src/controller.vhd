@@ -55,15 +55,8 @@ architecture Behavioral of controller is
 	
 begin
 
-	process (mem_write) 
-	begin
-		out_mem_write <= mem_write;
-	end process;
-
-	process (mem_read) 
-	begin
-		out_mem_read <= mem_read;
-	end process;
+	out_mem_write <= mem_write;
+	out_mem_read <= mem_read;
 
 	-- branch_type
 	process (instruction)

@@ -209,7 +209,8 @@ architecture Behavioral of processor is
 
 	component ID_forward_IF_regs is
 		Port (  bubble : in  STD_LOGIC;
-			stall_next_period : in  STD_LOGIC;
+			--stall_next_period : in  STD_LOGIC;
+			stall : in  STD_LOGIC;
 			branch_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
 			jump_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
 			is_jump_in : in  STD_LOGIC;
@@ -280,6 +281,7 @@ architecture Behavioral of processor is
 	end component;
 
 	signal bubble_to_id_alu_tmp, stall_to_id_alu_tmp: STD_LOGIC;
+	signal bubble_to_id_alu_from_ual_tmp: STD_LOGIC;
 	signal pc_to_alu_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	signal wb_src_to_alu_tmp : STD_LOGIC_VECTOR (2 downto 0);	
 	signal mem_data_from_reg_to_alu_tmp : STD_LOGIC_VECTOR (15 downto 0);
@@ -506,11 +508,29 @@ architecture Behavioral of processor is
 	
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
-	signal clk, rst_fake, clk_tmp, clk_50: STD_LOGIC := '0';
+	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
+	signal clk, clk_50, clk_tmp: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
-		
+	
+	signal stall_to_if_id_tmp_from_ual_tmp: STD_LOGIC;
+	signal is_structural_hazard_pred: STD_LOGIC;
+	
+		COMPONENT clock
+	PORT(
+		CLKIN_IN : IN std_logic;          
+		CLKFX_OUT : OUT std_logic;
+		CLK0_OUT : OUT std_logic
+		);
+	END COMPONENT;
+
 begin
+
+	Inst_clock: clock PORT MAP(
+		CLKIN_IN => clk_50M,
+		CLKFX_OUT => clk,
+		CLK0_OUT => clk_50
+	);
 
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
@@ -522,15 +542,15 @@ begin
 		
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => clk_50M,
+ 	CLK_in => clk_50,
 
 	-- data
 	r0 => reg_debug_tmp,
 	r1 => r1,
 	r2 => r2,
 	r3 => r3,
-	r4 => r4,
-	r5 => r5,
+	r4 => instruction_to_id_tmp,
+	r5 => instruction_from_if_tmp,
 	r6 => hazard_debug,
 	r7 => enable_debug,
 
@@ -553,7 +573,7 @@ begin
 	);
 
 	fontMem: font port map (
-	clka => clk_50M,
+	clka => clk_50,
 	addra => fontAddr,
 	douta => fontData
 	);
@@ -610,11 +630,14 @@ begin
 
 	-- bubble and stall signals
 	-- IF-ID
-	bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
+	-- bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
+	bubble_to_if_id_tmp <= '0';
 
 	-- ID-IF
 	bubble_to_id_if_tmp <= '0';
-	stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp or stall_to_if_id_tmp;
+	--stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp or stall_to_if_id_tmp;
+	stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp;
+	stall_to_id_alu_tmp <= '0';
 
 	-- ID-ALU
 	stall_to_id_alu_tmp <= '0';
@@ -664,21 +687,36 @@ begin
 		clk => clk, 
 		rst => rst,
 	
-		bubble => bubble_to_id_alu_tmp,
-		stall => stall_to_if_id_tmp
+		--bubble => bubble_to_id_alu_tmp,
+		bubble => bubble_to_id_alu_from_ual_tmp,
+		stall => stall_to_if_id_tmp_from_ual_tmp
 	);
+
+	--bubble_to_id_alu_tmp <= bubble_to_id_alu_from_ual_tmp or is_structural_hazard_to_if_tmp;
+	--is_structural_hazard_pred <= '1' when mem_enable_from_alu_tmp = '1' and mem_address_from_alu_tmp(15) = '0' else '0';
+	is_structural_hazard_pred <= is_structural_hazard_to_if_tmp;
+
+	bubble_to_id_alu_tmp <= bubble_to_id_alu_from_ual_tmp or is_structural_hazard_pred;
+	--stall_to_if_id_tmp <= stall_to_if_id_tmp_from_ual_tmp or is_structural_hazard_to_if_tmp;
+	stall_to_if_id_tmp <= stall_to_if_id_tmp_from_ual_tmp or is_structural_hazard_pred;
 
 	is_ual_hazard_to_if_tmp <= stall_to_if_id_tmp;
 
 	-- structural hazard detector
 	structural_hazard_detector_imp: structural_hazard_detector 
 	port map (
-		mem_write_in => mem_write_to_mem_tmp,
-		mem_read_in => mem_read_to_mem_tmp,
-		mem_enable_in => mem_enable_to_mem_tmp,
-
+mem_write_in => mem_write_to_mem_tmp,
+mem_read_in => mem_read_to_mem_tmp,
+mem_enable_in => mem_enable_to_mem_tmp,
+-- 
 		mem_address_in => mem_address_to_mem_tmp,
 		mem_data_in => mem_data_to_mem_tmp,
+
+--		mem_write_in => mem_write_from_alu_tmp,
+--		mem_read_in => mem_read_from_alu_tmp,
+--		mem_enable_in => mem_enable_from_alu_tmp,
+	--	mem_address_in => mem_address_from_alu_tmp,
+	--	mem_data_in 
 	
 		is_hazard => is_structural_hazard_to_if_tmp,
 		ram2_oe => ram2_oe_to_if_tmp, 
@@ -697,7 +735,7 @@ begin
 		ram2_we_out => ram2_we,
 		ram2_en_out => ram2_en,
 
-		is_structural_hazard_in => is_structural_hazard_to_if_tmp,
+is_structural_hazard_in => is_structural_hazard_pred,
 		is_ual_hazard_in => is_ual_hazard_to_if_tmp,
 		ram2_we_in => ram2_we_to_if_tmp,
 		ram2_oe_in => ram2_oe_to_if_tmp,
@@ -799,7 +837,8 @@ begin
 	ID_forward_IF_regs_imp: ID_forward_IF_regs 
 	port map (
 		bubble => bubble_to_id_if_tmp,
-		stall_next_period => stall_to_id_if_tmp,
+		--stall_next_period => stall_to_id_if_tmp,
+		stall => stall_to_id_if_tmp,
 	
 		branch_target_in => branch_target_from_id_tmp,
 		jump_target_in => jump_target_from_id_tmp,
@@ -974,15 +1013,8 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 		write_enable_in => write_enable_from_mem_tmp,
 		write_enable_out => write_back_enable_to_wb_tmp
 	);
-	
-	clk_tmp <= clk_manual when switch(0) = '1' else clk_11 ;
-	
-	Inst_clock: clock PORT MAP(
-		CLKIN_IN => clk_50M,
-		RST_IN => rst_fake,
-		CLKFX_OUT => clk,
-		CLK0_OUT => clk_50
-	);
+
+	clk_tmp <= clk_manual when switch(0) = '1' else clk_11;
 
 end Behavioral;
 

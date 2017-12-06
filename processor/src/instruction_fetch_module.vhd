@@ -133,6 +133,10 @@ begin
 			is_branch_verified <= '0';
 		end if;
 	end process;
+	
+--	is_branch_verified <= '1' when (is_branch_in = '1' and branch_type_in = equal_branch and branch_relative_reg_data_in = x"0000")
+--								or (is_branch_in = '1' and branch_type_in = not_equal_branch and branch_relative_reg_data_in = x"0001")
+--								else '0';
 
 	--pc_out <= pc_in;
 	pc_out <= pc_out_tmp;
@@ -148,6 +152,7 @@ begin
 		elsif (clk'event and clk = '1') then
 			if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 				pc_in <= pc_in;
+				--pc_in <= pc_out_tmp;
 			else
 				pc_in <= pc_out_tmp + x"0001";
 			end if;

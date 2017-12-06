@@ -1,5 +1,5 @@
 
--- VHDL Instantiation Created from source file clock.vhd -- 18:55:44 12/06/2017
+-- VHDL Instantiation Created from source file clock.vhd -- 00:40:39 12/07/2017
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types
@@ -8,8 +8,7 @@
 
 	COMPONENT clock
 	PORT(
-		CLKIN_IN : IN std_logic;
-		RST_IN : IN std_logic;          
+		CLKIN_IN : IN std_logic;          
 		CLKFX_OUT : OUT std_logic;
 		CLK0_OUT : OUT std_logic
 		);
@@ -17,7 +16,6 @@
 
 	Inst_clock: clock PORT MAP(
 		CLKIN_IN => ,
-		RST_IN => ,
 		CLKFX_OUT => ,
 		CLK0_OUT => 
 	);
