@@ -46,6 +46,8 @@ entity DM is
            Ram1Addr : out  STD_LOGIC_VECTOR (17 downto 0);
            Ram1Data : inout  STD_LOGIC_VECTOR (15 downto 0);
 			  
+			  keyboard_key_value: in std_logic_vector(15 downto 0);
+			  
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--控制读DM的信号，='1'代表需要读
            MemWrite : in  STD_LOGIC;	--控制写DM的信号，='1'代表需要写
@@ -71,7 +73,7 @@ begin
 					"00" & AddrIn;
 	DataOut <= (others => '0') when rst = '0' else
 					Ram1Data;
-	Ram1Data <= "00000000000000" & data_ready & (tsre and tbre) when AddrIn = x"BF01" else
+	Ram1Data <= x"000" & "00" & data_ready & (tsre and tbre) when AddrIn = x"BF01" else
 					DataIn when MemWrite = '1' else
 					(others => 'Z');
 		
