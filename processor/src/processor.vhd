@@ -475,13 +475,29 @@ architecture Behavioral of processor is
 	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
 	
 	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
-	signal clk, clk_25: STD_LOGIC := '0';
+	signal clk, clk_50, clk_tmp: STD_LOGIC := '0';
 
 	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	
 	signal stall_to_if_id_tmp_from_ual_tmp: STD_LOGIC;
 	signal is_structural_hazard_pred: STD_LOGIC;
+	
+		COMPONENT clock
+	PORT(
+		CLKIN_IN : IN std_logic;          
+		CLKFX_OUT : OUT std_logic;
+		CLK0_OUT : OUT std_logic
+		);
+	END COMPONENT;
+
+
 begin
+
+	Inst_clock: clock PORT MAP(
+		CLKIN_IN => clk_50M,
+		CLKFX_OUT => clk,
+		CLK0_OUT => clk_50
+	);
 
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
@@ -493,7 +509,7 @@ begin
 		
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => clk_50M,
+ 	CLK_in => clk_50,
 
 	-- data
 	r0 => reg_debug_tmp,
@@ -523,7 +539,7 @@ begin
 	);
 
 	fontMem: font port map (
-	clka => clk_50M,
+	clka => clk_50,
 	addra => fontAddr,
 	douta => fontData
 	);
@@ -952,16 +968,7 @@ write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_
 		write_enable_out => write_back_enable_to_wb_tmp
 	);
 
-
-
-	process(clk_50M)
-	begin
-		if clk_50M'event and clk_50M = '1' then
-			clk_25 <= not clk_25;
-		end if;
-	end process;
-	
-	clk <= clk_manual when switch(0) = '1' else clk_11;
+	clk_tmp <= clk_manual when switch(0) = '1' else clk_11;
 
 end Behavioral;
 
