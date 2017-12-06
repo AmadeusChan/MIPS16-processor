@@ -148,6 +148,7 @@ begin
 		elsif (clk'event and clk = '1') then
 			if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 				pc_in <= pc_in;
+				--pc_in <= pc_out_tmp;
 			else
 				pc_in <= pc_out_tmp + x"0001";
 			end if;
