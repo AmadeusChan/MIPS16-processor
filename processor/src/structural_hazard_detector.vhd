@@ -34,6 +34,9 @@ use work.constants.all;
 
 entity structural_hazard_detector is
     Port ( mem_write_in : in  STD_LOGIC;
+    	   mem_read_in : in STD_LOGIC;
+    	   mem_enable_in : in STD_LOGIC;
+
            mem_address_in : in  STD_LOGIC_VECTOR (15 downto 0);
            mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
 
@@ -49,11 +52,13 @@ architecture Behavioral of structural_hazard_detector is
 begin
 
 	ram2_in_data <= mem_data_in;
-	ram2_in_address <= mem_address_in;
+	ram2_in_address <= mem_address_in when (mem_enable_in = enable) else
+			   x"FFFF";
 	ram2_oe <= enable;
-	
-	is_hazard <= '1' when (mem_write_in = enable and mem_address_in(15) = '0') else '0';
-	ram2_we <= enable when (mem_write_in = enable and mem_address_in(15) = '0') else disable;
+	ram2_we <= enable when (mem_write_in = enable and mem_address_in(15) = '0') else 
+		   disable;
+	is_hazard <= '1' when (mem_enable_in = enable and mem_address_in(15) = '0') else 
+		     '0';
 
 end Behavioral;
 

@@ -41,41 +41,54 @@ entity IM is
            MemEN : in  STD_LOGIC;
            MemRead : in  STD_LOGIC;		--控制读IM的信号，='1'代表需要读
            MemWrite : in  STD_LOGIC;	--控制写IM的信号，='1'代表需要写
-           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--读IM时，地址输入
-           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写IM时，地址输入
-           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写内存时，要写入IM的数据
-           InstOut : out  STD_LOGIC_VECTOR (15 downto 0));	--读IM时，读出的指令
+           PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--读IM时，PC输入
+			  InstOut : out  STD_LOGIC_VECTOR (15 downto 0);	--读IM时，PC读出的指令
+           AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--读/写内存时，地址输入
+           DataIn : in  STD_LOGIC_VECTOR (15 downto 0);	--写内存时，要写入IM的数据
+			  DataOut: out STD_LOGIC_vECTOR(15 downto 0)
+	);
 			  
 end IM;
 
 architecture Behavioral of IM is
 	
+	signal judge : std_logic := '0';
+	
 begin
 
+	judge <= '1' when (AddrIn <= x"7FFF") else '0';
 	Ram2EN <= '0' when (MemEn = '1') else '1';
 	Ram2WE <= '0' when (MemWrite = '1' and clk = '0') else '1';
-	Ram2OE <= '0' when (MemRead = '1') else '1';    
+	Ram2OE <= '0' when (MemWrite = '0') else '1';    
 
 	Ram2Addr <= (others => '0') when rst = '0' else 
-		    "00" & PCIn when MemRead = '1' else 
-		    "00" & AddrIn;
-	InstOut <= (others => '0') when rst = '0' else Ram2Data;
-	Ram2Data <= (others => 'Z') when MemRead = '1' else InstIn;
+		    "00" & AddrIn when judge = '1' else
+		    "00" & PCIn;
+	InstOut <= x"0800" when rst = '0' else Ram2Data; --when (AddrIn > x"7FFF");
+	Ram2Data <= DataIn when MemWrite = '1' else (others => 'Z');
+	DataOut <= (others => '0') when rst = '0' else Ram2Data; -- when (AddrIn <= x"7FFF");
 	
 --	process(clk, rst, MemWrite, MemRead, Ram2Data)
 --	begin
 --		
 --		if (rst = '0') then
 --			Ram2Addr <= (others => '0');
---			InstOut <= (others => '0');			
+--			InstOut <= (others => '0');
+--			DataOut <= (others => '0');
 --		else
 --			if (MemWrite = '1' and AddrIn <= x"7FFF") then	--write
 --				Ram2Addr(15 downto 0) <= AddrIn;
---				Ram2Data <= InstIn;
+--				Ram2Data <= DataIn;
 --			elsif (MemRead = '1') then								--read
---				Ram2Addr(15 downto 0) <= PCIn;
---				Ram2Data <= (others => 'Z');
---				InstOut <= Ram2Data;
+--				if (AddrIn <= x"7FFF") then
+--					Ram2Addr(15 downto 0) <= AddrIn;
+--					Ram2Data <= (others => 'Z');
+--					DataOut <= Ram2Data;
+--				else
+--					Ram2Addr(15 downto 0) <= PCIn;
+--					Ram2Data <= (others => 'Z');
+--					InstOut <= Ram2Data;				
+--				end if;
 --			end if;
 --		end if;
 --

@@ -100,8 +100,6 @@ NET "switch[3]" LOC = V4;
 NET "switch[2]" LOC = U8;
 NET "switch[1]" LOC = R7;
 NET "switch[0]" LOC = T7;
-NET "clk_manual" LOC = B9;
-NET "clk_serial_port" LOC = B8;
 NET "data_ready" LOC = A16;
 NET "ram1_en" LOC = M15;
 NET "ram1_oe" LOC = M16;
@@ -145,7 +143,12 @@ NET "hs" LOC = D6;
 NET "vs" LOC = E6;
 
 
-NET "clk" LOC = U9;
+NET "clk_11" LOC = B8;
+
+NET "clk_manual" LOC = U9;
+
+
+NET "clk_50M" LOC = B9;
 
 # PlanAhead Generated physical constraints 
 

@@ -50,6 +50,7 @@ entity instruction_fetch_module is
 		branch_relative_reg_data_in, branch_target_in, jump_target_in: in STD_LOGIC_VECTOR(15 downto 0);
 	
 		addr_in, data_in: in STD_LOGIC_VECTOR(15 downto 0); --write back signals
+		data_out: out STD_LOGIC_VECTOR(15 downto 0); --load signals
 	
 		instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 		pc_debug: out STD_LOGIC_VECTOR(15 downto 0);
@@ -77,9 +78,10 @@ architecture Behavioral of instruction_fetch_module is
            MemRead : in  STD_LOGIC;		--read IM signal, '1' for read 
            MemWrite : in  STD_LOGIC;	--write IM signal, '1' for write 
            PCIn : in  STD_LOGIC_VECTOR (15 downto 0);		--address when fetch instruction from IM
+			  InstOut : out  STD_LOGIC_VECTOR (15 downto 0);--data when fetch instruction from IM
            AddrIn : in  STD_LOGIC_VECTOR (15 downto 0);	--address when write IM
-           InstIn : in  STD_LOGIC_VECTOR (15 downto 0);	--data when write IM
-           InstOut : out  STD_LOGIC_VECTOR (15 downto 0)
+           DataIn : in  STD_LOGIC_VECTOR (15 downto 0);	--data when write IM
+           DataOut : out STD_LOGIC_VECTOR (15 downto 0)	--data when load IM
 		);
 	end component;
 
@@ -102,9 +104,10 @@ begin
 				MemRead => ram2_oe_in,
 				MemWrite => ram2_we_in,
 				PCIn => pc_out_tmp,
+				InstOut => instruction_out,
 				AddrIn => addr_in,
-				InstIn => data_in,
-				InstOut => instruction_out
+				DataIn => data_in,
+				DataOut => data_out
 	);	
 	
 	process(is_branch_in, branch_relative_reg_data_in, branch_type_in)
@@ -130,6 +133,10 @@ begin
 			is_branch_verified <= '0';
 		end if;
 	end process;
+	
+--	is_branch_verified <= '1' when (is_branch_in = '1' and branch_type_in = equal_branch and branch_relative_reg_data_in = x"0000")
+--								or (is_branch_in = '1' and branch_type_in = not_equal_branch and branch_relative_reg_data_in = x"0001")
+--								else '0';
 
 	--pc_out <= pc_in;
 	pc_out <= pc_out_tmp;
@@ -138,13 +145,14 @@ begin
 		      jump_target_in when is_jump_in = '1' else
 		      pc_in;
 	
-	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in, is_jump_in, is_branch_in, branch_type_in, branch_relative_reg_data_in)
+	process(rst, clk, is_structural_hazard_in, is_ual_hazard_in)
 	begin
 		if (rst = '0') then
 			pc_in <= (others => '0');
 		elsif (clk'event and clk = '1') then
 			if (is_structural_hazard_in = '1' or is_ual_hazard_in = '1') then
 				pc_in <= pc_in;
+				--pc_in <= pc_out_tmp;
 			else
 				pc_in <= pc_out_tmp + x"0001";
 			end if;

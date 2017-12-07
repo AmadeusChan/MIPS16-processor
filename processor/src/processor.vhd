@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL; 
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-library work;
+library work; 
 use work.constants.all; 
 
 -- Uncomment the following library declaration if using
@@ -36,9 +36,9 @@ use work.constants.all;
 
 entity processor is
     Port ( 
-	clk : in  STD_LOGIC; -- 50 MHz
+	clk_11 : in  STD_LOGIC; -- 11M
 	rst : in  STD_LOGIC;
-	clk_serial_port : in  STD_LOGIC; -- 11.0592 MHz
+	clk_50M : in  STD_LOGIC; -- 50M
 	clk_manual : in  STD_LOGIC;
 	switch : in  STD_LOGIC_VECTOR (15 downto 0);  
 	led : out  STD_LOGIC_VECTOR (15 downto 0);
@@ -90,7 +90,7 @@ entity processor is
 	 
 	);
 end processor;
-
+ 
 architecture Behavioral of processor is
 
 	component instruction_fetch_module is  
@@ -110,7 +110,7 @@ architecture Behavioral of processor is
 
 			addr_in: in STD_LOGIC_VECTOR(15 downto 0); 
 			data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		
+			data_out: out STD_LOGIC_VECTOR(15 downto 0);
 			instruction_out: out STD_LOGIC_VECTOR(15 downto 0);
 			pc_out: out STD_LOGIC_VECTOR(15 downto 0);
 			
@@ -118,7 +118,7 @@ architecture Behavioral of processor is
 			clk, rst: in STD_LOGIC
 		);
 	end component; 
-	
+	 
 	signal pc_debug_tmp: STD_LOGIC_VECTOR(15 downto 0);
 
 	signal ram2_we_to_if_tmp, ram2_oe_to_if_tmp, is_structural_hazard_to_if_tmp, is_ual_hazard_to_if_tmp: STD_LOGIC;
@@ -209,6 +209,7 @@ architecture Behavioral of processor is
 
 	component ID_forward_IF_regs is
 		Port (  bubble : in  STD_LOGIC;
+			--stall_next_period : in  STD_LOGIC;
 			stall : in  STD_LOGIC;
 			branch_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
 			jump_target_in : in  STD_LOGIC_VECTOR (15 downto 0);
@@ -280,6 +281,7 @@ architecture Behavioral of processor is
 	end component;
 
 	signal bubble_to_id_alu_tmp, stall_to_id_alu_tmp: STD_LOGIC;
+	signal bubble_to_id_alu_from_ual_tmp: STD_LOGIC;
 	signal pc_to_alu_tmp: STD_LOGIC_VECTOR(15 downto 0);
 	signal wb_src_to_alu_tmp : STD_LOGIC_VECTOR (2 downto 0);	
 	signal mem_data_from_reg_to_alu_tmp : STD_LOGIC_VECTOR (15 downto 0);
@@ -385,6 +387,9 @@ architecture Behavioral of processor is
 
 	component structural_hazard_detector is
 	    Port ( mem_write_in : in  STD_LOGIC;
+	    	   mem_read_in : in STD_LOGIC;
+	    	   mem_enable_in : in STD_LOGIC;
+	
 	           mem_address_in : in  STD_LOGIC_VECTOR (15 downto 0);
 	           mem_data_in : in  STD_LOGIC_VECTOR (15 downto 0);
 	
@@ -393,7 +398,7 @@ architecture Behavioral of processor is
 	           ram2_we : out  STD_LOGIC;
 	           ram2_in_data : out  STD_LOGIC_VECTOR (15 downto 0);
 	           ram2_in_address : out  STD_LOGIC_VECTOR (15 downto 0));
-	end component;
+		end component;
 
 	component UAL_hazard_detector is
 	    Port ( read_reg1 : in  STD_LOGIC_VECTOR (3 downto 0);
@@ -492,35 +497,75 @@ architecture Behavioral of processor is
 
 	--------------process-------------------
 	
-	signal hazard_debug, enable_debug, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
+	signal hazard_debug, enable_debug, enable_instruction, r4_debug, r5_debug, r3_debug: STD_LOGIC_VECTOR(15 downto 0);
+	
+	signal cnt: STD_LOGIC_VECTOR(23 downto 0) := x"000000";
+	signal clk, clk_50, clk_tmp, clk_high: STD_LOGIC := '0';
+
+	signal mem_data_out_from_if_tmp: STD_LOGIC_VECTOR(15 downto 0);
+	
+	signal stall_to_if_id_tmp_from_ual_tmp: STD_LOGIC;
+	signal is_structural_hazard_pred: STD_LOGIC;
+	
+	COMPONENT clock
+	PORT(
+		CLKIN_IN : IN std_logic;          
+		CLKFX_OUT : OUT std_logic;
+		CLK0_OUT : OUT std_logic
+		);
+	END COMPONENT;
 
 begin
+
+	Inst_clock: clock PORT MAP(
+		CLKIN_IN => clk_50M,
+		CLKFX_OUT => clk_high,
+		CLK0_OUT => clk_50
+	);
+	
+	process(clk_high, clk)
+	variable cnt: integer := 0;
+	begin
+	if clk_high'event and clk_high = '1' then
+		if clk = '1' and cnt = 1 then
+			cnt := 0;
+			clk <= '0';
+		elsif clk = '0' and cnt = 2 then
+			cnt := 0;
+			clk <= '1';
+		else
+			cnt := cnt + 1;
+		end if;
+	end if;
+	end process;
+
 	 r3_debug <= x"000" & write_back_reg_to_wb_tmp;
 	 r4_debug <= x"000" & write_back_reg_to_mem_tmp;
 	 r5_debug <= x"000" & write_back_reg_to_alu_tmp;
-	 hazard_debug <= "000" & is_jump_from_id_tmp & x"00" & "00" & is_hazard_1_to_id_tmp & is_hazard_2_to_id_tmp;
+	 hazard_debug <= "000" & is_jump_to_if_tmp & "000" & is_structural_hazard_to_if_tmp & "000" & is_hazard_1_to_id_tmp & "000" & stall_to_id_if_tmp;
 	 enable_debug <= "000" & reg_write_enable_from_id_tmp & "000" & write_back_enable_to_wb_tmp & "000" & reg_write_enable_to_mem_tmp & "000" & reg_write_enable_to_alu_tmp;
+	 enable_instruction <= x"00" & "000" & ram2_we_to_if_tmp & "000" & ram2_oe_to_if_tmp;
 	-------------- VGA-DEBUGGER -------------
+		
 	VGA: VGA_Controller port map (
 	reset => rst,
- 	CLK_in => CLK_manual,
+ 	CLK_in => clk_50,
 
 	-- data
 	r0 => reg_debug_tmp,
 	r1 => r1,
 	r2 => r2,
-	r3 => r3_debug,
-	r4 => r4_debug,
-	r5 => r5_debug,
-	r6 => enable_debug,
-	r7 => hazard_debug,
+	r3 => r3,
+	r4 => instruction_to_id_tmp,
+	r5 => instruction_from_if_tmp,
+	r6 => hazard_debug,
+	r7 => enable_debug,
 
 	PC => pc_from_if_tmp,
-	RA => rRA,
-	Tdata => rTdata,
-	SPdata => rSPdata,
-	IHdata => rIHdata,
-	
+	RA => address_in_to_if_tmp,
+	Tdata => data_in_to_if_tmp,
+	SPdata => enable_instruction,
+	IHdata => instruction_from_if_tmp,	
 	psdata => keyboard_key_value,
 
 	-- font rom
@@ -535,7 +580,7 @@ begin
 	);
 
 	fontMem: font port map (
-	clka => clk_manual,
+	clka => clk_50,
 	addra => fontAddr,
 	douta => fontData
 	);
@@ -592,11 +637,14 @@ begin
 
 	-- bubble and stall signals
 	-- IF-ID
-	bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
+	-- bubble_to_if_id_tmp <= is_structural_hazard_to_if_tmp;
+	bubble_to_if_id_tmp <= '0';
 
 	-- ID-IF
 	bubble_to_id_if_tmp <= '0';
-	stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp or stall_to_if_id_tmp;
+	--stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp or stall_to_if_id_tmp;
+	stall_to_id_if_tmp <= is_structural_hazard_to_if_tmp;
+	stall_to_id_alu_tmp <= '0';
 
 	-- ID-ALU
 	stall_to_id_alu_tmp <= '0';
@@ -646,18 +694,36 @@ begin
 		clk => clk, 
 		rst => rst,
 	
-		bubble => bubble_to_id_alu_tmp,
-		stall => stall_to_if_id_tmp
+		--bubble => bubble_to_id_alu_tmp,
+		bubble => bubble_to_id_alu_from_ual_tmp,
+		stall => stall_to_if_id_tmp_from_ual_tmp
 	);
+
+	--bubble_to_id_alu_tmp <= bubble_to_id_alu_from_ual_tmp or is_structural_hazard_to_if_tmp;
+	--is_structural_hazard_pred <= '1' when mem_enable_from_alu_tmp = '1' and mem_address_from_alu_tmp(15) = '0' else '0';
+	is_structural_hazard_pred <= is_structural_hazard_to_if_tmp;
+
+	bubble_to_id_alu_tmp <= bubble_to_id_alu_from_ual_tmp or is_structural_hazard_pred;
+	--stall_to_if_id_tmp <= stall_to_if_id_tmp_from_ual_tmp or is_structural_hazard_to_if_tmp;
+	stall_to_if_id_tmp <= stall_to_if_id_tmp_from_ual_tmp or is_structural_hazard_pred;
 
 	is_ual_hazard_to_if_tmp <= stall_to_if_id_tmp;
 
 	-- structural hazard detector
 	structural_hazard_detector_imp: structural_hazard_detector 
 	port map (
-		mem_write_in => mem_write_to_mem_tmp,
+mem_write_in => mem_write_to_mem_tmp,
+mem_read_in => mem_read_to_mem_tmp,
+mem_enable_in => mem_enable_to_mem_tmp,
+-- 
 		mem_address_in => mem_address_to_mem_tmp,
 		mem_data_in => mem_data_to_mem_tmp,
+
+--		mem_write_in => mem_write_from_alu_tmp,
+--		mem_read_in => mem_read_from_alu_tmp,
+--		mem_enable_in => mem_enable_from_alu_tmp,
+	--	mem_address_in => mem_address_from_alu_tmp,
+	--	mem_data_in 
 	
 		is_hazard => is_structural_hazard_to_if_tmp,
 		ram2_oe => ram2_oe_to_if_tmp, 
@@ -676,13 +742,14 @@ begin
 		ram2_we_out => ram2_we,
 		ram2_en_out => ram2_en,
 
-		is_structural_hazard_in => is_structural_hazard_to_if_tmp,
+is_structural_hazard_in => is_structural_hazard_pred,
 		is_ual_hazard_in => is_ual_hazard_to_if_tmp,
 		ram2_we_in => ram2_we_to_if_tmp,
 		ram2_oe_in => ram2_oe_to_if_tmp,
 
 		addr_in => address_in_to_if_tmp,
 		data_in => data_in_to_if_tmp,
+		data_out => mem_data_out_from_if_tmp,
 
 		branch_type_in => branch_type_to_if_tmp,
 		is_branch_in => is_branch_to_if_tmp,
@@ -777,6 +844,7 @@ begin
 	ID_forward_IF_regs_imp: ID_forward_IF_regs 
 	port map (
 		bubble => bubble_to_id_if_tmp,
+		--stall_next_period => stall_to_id_if_tmp,
 		stall => stall_to_id_if_tmp,
 	
 		branch_target_in => branch_target_from_id_tmp,
@@ -920,7 +988,7 @@ begin
 
 	keyboard_imp: keyboard PORT MAP(
 		rst => rst,
-		clk50M => clk_manual,
+		clk50M => CLK_50M,
 		ps2clk => ps2clk,
 		ps2data => ps2data,
 		data_ready => keyboard_data_ready, -- �，有数据到来时变�
@@ -928,8 +996,13 @@ begin
 	);
 
 	-- memory access module
-	write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when mem_read_to_mem_tmp = enable else
-					write_back_data_to_mem_tmp;
+	--write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when mem_read_to_mem_tmp = enable else
+	--				write_back_data_to_mem_tmp;
+	-- now it is able to load from instruction memory
+write_back_data_from_mem_tmp <= mem_data_out_from_mem_tmp when (mem_read_to_mem_tmp = enable and mem_address_to_mem_tmp(15) = '1') else
+				mem_data_out_from_if_tmp when (mem_read_to_mem_tmp = enable and mem_address_to_mem_tmp(15) = '0') else
+				write_back_data_to_mem_tmp;
+
 	write_back_reg_from_mem_tmp <= write_back_reg_to_mem_tmp;
 	write_enable_from_mem_tmp <= reg_write_enable_to_mem_tmp;
 
@@ -948,6 +1021,7 @@ begin
 		write_enable_out => write_back_enable_to_wb_tmp
 	);
 
+	clk_tmp <= clk_manual when switch(0) = '1' else clk_11;
 
 end Behavioral;
 

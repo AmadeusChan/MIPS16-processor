@@ -44,7 +44,7 @@ architecture behave of VGA_Controller is
 	signal cao		: std_logic_vector (7 downto 0);		--Y坐标
 
 	shared variable dx : integer range 0 to 7;
-	shared variable inty,tmp,h,w: integer range 0 to 500;
+	shared variable inty,tmp,h,w,gan: integer range 0 to 500;
 	type data_data is array(0 to 300) of std_logic_vector(7 downto 0);
 	signal data : data_data;
 	shared variable fuck : integer range 0 to 1000;
@@ -143,10 +143,33 @@ CLK<=CLK_2;
 	   		fuck := 0;
 	  	elsif CLK'event and CLK='1' then
 			if not (PSdata(5 downto 0) = "111111") then
-				if (conv_integer(fuck) < 14000) then
+
+
+				if PSdata(5 downto 0) = "100111" then --backspace
+					if fuck > 0 then
+						data(fuck) <= "00000000";
+						fuck := fuck - 1;
+					end if;
+				end if;
+
+				if PSdata(5 downto 0) = "011110" then --enter
+					gan := fuck / 16;
+					fuck := (gan + 1) * 16;
+					if fuck > 256 then
+						fuck := fuck - 16;
+					end if;
+				end if;
+
+				if PSdata(5 downto 0) = "100110" then --esc
+					fuck := 0;
+					data <= (others => (others => '0'));
+				end if;
+
+				if (conv_integer(fuck) < 14000 and  PSdata(5 downto 0) /= "100110" and PSdata(5 downto 0) /= "011110" and PSdata(5 downto 0) /= "100111") then
 					data(fuck) <= PSdata(7 downto 0);
 					fuck := fuck + 1;
 				end if;
+
 			end if;
 	  	end if;
 	 end process;
@@ -161,7 +184,7 @@ CLK<=CLK_2;
 		elsif(clk'event and clk='1')then
 
 
-			if (x >= 240 and x <= 240 + 16 * 16 and y >= 64 and y <= 64 + 16 * 16 - 1) then
+			if (x >= 240 and x <= 240 + 16 * 16 - 1 and y >= 64 and y <= 64 + 16 * 16 - 1) then
 				h := (conv_integer(x) - 240) / 16;
 				w := (conv_integer(y) - 64) / 16;
 				tmp := w * 16 + h;
@@ -190,7 +213,7 @@ CLK<=CLK_2;
 						end if;
 
 						if (cao(5 downto 0) = "100110") then
-							tmp := 27;
+							tmp := 32;
 						end if;
 
 						if (cao(5 downto 0) = "000000") then
@@ -198,16 +221,16 @@ CLK<=CLK_2;
 						end if;
 
 						if (cao(5 downto 0) = "011110") then
-							tmp := 13;
+							tmp := 32;
 						end if;
 
-				if (x >= h * 16 + 240 and x <= h * 16 + 240 + 7) then
-					if (y >= w * 16 + 64 and y <= w * 16 + 64 + 7) then
+				if (x >= h * 16 + 240 and x <= h * 16 + 240 + 8 and x <= 240 + 16 * 16 - 1) then
+					if (y >= w * 16 + 64 and y <= w * 16 + 64 + 7 and y <= 64 + 16 * 16 - 1) then
 						if (h * 16 + 240 = x) then
 							inty := conv_integer(y);
 							romAddr <= conv_std_logic_vector(tmp * 8 + inty mod 8,11);--R
 						else
-							dx := 7 - (conv_integer(x) - (h * 8 + 240 + 1));
+							dx := 7 - (conv_integer(x) - (h * 16 + 240 + 1));
 							rt <= (others => romData(dx));
 							gt <= (others => romData(dx));
 							bt <= (others => romData(dx));
@@ -1220,9 +1243,7 @@ CLK<=CLK_2;
 				elsif ( y >= 128 and y <= 135) then --IH 0
 					if (x = 209) then
 						inty := conv_integer(y);
-						--changed! TODO
-						--tmp := conv_integer(IHdata(3 downto 0));
-						tmp := fuck;
+						tmp := conv_integer(IHdata(3 downto 0));
 						if (tmp <= 9) then
 							romAddr <= conv_std_logic_vector( (tmp + 48) * 8 + inty mod 8, 11);
 						else

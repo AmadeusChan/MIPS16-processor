@@ -1,10 +1,17 @@
 #-----------------------------------------------------------
-# PlanAhead v14.7 (64-bit)
-# Build 321239 by xbuild on Fri Sep 27 19:29:51 MDT 2013
-# Start of session at: Sat Dec 02 18:03:12 2017
-# Process ID: 2120
-# Log file: Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/planAhead_run_2/planAhead.log
-# Journal file: Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/planAhead_run_2/planAhead.jou
+# PlanAhead v14.6
+# Build 269223 by xbuild on Wed Jun  5 11:17:50 MDT 2013
+# Start of session at: Thu Dec 07 06:46:59 2017
+# Process ID: 11520
+# Log file: E:/MIPS16-processor-master/processor/planAhead_run_2/planAhead.log
+# Journal file: E:/MIPS16-processor-master/processor/planAhead_run_2/planAhead.jou
 #-----------------------------------------------------------
 start_gui
-source Z:/amadeus/academic_materials/Semester_Fall2017/Computer_Orgnization/projects/MIPS16-processor/processor/pa.fromNetlist.tcl
+source E:/MIPS16-processor-master/processor/pa.fromNetlist.tcl
+startgroup
+set_property package_pin U6 [get_ports ps2clk]
+endgroup
+startgroup
+set_property package_pin V6 [get_ports ps2data]
+endgroup
+save_constraints

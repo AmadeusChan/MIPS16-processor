@@ -77,8 +77,8 @@ begin
 	process (clk, rst) 
 	begin
 		if rst = '0' then
-			regs(0) <= x"0011";
-			regs(1) <= x"AA11";
+			regs(0) <= x"0012";
+			regs(1) <= x"AA12";
 			regs(2) <= x"0007";
 			regs(3) <= (others => '0');
 			regs(4) <= (others => '0');

@@ -69,48 +69,46 @@ begin
 	Ram1WE <= '0' when (judge = '1' and MemWrite = '1' and clk = '0') else '1';
 	Ram1OE <= '0' when (judge = '1' and MemRead = '1') else '1';
 	
--- Ram1Addr <= (others => '0') when rst = '0' else
---					"00" & AddrIn;
---	DataOut <= (others => '0') when rst = '0' else
---					"00000000000000" & data_ready & (tsre and tbre) when MemRead = '1' and AddrIn = x"BF01" else
---					Ram1Data;
---	Ram1Data <= (others => '0') when MemRead = '1' and AddrIn = x"BF01" else
---					(others => 'Z') when MemRead = '1' else
---					DataIn;
+   Ram1Addr <= (others => '0') when rst = '0' else
+					"00" & AddrIn;
+	DataOut <= (others => '0') when rst = '0' else
+					Ram1Data;
+	Ram1Data <= x"000" & "00" & data_ready & (tsre and tbre) when AddrIn = x"BF01" else
+					DataIn when MemWrite = '1' else
+					(others => 'Z');
 		
-	process(clk, rst, AddrIn)
-	begin
-		
-		if (rst = '0') then
-			Ram1Addr <= (others => '0');
-			DataOut <= (others => '0');
-		else
-			if (MemWrite = '1') then
-				if (AddrIn = x"BF00") then			--write serial port
-					Ram1Data(7 downto 0) <= DataIn(7 downto 0);
-				elsif (judge = '1') then			--write memory
-					Ram1Addr(15 downto 0) <= AddrIn;
-					Ram1Data <= DataIn;
-				end if;
-			elsif (MemRead = '1') then
-				if (AddrIn = x"BF01") then			--read the state of serial port
-					DataOut(15 downto 2) <= (others => '0');
-					DataOut(1) <= data_ready;		--judge for read
-					DataOut(0) <= tsre and tbre;	--judge for write
-					Ram1Data <= (others => '0');
-				elsif (AddrIn = x"BF00") then		--read serial port
-					Ram1Data <= (others => 'Z');
-					DataOut(15 downto 8) <= (others => '0');
-					DataOut(7 downto 0) <= Ram1Data(7 downto 0);
-				elsif (judge = '1') then			--read memory
-					Ram1Addr(15 downto 0) <= AddrIn;
-					Ram1Data <= (others => 'Z');
-					DataOut <= Ram1Data;
-				end if;
-			end if;
-		end if;
-	
-	end process;
+--	process(clk, rst, AddrIn)
+--	begin
+--		
+--		if (rst = '0') then
+--			Ram1Addr <= (others => '0');
+--			DataOut <= (others => '0');
+--		else
+--			if (MemWrite = '1') then
+--				if (AddrIn = x"BF00") then			--write serial port
+--					Ram1Data(7 downto 0) <= DataIn(7 downto 0);
+--				elsif (judge = '1') then			--write memory
+--					Ram1Addr(15 downto 0) <= AddrIn;
+--					Ram1Data <= DataIn;
+--				end if;
+--			elsif (MemRead = '1') then
+--				if (AddrIn = x"BF01") then			--read the state of serial port
+--					DataOut(15 downto 2) <= (others => '0');
+--					DataOut(1) <= data_ready;		--judge for read
+--					DataOut(0) <= tsre and tbre;	--judge for write
+--				elsif (AddrIn = x"BF00") then		--read serial port
+--					Ram1Data <= (others => 'Z');
+--					DataOut(15 downto 8) <= (others => '0');
+--					DataOut(7 downto 0) <= Ram1Data(7 downto 0);
+--				elsif (judge = '1') then			--read memory
+--					Ram1Addr(15 downto 0) <= AddrIn;
+--					Ram1Data <= (others => 'Z');
+--					DataOut <= Ram1Data;
+--				end if;
+--			end if;
+--		end if;
+--	
+--	end process;
 
 end Behavioral;
 

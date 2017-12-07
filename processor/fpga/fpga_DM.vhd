@@ -137,6 +137,8 @@ begin
 						addr_in <= x"BF00";
 						data_in <= cnt;
 						current_state <= s2;
+					else
+						current_state <= s0;
 					end if;
 				when s2 =>
 					memoe <= '1';
@@ -144,11 +146,13 @@ begin
 					addr_in <= x"BF01";
 					current_state <= s3;
 				when s3 =>
-					if (data_out(1 downto 0) = "11") then
+					if (data_out(1) = '1') then
 						memoe <= '1';
 						memwe <= '0';
 						addr_in <= x"BF00";
 						current_state <= s0;
+					else
+						current_state <= s2;
 					end if;
 			end case;
 		end if;
